@@ -36,19 +36,26 @@
 
   <!-- NAVBAR -->
   <nav id="navbar">
-    <div class="nav-logo">
-      <svg width="28" height="28" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M8 20h40l-4 28H12L8 20z"/>
-        <path d="M48 24h6a6 6 0 0 1 0 12h-6"/>
-        <line x1="4" y1="20" x2="52" y2="20"/>
-      </svg>
-      <span>MR CAFE</span>
+  <div class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M8 20h40l-4 28H12L8 20z"/><path d="M48 24h6a6 6 0 0 1 0 12h-6"/><line x1="4" y1="20" x2="52" y2="20"/>
+    </svg>
+    <span>MR CAFE</span>
+  </div>
+  
+  <div style="display: flex; align-items: center; gap: 1rem;">
+    <div id="cart-icon-wrap" style="position: relative; cursor: pointer;">
+      <span style="font-size: 1.5rem;">🛒</span>
+      <span id="cart-count">0</span>
     </div>
+
     <button id="theme-toggle" aria-label="Toggle theme">
       <span class="icon-sun">☀️</span>
       <span class="icon-moon">🌙</span>
     </button>
-  </nav>
+  </div>
+</nav>
+
 
   <!-- HERO -->
   <section id="hero">
