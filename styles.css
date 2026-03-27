@@ -80,7 +80,7 @@ body { background: var(--bg); color: var(--text); }
 .hero-bg {
   position: absolute; inset: 0;
   background: 
-    url('./image_11.jpg'),
+    url('image_11.jpg'),
     radial-gradient(ellipse at 20% 50%, rgba(220,20,60,0.5) 0%, transparent 60%),
     linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 40%, #0a0a0a 100%);
   background-size: cover, cover, cover;
