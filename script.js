@@ -254,3 +254,99 @@ function showToast(msg) {
 // تشغيل عرض الكروت لأول مرة
 renderCards("all");
 
+
+// --- برمجة فتح وإغلاق وعمل السلة ---
+const cartIcon = document.getElementById("cart-icon-wrap");
+const cartModal = document.getElementById("cart-modal-overlay");
+const cartClose = document.getElementById("cart-modal-close");
+const cartItemsList = document.getElementById("cart-items-list");
+const cartTotalEl = document.getElementById("cart-total-price");
+
+// 1. فتح السلة
+if (cartIcon) {
+  cartIcon.onclick = () => {
+    renderCartItems(); // تحديث القائمة بالمنتجات الحالية
+    cartModal.classList.remove("hidden");
+    cartModal.classList.add("open");
+    document.body.style.overflow = "hidden";
+  };
+}
+
+// 2. إغلاق السلة
+if (cartClose) {
+  cartClose.onclick = () => {
+    cartModal.classList.add("closing");
+    setTimeout(() => {
+      cartModal.classList.add("hidden");
+      cartModal.classList.remove("open", "closing");
+      document.body.style.overflow = "";
+    }, 300);
+  };
+}
+
+// 3. عرض المنتجات داخل السلة
+function renderCartItems() {
+  cartItemsList.innerHTML = "";
+  let total = 0;
+
+  if (cart.length === 0) {
+    cartItemsList.innerHTML = "<p style='text-align:center; color:var(--text-muted); padding: 2rem;'>السلة فارغة حالياً ☕</p>";
+    cartTotalEl.textContent = "0";
+    return;
+  }
+
+  cart.forEach((item, index) => {
+    total += item.price;
+    const itemDiv = document.createElement("div");
+    itemDiv.style = "display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; background: var(--bg2); padding: 10px; border-radius: 8px;";
+    itemDiv.innerHTML = `
+      <div style="display:flex; gap:10px; align-items:center;">
+        <img src="${item.image}" style="width:45px; height:45px; border-radius:5px; object-fit:cover;">
+        <div style="text-align: right;">
+          <p style="font-weight:bold; font-size:0.85rem; color: var(--text);">${item.nameAr}</p>
+          <p style="font-size:0.8rem; color: var(--primary);">${item.price} ر.س</p>
+        </div>
+      </div>
+      <button onclick="removeFromCart(${index})" style="background:none; border:none; cursor:pointer; font-size:1.1rem;">🗑️</button>
+    `;
+    cartItemsList.appendChild(itemDiv);
+  });
+
+  cartTotalEl.textContent = total;
+}
+
+// 4. حذف منتج من السلة
+window.removeFromCart = function(index) {
+  cart.splice(index, 1);
+  localStorage.setItem("myCart", JSON.stringify(cart));
+  document.getElementById("cart-count").textContent = cart.length;
+  renderCartItems();
+  showToast("تم حذف المنتج");
+};
+
+// 5. إرسال الطلب للواتساب الخاص بك (01125933005)
+const whatsappBtn = document.getElementById("checkout-whatsapp");
+if (whatsappBtn) {
+  whatsappBtn.onclick = () => {
+    if (cart.length === 0) {
+      showToast("⚠️ السلة فارغة!");
+      return;
+    }
+
+    let message = "مرحباً MR CAFE، أريد طلب الآتي:%0a%0a";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      message += `${index + 1}. *${item.nameAr}* - ${item.price} ر.س%0a`;
+      total += item.price;
+    });
+
+    message += `%0a💰 *الإجمالي: ${total} ر.س*`;
+    
+    const phoneNumber = "201125933005"; 
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    
+    window.open(whatsappUrl, "_blank");
+  };
+}
+
