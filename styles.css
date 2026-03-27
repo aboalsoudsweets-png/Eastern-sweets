@@ -7,46 +7,20 @@ img { display: block; max-width: 100%; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; }
 
 /* DARK MODE (default) */
-/* DARK MODE (تحديث الألوان لتناسب الصورة) */
 :root {
-  --bg: #0f0505;           /* أسود مائل للاحمرار */
-  --bg2: #1a0a0a;
-  --card: #1c0d0d;         /* خلفية الكروت بلون أحمر غامق جداً */
-  --card-hover: #2d1414;
-  --border: rgba(212, 168, 67, 0.15); /* حدود ذهبية خفيفة */
-  --text: #f5e6d3;         /* لون كريمي مريح للعين */
-  --text-muted: #a68b8b;
-  --primary: #d4a843;      /* ذهبي */
-  --primary-dark: #b8892e;
-  --primary-glow: rgba(212, 168, 67, 0.2);
-  --overlay: rgba(0,0,0,0.8);
-  --glass: rgba(15, 5, 5, 0.8);
-  --shadow: rgba(0,0,0,0.6);
-  --radius: 1.25rem;
+  --bg: #0b150b; --bg2: #111d11; --card: #152015; --card-hover: #1c2e1c;
+  --border: rgba(255,255,255,0.08); --text: #e8dcc8; --text-muted: #7a9070;
+  --primary: #d4a843; --primary-dark: #b8892e; --primary-glow: rgba(212,168,67,0.25);
+  --overlay: rgba(0,0,0,0.75); --glass: rgba(11,21,11,0.7); --shadow: rgba(0,0,0,0.5);
+  --radius: 1.25rem; --radius-sm: 0.75rem;
 }
-
-body {
-  background-color: var(--bg);
-  /* إضافة الصورة كنمط متكرر خلف الموقع */
-  background-image: url('1000250005.jpg');
-  background-size: 400px; /* حجم النمط الزخرفي */
-  background-repeat: repeat;
-  background-attachment: fixed;
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
+html.light {
+  --bg: #faf7f0; --bg2: #f0ebe0; --card: #ffffff; --card-hover: #f5f0e8;
+  --border: rgba(0,0,0,0.08); --text: #1a1a1a; --text-muted: #6b7c61;
+  --primary: #b8740a; --primary-dark: #8f5a06; --primary-glow: rgba(184,116,10,0.2);
+  --overlay: rgba(250,247,240,0.85); --glass: rgba(250,247,240,0.8); --shadow: rgba(0,0,0,0.12);
 }
-
-/* تعديل قسم المنيو ليكون شفافاً قليلاً ليظهر ما خلفه */
-#menu {
-  position: relative;
-  z-index: 20;
-  background: rgba(15, 5, 5, 0.85); /* خلفية سوداء شفافة تظهر الزخرفة */
-  backdrop-filter: blur(5px); /* تنعيم الخلفية خلف المنيو */
-  padding: 6rem 1.5rem;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
+body { background: var(--bg); color: var(--text); }
 
 /* LOADING SCREEN */
 #loading-screen {
@@ -104,34 +78,13 @@ body {
 html.light .icon-sun { display: block; } html.light .icon-moon { display: none; }
 
 /* HERO */
-/* تعديل قسم الـ HERO */
-#hero {
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  /* إضافة الصورة هنا */
-  background-image: url('1000250005.jpg'); /* تأكد من صحة اسم الملف */
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed; /* تعطي تأثير رائع عند الاسكرول */
+#hero { position: relative; height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.hero-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(30,60,20,0.6) 0%, transparent 60%), radial-gradient(ellipse at 80% 30%, rgba(60,40,10,0.4) 0%, transparent 50%), linear-gradient(135deg, #0a1a0a 0%, #1a2e0a 40%, #0f1a08 100%);
+  transform: scale(1.08); transition: transform 0.1s linear;
 }
-
-/* طبقة فوق الصورة لجعل النص واضحاً */
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(15, 5, 5, 0.5) 0%,
-    rgba(15, 5, 5, 0.8) 70%,
-    var(--bg) 100%
-  );
-}
-
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(11,21,11,0.3) 0%, rgba(11,21,11,0.55) 60%, var(--bg) 100%); }
 html.light .hero-overlay { background: linear-gradient(to bottom, rgba(250,247,240,0.2) 0%, rgba(250,247,240,0.5) 60%, var(--bg) 100%); }
 .floating-bean { position: absolute; font-size: 2rem; opacity: 0.3; pointer-events: none; filter: blur(1px); }
 .bean-1 { top: 25%; left: 8%; animation: floatA 5s ease-in-out infinite; }
@@ -163,13 +116,7 @@ html.light .hero-overlay { background: linear-gradient(to bottom, rgba(250,247,2
 .drinks-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap: 2rem; }
 
 /* CARDS */
-.drink-card {
-  background: var(--card);
-  border: 1px solid rgba(212, 168, 67, 0.2); /* حدود ذهبية رفيعة */
-  border-radius: var(--radius);
-  backdrop-filter: blur(10px); /* يعطي تأثير زجاجي فخم */
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
+.drink-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; cursor: pointer; transition: transform 0.45s ease, box-shadow 0.45s ease; opacity: 0; transform: translateY(40px); }
 .drink-card.visible { animation: cardReveal 0.6s ease both; }
 @keyframes cardReveal { to{opacity:1;transform:translateY(0)} }
 .drink-card:hover { transform: translateY(-10px); box-shadow: 0 20px 60px var(--primary-glow); background: var(--card-hover); }
@@ -177,11 +124,7 @@ html.light .hero-overlay { background: linear-gradient(to bottom, rgba(250,247,2
 .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.65s ease; }
 .drink-card:hover .card-img-wrap img { transform: scale(1.12); }
 .card-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.2); transition: background 0.4s ease; }
-
-.drink-card:hover {
-  border-color: var(--primary);
-  box-shadow: 0 20px 40px rgba(212, 168, 67, 0.15);
-}
+.drink-card:hover .card-overlay { background: transparent; }
 .card-badge { position: absolute; top: 12px; right: 12px; padding: 4px 10px; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15); border-radius: 999px; font-size: 0.75rem; color: #fff; }
 .card-glow { position: absolute; inset: 0; background: linear-gradient(to top, var(--primary-glow), transparent); opacity: 0; transition: opacity 0.4s ease; pointer-events: none; }
 .drink-card:hover .card-glow { opacity: 1; }
