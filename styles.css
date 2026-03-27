@@ -7,19 +7,89 @@ img { display: block; max-width: 100%; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; }
 
 /* DARK MODE (default) */
+/* الألوان الجديدة: الأحمر العنابي والبيج العاجي */
+
+/* DARK MODE (الوضع الليلي الجديد) */
 :root {
-  --bg: #0b150b; --bg2: #111d11; --card: #152015; --card-hover: #1c2e1c;
-  --border: rgba(255,255,255,0.08); --text: #e8dcc8; --text-muted: #7a9070;
-  --primary: #d4a843; --primary-dark: #b8892e; --primary-glow: rgba(212,168,67,0.25);
-  --overlay: rgba(0,0,0,0.75); --glass: rgba(11,21,11,0.7); --shadow: rgba(0,0,0,0.5);
+  --bg: #0f0a0a;             /* أسود مائل للبني المحروق */
+  --bg2: #1a0f0f;            /* عنابي داكن جداً */
+  --card: #1f1414;           /* لون البطاقات */
+  --card-hover: #2d1b1b; 
+  --border: rgba(255,255,255,0.06); 
+  --text: #f5f0e6;           /* عاجي فاتح للنصوص */
+  --text-muted: #a68b8b;     /* أحمر باهت للنصوص الثانوية */
+  --primary: #800000;        /* أحمر عنابي (Maroon) */
+  --primary-dark: #5c0000; 
+  --primary-glow: rgba(128,0,0,0.35); /* توهج أحمر */
+  --overlay: rgba(0,0,0,0.85); 
+  --glass: rgba(15,10,10,0.75); 
+  --shadow: rgba(0,0,0,0.6);
   --radius: 1.25rem; --radius-sm: 0.75rem;
 }
+
+/* LIGHT MODE (الوضع النهاري الجديد - كلاسيكي ورق قديم) */
 html.light {
-  --bg: #faf7f0; --bg2: #f0ebe0; --card: #ffffff; --card-hover: #f5f0e8;
-  --border: rgba(0,0,0,0.08); --text: #1a1a1a; --text-muted: #6b7c61;
-  --primary: #b8740a; --primary-dark: #8f5a06; --primary-glow: rgba(184,116,10,0.2);
-  --overlay: rgba(250,247,240,0.85); --glass: rgba(250,247,240,0.8); --shadow: rgba(0,0,0,0.12);
+  --bg: #fbf6f0;             /* لون عاجي كلاسيكي (Ivory) */
+  --bg2: #f2ede4; 
+  --card: #ffffff; 
+  --card-hover: #faf8f5;
+  --border: rgba(128,0,0,0.1); 
+  --text: #2d1b1b;           /* بني محروق للنصوص */
+  --text-muted: #7a5a5a; 
+  --primary: #800000;        /* أحمر عنابي */
+  --primary-dark: #5c0000; 
+  --primary-glow: rgba(128,0,0,0.15);
+  --overlay: rgba(251,246,240,0.9); 
+  --glass: rgba(251,246,240,0.8); 
+  --shadow: rgba(128,0,0,0.1);
 }
+
+/* HERO BACKGROUND (تعديل التدرج في الخلفية ليناسب الأحمر) */
+.hero-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(128,0,0,0.3) 0%, transparent 60%), 
+              radial-gradient(ellipse at 80% 30%, rgba(80,0,0,0.2) 0%, transparent 50%), 
+              linear-gradient(135deg, #0f0a0a 0%, #2d1b1b 40%, #0f0a0a 100%);
+  transform: scale(1.08); transition: transform 0.1s linear;
+}
+
+/* أيقونة القهوة والتحميل بلون المارون */
+.loading-cup, .steam-wrap, .nav-logo svg, .scroll-arrow {
+  color: var(--primary) !important;
+}
+
+/* تعديل الـ Badge واللمسات الجمالية */
+.hero-badge {
+  border: 1px solid rgba(128,0,0,0.35);
+  background: rgba(128,0,0,0.1);
+  color: var(--primary);
+}
+
+.modal-price-box {
+  background: rgba(128,0,0,0.08);
+  border: 1px solid rgba(128,0,0,0.2);
+}
+
+#modal-price {
+  color: var(--primary);
+}
+
+.order-btn {
+  background: var(--primary);
+  color: #fff; /* النص أبيض فوق الأحمر */
+}
+
+.order-btn:hover {
+  background: var(--primary-dark);
+}
+
+/* تعديل عداد السلة */
+#cart-count {
+  background: var(--primary);
+  color: #fff;
+  border: 2px solid var(--bg);
+}
+
 body { background: var(--bg); color: var(--text); }
 
 /* LOADING SCREEN */
