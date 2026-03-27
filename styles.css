@@ -100,7 +100,7 @@ body { background: var(--bg); color: var(--text); }
   inset: 0; 
   z-index: 1000;
   /* تطبيق الخلفية الطولية */
-  background-image: url("image_11.png"); 
+  background-image: url("image_11.jpg"); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -244,7 +244,7 @@ footer p { font-family: 'Cairo',sans-serif; color: var(--text-muted); font-size:
 .hidden { display: none !important; }
 .modal-box { 
   position: relative; 
-  background-image: url("image_11.png"); /* الخلفية الطولية */
+  background-image: url("image_11.jpg"); /* الخلفية الطولية */
   background-size: cover; 
   background-position: center; 
   border: 1px solid var(--border); 
