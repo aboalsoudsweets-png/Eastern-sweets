@@ -68,6 +68,20 @@ const drinks = [
 const categoryEmoji = { coffee:"☕", tea:"🍵", cold:"🧃", smoothie:"🥤" };
 let activeFilter = "all";
 
+// نظام السلة - تعريف المتغيرات والعناصر
+let cart = JSON.parse(localStorage.getItem("myCart")) || [];
+const cartCountEl   = document.getElementById("cart-count");
+const cartModal     = document.getElementById("cart-modal-overlay");
+const cartItemsList = document.getElementById("cart-items-list");
+const cartTotalEl   = document.getElementById("cart-total-price");
+const cartIconWrap  = document.getElementById("cart-icon-wrap");
+const cartModalClose= document.getElementById("cart-modal-close");
+const checkoutBtn   = document.getElementById("checkout-whatsapp");
+
+// تحديث العداد فوراً
+if (cartCountEl) cartCountEl.textContent = cart.length;
+
+
 const loadingScreen = document.getElementById("loading-screen");
 const navbar        = document.getElementById("navbar");
 const heroBg        = document.getElementById("hero-bg");
@@ -182,7 +196,21 @@ function openModal(drink) {
   modalOverlay.classList.remove("hidden","closing");
   modalOverlay.classList.add("open");
   document.body.style.overflow = "hidden";
-  orderBtn.onclick = () => { closeModal(); showToast(`✅ تمت إضافة ${drink.nameAr} للطلب!`); };
+  orderBtn.onclick = () => { 
+    // إضافة المشروب الحالي لمصفوفة السلة
+    cart.push(drink);
+    
+    // حفظ السلة المحدثة في ذاكرة المتصفح
+    localStorage.setItem("myCart", JSON.stringify(cart));
+    
+    // تحديث رقم العداد الموجود فوق أيقونة السلة
+    if (cartCountEl) cartCountEl.textContent = cart.length;
+    
+    // إغلاق النافذة المنبثقة وإظهار رسالة التأكيد
+    closeModal(); 
+    showToast(`✅ تمت إضافة ${drink.nameAr} للطلب!`); 
+};
+
 }
 function closeModal() {
   modalOverlay.classList.remove("open");
@@ -208,3 +236,78 @@ function showToast(msg) {
 }
 
 renderCards("all");
+
+
+
+// 1. دالة عرض محتويات السلة وتحديث الإجمالي
+function renderCartItems() {
+    cartItemsList.innerHTML = "";
+    let total = 0;
+    
+    if (cart.length === 0) {
+        cartItemsList.innerHTML = "<p style='text-align:center; padding:1rem;'>السلة فارغة ☕</p>";
+        cartTotalEl.textContent = "0";
+        return;
+    }
+
+    cart.forEach((item, index) => {
+        total += item.price;
+        const itemDiv = document.createElement("div");
+        itemDiv.style = "display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:10px; border-radius:8px; margin-bottom:10px; border:1px solid rgba(255,255,255,0.1);";
+        itemDiv.innerHTML = `
+            <div style="display:flex; align-items:center; gap:10px;">
+                <img src="${item.image}" style="width:40px; height:40px; border-radius:5px; object-fit:cover;">
+                <span>${item.nameAr}</span>
+            </div>
+            <button onclick="removeFromCart(${index})" style="background:none; border:none; cursor:pointer; font-size:1.2rem;">🗑️</button>`;
+        cartItemsList.appendChild(itemDiv);
+    });
+    cartTotalEl.textContent = total;
+}
+
+// 2. دالة حذف صنف معين من السلة
+window.removeFromCart = function(index) {
+    cart.splice(index, 1);
+    localStorage.setItem("myCart", JSON.stringify(cart));
+    if (cartCountEl) cartCountEl.textContent = cart.length;
+    renderCartItems(); // إعادة عرض السلة بعد الحذف
+};
+
+// 3. برمجة فتح وإغلاق نافذة السلة
+if (cartIconWrap) {
+    cartIconWrap.onclick = () => {
+        renderCartItems();
+        cartModal.classList.remove("hidden");
+        cartModal.classList.add("open");
+        document.body.style.overflow = "hidden"; // منع سكرول الصفحة خلف السلة
+    };
+}
+
+if (cartModalClose) {
+    cartModalClose.onclick = () => {
+        cartModal.classList.add("hidden");
+        cartModal.classList.remove("open");
+        document.body.style.overflow = ""; // إعادة السكرول
+    };
+}
+
+// 4. زر إرسال الطلب للواتساب
+if (checkoutBtn) {
+    checkoutBtn.onclick = () => {
+        if (cart.length === 0) {
+            alert("سلتك فارغة، أضف بعض المشروبات أولاً!");
+            return;
+        }
+        
+        let msg = "مرحباً MR CAFE، أريد طلب الآتي:%0a%0a";
+        let total = 0;
+        cart.forEach((item, i) => {
+            msg += `${i + 1}. *${item.nameAr}* (${item.price} ر.س)%0a`;
+            total += item.price;
+        });
+        msg += `%0a💰 *الإجمالي: ${total} ر.س*`;
+        
+        // استبدل الرقم بالرقم الخاص بك
+        window.open(`https://wa.me/201125933005?text=${msg}`, "_blank");
+    };
+}
