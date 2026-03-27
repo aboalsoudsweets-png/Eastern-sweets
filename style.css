@@ -182,3 +182,26 @@ footer p { font-family: 'Cairo',sans-serif; color: var(--text-muted); font-size:
 @media(min-width:768px){ .drinks-grid{grid-template-columns:repeat(2,1fr)} }
 @media(min-width:1024px){ .drinks-grid{grid-template-columns:repeat(3,1fr)} }
 @media(min-width:1280px){ .drinks-grid{grid-template-columns:repeat(4,1fr)} }
+
+
+
+#cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: var(--primary);
+  color: #111;
+  font-size: 0.7rem;
+  font-weight: bold;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid var(--bg);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* تأثير نبض عند إضافة منتج */
+.bump { transform: scale(1.4); }
