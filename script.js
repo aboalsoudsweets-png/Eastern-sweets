@@ -1,525 +1,210 @@
-// بيانات الصور لكل فئة
-const categoryImages = {
-    'reception': [
-        'images/reception1.jpg', 'images/reception2.jpg', 'images/reception3.jpg', 'images/reception4.jpg',
-        'images/reception5.jpg', 'images/reception6.jpg', 'images/reception7.jpg', 'images/reception8.jpg',
-        'images/reception9.jpg', 'images/reception10.jpg', 'images/reception11.jpg', 'images/reception12.jpg',
-        'images/reception13.jpg', 'images/reception14.jpg', 'images/reception15.jpg', 'images/reception16.jpg',
-        'images/reception17.jpg', 'images/reception18.jpg', 'images/reception19.jpg', 'images/reception20.jpg',
-        'images/reception21.jpg', 'images/reception22.jpg', 'images/reception23.jpg', 'images/reception24.jpg'
-    ],
-    'fela-k': [
-        'images/oqto1.jpg', 'images/oqto2.jpg', 'images/oqto3.jpg', 'images/oqto4.jpg',
-        'images/oqto5.jpg', 'images/oqto6.jpg', 'images/oqto7.jpg', 'images/oqto8.jpg',
-        'images/oqto9.jpg', 'images/oqto10.jpg'
-    ],
-    'fela_3': [
-        'images/Screenshot1.jpg', 'images/Screenshot2.jpg', 'images/Screenshot3.jpg', 'images/Screenshot4.jpg',
-        'images/Screenshot5.jpg', 'images/Screenshot6.jpg', 'images/Screenshot7.jpg', 'images/Screenshot8.jpg',
-        'images/Screenshot9.jpg', 'images/Screenshot10.jpg', 'images/Screenshot11.jpg', 'images/Screenshot12.jpg',
-        'images/Screenshot13.jpg', 'images/Screenshot14.jpg', 'images/Screenshot15.jpg', 'images/Screenshot16.jpg',
-        'images/Screenshot17.jpg', 'images/Screenshot18.jpg', 'images/Screenshot19.jpg'
-    ],
-    'garden': [
-        'images/garden1.jpg',
-        'images/garden2.jpg',
-        'images/garden3.jpg',
-        'images/garden4.jpg',
-        'images/garden5.jpg',
-        'images/garden6.jpg',
-        'images/garden7.jpg',
-        'images/garden8.jpg',
-        'images/garden9.jpg',
-        'images/garden10.jpg',
-        'images/garden11.jpg'
-    ],
-    'master-bedroom': [
-        'images/master1.jpg', 'images/master2.jpg', 'images/master3.jpg', 'images/master4.jpg',
-        'images/master5.jpg', 'images/master6.jpg', 'images/master7.jpg', 'images/master8.jpg',
-        'images/master9.jpg', 'images/master10.jpg', 'images/master11.jpg', 'images/master12.jpg',
-        'images/master13.jpg', 'images/master14.jpg', 'images/master15.jpg', 'images/master16.jpg',
-        'images/master17.jpg', 'images/master18.jpg', 'images/master19.jpg', 'images/master20.jpg'
-    ],
-    'boys-room': [
-        'images/boy1.jpg', 'images/boy2.jpg', 'images/boy3.jpg', 'images/boy4.jpg',
-        'images/boy5.jpg', 'images/boy6.jpg', 'images/boy7.jpg', 'images/boy8.jpg',
-        'images/boy9.jpg', 'images/boy10.jpg'
-    ],
-    'girls-room': [
-        'images/girl1.jpg', 'images/girl2.jpg', 'images/girl3.jpg', 'images/girl4.jpg',
-        'images/girl5.jpg', 'images/girl6.jpg', 'images/girl7.jpg'
-    ],
-    'small-bathroom': [
-        'images/small1.jpg', 'images/small2.jpg', 'images/small3.jpg', 'images/small4.jpg',
-        'images/small5.jpg', 'images/small6.jpg', 'images/small7.jpg', 'images/small8.jpg',
-        'images/small9.jpg'
-    ],
-    'large-bathroom': [
-        'images/big1.jpg',
-        'images/big2.jpg',
-        'images/big3.jpg',
-        'images/big4.jpg',
-        'images/big5.jpg',
-        'images/big6.jpg',
-        'images/big7.jpg', 
-        'images/big8.jpg',
-        'images/big9.jpg',
-        'images/big10.jpg',
-        'images/big11.jpg'
-    ],
-    'kitchen': [
-        'images/kichin1.jpg', 'images/kichin2.jpg', 'images/kichin3.jpg', 'images/kichin4.jpg',
-        'images/kichin5.jpg', 'images/kichin6.jpg', 'images/kichin7.jpg', 'images/kichin8.jpg',
-        'images/kichin9.jpg', 'images/kichin10.jpg', 'images/kichin11.jpg', 'images/kichin12.jpg',
-        'images/kichin13.jpg', 'images/kichin14.jpg', 'images/kichin15.jpg', 'images/kichin16.jpg',
-        'images/kichin17.jpg'
-    ]
-};
+const drinks = [
+  { id:"c1", nameAr:"اسبريسو", nameEn:"Espresso", price:15, category:"coffee",
+    image:"https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800&q=80",
+    desc:"قهوة مركزة بنكهة غنية وعميقة. أساس كل تجربة قهوة فاخرة.",
+    ingredients:["حبوب أرابيكا 100%","ماء مفلتر"] },
+  { id:"c2", nameAr:"كابوتشينو", nameEn:"Cappuccino", price:20, category:"coffee",
+    image:"https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=800&q=80",
+    desc:"توازن مثالي بين الإسبريسو الغني والحليب المبخر والرغوة الكثيفة.",
+    ingredients:["إسبريسو","حليب مبخر","رغوة الحليب","مسحوق كاكاو (اختياري)"] },
+  { id:"c3", nameAr:"لاتيه", nameEn:"Cafe Latte", price:22, category:"coffee",
+    image:"https://images.unsplash.com/photo-1561882468-9110e03e0f78?w=800&q=80",
+    desc:"إسبريسو عميق الطعم ممزوج بحليب مبخر ناعم مع رغوة خفيفة.",
+    ingredients:["إسبريسو","حليب مبخر","رغوة خفيفة"] },
+  { id:"c4", nameAr:"موكا", nameEn:"Caffe Mocha", price:25, category:"coffee",
+    image:"https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?w=800&q=80",
+    desc:"إسبريسو مع صلصة الموكا والحليب المبخر وكريمة مخفوقة فوقها.",
+    ingredients:["إسبريسو","صلصة موكا","حليب مبخر","كريمة مخفوقة"] },
+  { id:"c5", nameAr:"أمريكانو", nameEn:"Americano", price:18, category:"coffee",
+    image:"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&q=80",
+    desc:"شوت إسبريسو يُضاف إليه ماء ساخن ليُعطي كوباً غنياً بعمق استثنائي.",
+    ingredients:["إسبريسو","ماء ساخن"] },
+  { id:"c6", nameAr:"فلات وايت", nameEn:"Flat White", price:23, category:"coffee",
+    image:"https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=800&q=80",
+    desc:"ريستريتو مركز مع حليب كامل الدسم مبخر — قوي بدون ثقل.",
+    ingredients:["ريستريتو","حليب كامل الدسم مبخر"] },
+  { id:"t1", nameAr:"شاي أخضر", nameEn:"Green Tea", price:15, category:"tea",
+    image:"https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=800&q=80",
+    desc:"أوراق شاي أخضر فاخرة تُنقع ببطء، غنية بمضادات الأكسدة.",
+    ingredients:["أوراق شاي أخضر ممتازة","ماء ساخن","عسل (اختياري)"] },
+  { id:"t2", nameAr:"شاي بالنعناع", nameEn:"Mint Tea", price:18, category:"tea",
+    image:"https://images.unsplash.com/photo-1530482054429-cc491f61333b?w=800&q=80",
+    desc:"مزيج مهدئ من الشاي الأسود وأوراق النعناع الطازجة.",
+    ingredients:["شاي أسود","أوراق نعناع طازجة","سكر أو عسل"] },
+  { id:"cd1", nameAr:"قهوة مثلجة", nameEn:"Iced Coffee", price:25, category:"cold",
+    image:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800&q=80",
+    desc:"قهوة طازجة التحضير تُقدم بارداً فوق ثلج متكسر.",
+    ingredients:["قهوة مخمرة","ثلج","شراب كلاسيك"] },
+  { id:"cd2", nameAr:"لاتيه مثلج", nameEn:"Iced Latte", price:28, category:"cold",
+    image:"https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=800&q=80",
+    desc:"إسبريسو مع الحليب البارد والثلج — تجربة ريفريشينج.",
+    ingredients:["إسبريسو","حليب بارد","ثلج"] },
+  { id:"cd3", nameAr:"فرابيه", nameEn:"Frappuccino", price:30, category:"cold",
+    image:"https://images.unsplash.com/photo-1541167760496-1628856ab772?w=800&q=80",
+    desc:"مشروب مُمزوج من القهوة والحليب والثلج فوقه كريمة مخفوقة.",
+    ingredients:["قهوة روست","حليب كامل","ثلج","كريمة مخفوقة"] },
+  { id:"cd4", nameAr:"عصير برتقال", nameEn:"Fresh Orange Juice", price:20, category:"cold",
+    image:"https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=800&q=80",
+    desc:"عصير برتقال طازج 100% — نقي ومشرق ومليء بفيتامين C.",
+    ingredients:["برتقال طازج"] },
+  { id:"cd5", nameAr:"ليموناضة", nameEn:"Classic Lemonade", price:20, category:"cold",
+    image:"https://images.unsplash.com/photo-1523371054106-bbf80586c38c?w=800&q=80",
+    desc:"توازن منعش بين الحامض والحلو، يُقدم بارداً.",
+    ingredients:["عصير ليمون طازج","ماء","شراب سكر","ثلج"] },
+  { id:"s1", nameAr:"سموذي مانجو", nameEn:"Mango Smoothie", price:30, category:"smoothie",
+    image:"https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=800&q=80",
+    desc:"مزيج استوائي من المانجو الحلوة مع الزبادي ولمسة عسل.",
+    ingredients:["بيوريه مانجو","زبادي يوناني","عسل","ثلج"] },
+  { id:"s2", nameAr:"سموذي توت", nameEn:"Berry Smoothie", price:32, category:"smoothie",
+    image:"https://images.unsplash.com/photo-1502741224143-90386d7f8c82?w=800&q=80",
+    desc:"مزيج من الفراولة والتوت الأزرق والأحمر غني بمضادات الأكسدة.",
+    ingredients:["توت مشكل","حليب لوز","أجاف","ثلج"] },
+  { id:"s3", nameAr:"سموذي خضار", nameEn:"Green Detox Smoothie", price:28, category:"smoothie",
+    image:"https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=800&q=80",
+    desc:"مشروب صحي من السبانخ والتفاح الأخضر والخيار والزنجبيل.",
+    ingredients:["سبانخ","تفاح أخضر","خيار","زنجبيل","ماء جوز الهند"] }
+];
 
-// Set current year in footer
-document.getElementById('year').textContent = new Date().getFullYear();
+const categoryEmoji = { coffee:"☕", tea:"🍵", cold:"🧃", smoothie:"🥤" };
+let activeFilter = "all";
 
-// ==================== Form Validation ====================
-const formValidation = {
-    name: (value) => {
-        if (!value) return "اسم العميل مطلوب";
-        if (value.length < 3) return "يجب أن يكون الاسم 3 أحرف على الأقل";
-        return null;
-    },
-    phone: (value) => {
-        if (!value) return "رقم الهاتف مطلوب";
-        if (!/^[0-9\s\-\+\(\)]{10,}$/.test(value)) return "رقم الهاتف غير صحيح";
-        return null;
-    },
-    location: (value) => !value ? "نوع المكان مطلوب" : null,
-    area: (value) => !value ? "المنطقة مطلوبة" : null,
-    floor: (value) => !value ? "الدور مطلوب" : null,
-    apartment: (value) => !value ? "حالة الشقة مطلوبة" : null,
-    designType: (value) => !value ? "نوع التصميم مطلوب" : null,
-    'floor-type': (value) => !value ? "نوع الأرضيات مطلوب" : null,
-    'designs-available': (value) => !value ? "هذا الحقل مطلوب" : null,
-    electricity: (value) => !value ? "نظام الكهرباء مطلوب" : null,
-    plumbing: (value) => !value ? "نظام السباكة مطلوب" : null,
-    'customer-location': (value) => !value ? "مكان إقامة العميل مطلوب" : null,
-};
+const loadingScreen = document.getElementById("loading-screen");
+const navbar        = document.getElementById("navbar");
+const heroBg        = document.getElementById("hero-bg");
+const drinksGrid    = document.getElementById("drinks-grid");
+const modalOverlay  = document.getElementById("modal-overlay");
+const modalImg      = document.getElementById("modal-img");
+const modalNameAr   = document.getElementById("modal-name-ar");
+const modalNameEn   = document.getElementById("modal-name-en");
+const modalPrice    = document.getElementById("modal-price");
+const modalDesc     = document.getElementById("modal-desc");
+const modalIngList  = document.getElementById("modal-ing-list");
+const modalClose    = document.getElementById("modal-close");
+const orderBtn      = document.getElementById("order-btn");
+const toast         = document.getElementById("toast");
+const themeToggle   = document.getElementById("theme-toggle");
+const yearEl        = document.getElementById("year");
 
-// ==================== Toast Notification ====================
-function showToast(message, type = 'success') {
-    const toast = document.createElement('div');
-    toast.className = `toast-notification toast-${type}`;
-    toast.innerHTML = `
-        <div class="toast-content">
-            <span class="toast-icon">${type === 'success' ? '✓' : '✕'}</span>
-            <p>${message}</p>
+if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+// Theme
+const savedTheme = localStorage.getItem("mr-cafe-theme") || "dark";
+document.documentElement.className = savedTheme;
+themeToggle.addEventListener("click", () => {
+  const next = document.documentElement.classList.contains("dark") ? "light" : "dark";
+  document.documentElement.className = next;
+  localStorage.setItem("mr-cafe-theme", next);
+});
+
+// Loading screen
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    loadingScreen.classList.add("fade-out");
+    setTimeout(() => { loadingScreen.style.display = "none"; }, 900);
+  }, 2800);
+});
+
+// Navbar scroll
+window.addEventListener("scroll", () => {
+  navbar.classList.toggle("scrolled", window.scrollY > 60);
+});
+
+// Parallax
+window.addEventListener("scroll", () => {
+  const ratio = window.scrollY / window.innerHeight;
+  heroBg.style.transform = `scale(1.08) translateY(${ratio * 30}%)`;
+});
+
+// Render cards
+function renderCards(filter) {
+  drinksGrid.innerHTML = "";
+  const list = filter === "all" ? drinks : drinks.filter(d => d.category === filter);
+  if (!list.length) {
+    drinksGrid.innerHTML = `<p style="text-align:center;color:var(--text-muted);grid-column:1/-1;padding:4rem 0">لا توجد مشروبات في هذا التصنيف</p>`;
+    return;
+  }
+  list.forEach((drink, i) => {
+    const card = document.createElement("div");
+    card.className = "drink-card";
+    card.style.transitionDelay = `${i * 0.07}s`;
+    card.innerHTML = `
+      <div class="card-img-wrap">
+        <img src="${drink.image}" alt="${drink.nameEn}" loading="lazy"/>
+        <div class="card-overlay"></div>
+        <div class="card-glow"></div>
+        <span class="card-badge">${categoryEmoji[drink.category]}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-row">
+          <div>
+            <p class="card-name-ar">${drink.nameAr}</p>
+            <p class="card-name-en">${drink.nameEn}</p>
+          </div>
+          <div class="card-price">
+            <strong>${drink.price}</strong>
+            <small>ر.س</small>
+          </div>
         </div>
-    `;
-    document.body.appendChild(toast);
-
-    const style = document.createElement('style');
-    if (!document.getElementById('toast-styles')) {
-        style.id = 'toast-styles';
-        style.textContent = `
-            .toast-notification {
-                position: fixed;
-                top: 24px;
-                left: 24px;
-                padding: 16px 24px;
-                border-radius: 8px;
-                color: white;
-                z-index: 50;
-                animation: slideIn 0.3s ease-out;
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                max-width: 400px;
-            }
-            
-            .toast-success {
-                background: linear-gradient(135deg, #d4af37 0%, #fdb813 100%);
-            }
-            
-            .toast-error {
-                background: #dc2626;
-            }
-            
-            .toast-content {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-            }
-            
-            .toast-icon {
-                font-size: 20px;
-                font-weight: bold;
-            }
-            
-            .toast-notification p {
-                margin: 0;
-                font-weight: 600;
-            }
-            
-            @keyframes slideIn {
-                from {
-                    transform: translateX(400px);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    setTimeout(() => {
-        toast.style.animation = 'slideIn 0.3s ease-out reverse';
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
+        <p class="card-cta">عرض التفاصيل ←</p>
+      </div>`;
+    card.addEventListener("click", () => openModal(drink));
+    drinksGrid.appendChild(card);
+    requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add("visible")));
+  });
+  observeCards();
 }
 
-// ==================== Form Error Display ====================
-function showFieldError(fieldName, errorMessage) {
-    const field = document.querySelector(`#${fieldName}`);
-    if (!field) return;
-
-    const parent = field.closest('.form-group');
-    if (!parent) return;
-
-    const existingError = parent.querySelector('.form-error');
-    if (existingError) existingError.remove();
-
-    if (errorMessage) {
-        const errorEl = document.createElement('span');
-        errorEl.className = 'form-error';
-        errorEl.textContent = errorMessage;
-        parent.appendChild(errorEl);
-
-        field.style.borderColor = '#dc2626';
-        field.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
-    } else {
-        field.style.borderColor = 'var(--border)';
-        field.style.boxShadow = '';
-    }
+function observeCards() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visible"); obs.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin:"0px 0px -40px 0px" });
+  document.querySelectorAll(".drink-card").forEach(c => obs.observe(c));
 }
 
-// ==================== Form Validation On Change ====================
-function setupFieldValidation() {
-    const formFields = document.querySelectorAll('.form-group input, .form-group select');
-    
-    formFields.forEach(field => {
-        field.addEventListener('change', function() {
-            const fieldName = this.id;
-            const fieldValue = this.value;
-            
-            if (formValidation[fieldName]) {
-                const error = formValidation[fieldName](fieldValue);
-                showFieldError(fieldName, error);
-            }
-        });
-
-        field.addEventListener('blur', function() {
-            const fieldName = this.id;
-            const fieldValue = this.value;
-            
-            if (formValidation[fieldName]) {
-                const error = formValidation[fieldName](fieldValue);
-                if (error) {
-                    showFieldError(fieldName, error);
-                }
-            }
-        });
-    });
-}
-
-// ==================== Display Category Images ====================
-function displayCategoryImages(category) {
-    const gallery = document.getElementById('categoryGallery');
-    gallery.innerHTML = '';
-
-    const images = categoryImages[category] || [];
-
-    images.forEach((imagePath, index) => {
-        const item = document.createElement('div');
-        item.className = 'gallery-item';
-        item.innerHTML = `
-            <div class="gallery-image-wrapper">
-                <img src="${imagePath}" alt="صورة ${index + 1}" loading="lazy">
-                <div class="gallery-overlay">
-                    <button class="gallery-btn" onclick="openImage('${imagePath}')">🔍 عرض</button>
-                </div>
-            </div>
-        `;
-        gallery.appendChild(item);
-    });
-}
-
-// ==================== Open Image Modal ====================
-function openImage(imagePath) {
-    const modal = document.createElement('div');
-    modal.className = 'image-modal';
-    modal.innerHTML = `
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <img src="${imagePath}" alt="صورة مكبرة">
-        </div>
-    `;
-    document.body.appendChild(modal);
-
-    modal.querySelector('.close-modal').addEventListener('click', function() {
-        modal.remove();
-    });
-
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            modal.remove();
-        }
-    });
-}
-
-// ==================== WhatsApp Form Integration ====================
-document.getElementById('surveyForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    const formData = {
-        clientName: document.getElementById('name').value,
-        phoneNumber: document.getElementById('phone').value,
-        locationType: document.getElementById('location').value,
-        area: document.getElementById('area').value,
-        floor: document.getElementById('floor').value,
-        apartmentState: document.getElementById('apartment').value,
-        designType: document.getElementById('designType').value,
-        flooring: document.getElementById('floor-type').value,
-        designsAvailable: document.getElementById('designs-available').value,
-        electricity: document.getElementById('electricity').value,
-        plumbing: document.getElementById('plumbing').value,
-        clientLocation: document.getElementById('customer-location').value
-    };
-
-    let hasErrors = false;
-    const fieldIds = ['name', 'phone', 'location', 'area', 'floor', 'apartment', 'designType', 'floor-type', 'designs-available', 'electricity', 'plumbing', 'customer-location'];
-    
-    fieldIds.forEach(fieldId => {
-        const field = document.getElementById(fieldId);
-        if (!field) return;
-        
-        const fieldValue = field.value;
-        if (formValidation[fieldId]) {
-            const error = formValidation[fieldId](fieldValue);
-            if (error) {
-                showFieldError(fieldId, error);
-                hasErrors = true;
-            } else {
-                showFieldError(fieldId, null);
-            }
-        }
-    });
-
-    if (hasErrors) {
-        showToast('يرجى تصحيح الأخطاء المشار إليها', 'error');
-        return;
-    }
-
-    const message = `*طلب تسعير / تشطيب جديد* 🏗️✨
-
-👤 *الاسم:* ${formData.clientName}
-📱 *رقم الهاتف:* ${formData.phoneNumber}
-🏢 *المكان:* ${formData.locationType}
-🗺️ *المنطقة:* ${formData.area}
-🔢 *الدور:* ${formData.floor}
-🏠 *حالة الشقة:* ${formData.apartmentState}
-🎨 *نوع التصميم:* ${formData.designType}
-⬜ *الأرضية:* ${formData.flooring}
-📋 *التصميمات المتاحة:* ${formData.designsAvailable}
-⚡ *الكهرباء:* ${formData.electricity}
-💧 *السباكة:* ${formData.plumbing}
-🌍 *مكان الإقامة:* ${formData.clientLocation}`;
-
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappURL = `https://wa.me/201121322202?text=${encodedMessage}`;
-    
-    setSubmitLoading(true);
-    showToast('تم استلام طلبك بنجاح! جاري تحويلك إلى واتساب...', 'success');
-
-    setTimeout(() => {
-        window.open(whatsappURL, '_blank');
-        setSubmitLoading(false);
-        resetForm();
-    }, 500);
+// Filters
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeFilter = btn.dataset.filter;
+    renderCards(activeFilter);
+  });
 });
 
-// ==================== Form Loading State ====================
-function setSubmitLoading(isLoading) {
-    const submitBtn = document.querySelector('.submit-btn');
-    if (!submitBtn) return;
+// Modal
+function openModal(drink) {
+  modalImg.src = drink.image; modalImg.alt = drink.nameEn;
+  modalNameAr.textContent = drink.nameAr;
+  modalNameEn.textContent = drink.nameEn;
+  modalPrice.textContent  = drink.price;
+  modalDesc.textContent   = drink.desc;
+  modalIngList.innerHTML  = drink.ingredients.map(i => `<li>${i}</li>`).join("");
+  modalOverlay.classList.remove("hidden","closing");
+  modalOverlay.classList.add("open");
+  document.body.style.overflow = "hidden";
+  orderBtn.onclick = () => { closeModal(); showToast(`✅ تمت إضافة ${drink.nameAr} للطلب!`); };
+}
+function closeModal() {
+  modalOverlay.classList.remove("open");
+  modalOverlay.classList.add("closing");
+  document.body.style.overflow = "";
+  setTimeout(() => { modalOverlay.classList.add("hidden"); modalOverlay.classList.remove("closing"); }, 320);
+}
+modalClose.addEventListener("click", closeModal);
+modalOverlay.addEventListener("click", e => { if (e.target === modalOverlay) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 
-    if (isLoading) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `
-            <span class="animate-spin">⏳</span>
-            جاري الإرسال...
-        `;
-    } else {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = `📱 إرسال عبر واتساب`;
-    }
+// Toast
+let toastTimer;
+function showToast(msg) {
+  clearTimeout(toastTimer);
+  toast.textContent = msg;
+  toast.classList.remove("hidden");
+  requestAnimationFrame(() => toast.classList.add("show"));
+  toastTimer = setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.classList.add("hidden"), 400);
+  }, 3000);
 }
 
-// ==================== Form Reset ====================
-function resetForm() {
-    const form = document.getElementById('surveyForm');
-    if (form) {
-        form.reset();
-        document.querySelectorAll('.form-error').forEach(el => el.remove());
-        document.querySelectorAll('.form-group input, .form-group select').forEach(field => {
-            field.style.borderColor = 'var(--border)';
-            field.style.boxShadow = '';
-        });
-    }
-}
-
-// ==================== Category Button Click Handler ====================
-document.addEventListener('DOMContentLoaded', function() {
-    displayCategoryImages('reception');
-
-    const categoryButtons = document.querySelectorAll('.category-btn');
-    categoryButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            categoryButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-
-            const category = this.getAttribute('data-category');
-            displayCategoryImages(category);
-        });
-    });
-
-    setupFieldValidation();
-});
-
-// ==================== Intersection Observer for Animations ====================
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
-        }
-    });
-}, observerOptions);
-
-// ==================== Smooth Scroll Navigation ====================
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-// ==================== Social Media Buttons ==================== 
-document.addEventListener('DOMContentLoaded', function() {
-    const whatsappBtn = document.querySelector('.wrapper .whatsapp');
-    if (whatsappBtn) {
-        whatsappBtn.addEventListener('click', function() {
-            showWhatsAppOptions();
-        });
-    }
-
-    const tiktokBtn = document.querySelector('.wrapper .tiktok');
-    if (tiktokBtn) {
-        tiktokBtn.addEventListener('click', function() {
-            window.open('https://www.tiktok.com/@yourusername', '_blank');
-        });
-    }
-
-    const instagramBtn = document.querySelector('.wrapper .instagram');
-    if (instagramBtn) {
-        instagramBtn.addEventListener('click', function() {
-            window.open('https://www.instagram.com/yourusername', '_blank');
-        });
-    }
-});
-
-// ==================== WhatsApp Numbers Selection ====================
-function showWhatsAppOptions() {
-    const modal = document.createElement('div');
-    modal.className = 'whatsapp-modal';
-    modal.innerHTML = `
-        <div class="whatsapp-modal-content">
-            <div class="modal-header">
-                <h3>اختر رقم التواصل</h3>
-                <span class="close-whatsapp-modal">&times;</span>
-            </div>
-            <div class="whatsapp-options">
-                <button class="whatsapp-option" onclick="openWhatsApp('201125933005')">
-                    <span class="whatsapp-icon">📱</span>
-                    <div class="option-info">
-                        <p class="option-title">المايسترو للتصميم</p>
-                        <p class="option-number">201125933005</p>
-                    </div>
-                </button>
-                <button class="whatsapp-option" onclick="openWhatsApp('201000000000')">
-                    <span class="whatsapp-icon">📱</span>
-                    <div class="option-info">
-                        <p class="option-title">فريق المبيعات</p>
-                        <p class="option-number">201000000000</p>
-                    </div>
-                </button>
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(modal);
-    
-    modal.querySelector('.close-whatsapp-modal').addEventListener('click', function() {
-        modal.remove();
-    });
-    
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            modal.remove();
-        }
-    });
-}
-
-function openWhatsApp(phoneNumber) {
-    const whatsappURL = `https://wa.me/${phoneNumber}`;
-    window.open(whatsappURL, '_blank');
-    document.querySelector('.whatsapp-modal').remove();
-}
-
-// ==================== SCROLL TO SURVEY BUTTON ==================== 
-window.addEventListener('scroll', function() {
-    const scrollToSurveyBtn = document.getElementById('scrollToSurveyBtn');
-    
-    if (!scrollToSurveyBtn) return;
-    
-    if (window.scrollY > 300) {
-        scrollToSurveyBtn.classList.add('show');
-    } else {
-        scrollToSurveyBtn.classList.remove('show');
-    }
-});
-
-// Click handler for scroll to survey button
-const scrollToSurveyBtn = document.getElementById('scrollToSurveyBtn');
-if (scrollToSurveyBtn) {
-    scrollToSurveyBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        const surveySection = document.getElementById('survey');
-        if (surveySection) {
-            surveySection.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-}
+renderCards("all");
