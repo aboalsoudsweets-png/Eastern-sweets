@@ -11,10 +11,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* DARK MODE (الوضع الليلي الجديد) */
 :root {
-  --bg: #0f0a0a;             /* أسود مائل للبني المحروق */
-  --bg2: #1a0f0f;            /* عنابي داكن جداً */
-  --card: #1f1414;           /* لون البطاقات */
-  --card-hover: #2d1b1b; 
+  --bg: #1a1212;             /* أسود مائل للبني المحروق */
+  --bg2: #241818;            /* عنابي داكن جداً */
+  --card: #2a1d1d;           /* لون البطاقات */
+  --card-hover: #382828; 
   --border: rgba(255,255,255,0.06); 
   --text: #f5f0e6;           /* عاجي فاتح للنصوص */
   --text-muted: #a68b8b;     /* أحمر باهت للنصوص الثانوية */
@@ -22,7 +22,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   --primary-dark: #5c0000; 
   --primary-glow: rgba(128,0,0,0.35); /* توهج أحمر */
   --overlay: rgba(0,0,0,0.85); 
-  --glass: rgba(15,10,10,0.75); 
+  --glass: rgba(26, 18, 18, 0.8); 
   --shadow: rgba(0,0,0,0.6);
   --radius: 1.25rem; --radius-sm: 0.75rem;
 }
@@ -47,11 +47,13 @@ html.light {
 /* HERO BACKGROUND (تعديل التدرج في الخلفية ليناسب الأحمر) */
 .hero-bg {
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 20% 50%, rgba(128,0,0,0.3) 0%, transparent 60%), 
-              radial-gradient(ellipse at 80% 30%, rgba(80,0,0,0.2) 0%, transparent 50%), 
-              linear-gradient(135deg, #0f0a0a 0%, #2d1b1b 40%, #0f0a0a 100%);
+  /* تم تفتيح درجات الأحمر والأسود في التدرج الشعاعي */
+  background: radial-gradient(ellipse at 20% 50%, rgba(160,0,0,0.3) 0%, transparent 60%), 
+              radial-gradient(ellipse at 80% 30%, rgba(120,20,20,0.2) 0%, transparent 50%), 
+              linear-gradient(135deg, #1a1212 0%, #3d2626 40%, #1a1212 100%);
   transform: scale(1.08); transition: transform 0.1s linear;
 }
+
 
 /* أيقونة القهوة والتحميل بلون المارون */
 .loading-cup, .steam-wrap, .nav-logo svg, .scroll-arrow {
