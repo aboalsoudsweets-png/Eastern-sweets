@@ -96,11 +96,30 @@ body { background: var(--bg); color: var(--text); }
 
 /* LOADING SCREEN */
 #loading-screen {
-  position: fixed; inset: 0; z-index: 1000;
-  background: var(--bg);
-  display: flex; align-items: center; justify-content: center;
+  position: fixed; 
+  inset: 0; 
+  z-index: 1000;
+  /* تطبيق الخلفية الطولية */
+  background-image: url("image_11.png"); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex; 
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
+
+/* إضافة طبقة تعتيم خفيفة خلف النص لزيادة الوضوح */
+#loading-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* تعتيم بنسبة 40% */
+  z-index: -1;
+}
+
 #loading-screen.fade-out { opacity: 0; transform: scale(1.05); pointer-events: none; }
 .loading-content { display: flex; flex-direction: column; align-items: center; animation: fadeSlideUp 0.8s ease both; }
 .steam-wrap { position: relative; width: 60px; height: 80px; margin-bottom: -10px; color: var(--primary); }
