@@ -172,29 +172,73 @@ document.querySelectorAll(".filter-btn").forEach(btn => {
 });
 
 // Modal
+// --- 🛒 نظام السلة (Cart System) ---
+let cart = [];
+const cartCountEl = document.getElementById("cart-count");
+
+// تحميل السلة المحفوظة عند فتح الصفحة (عشان لو عملت Refresh الحاجة ما تضيعش)
+window.addEventListener("DOMContentLoaded", () => {
+  const savedCart = localStorage.getItem("myCart");
+  if (savedCart) {
+    cart = JSON.parse(savedCart);
+    if (cartCountEl) cartCountEl.textContent = cart.length;
+  }
+});
+
+function addToCart(drink) {
+  cart.push(drink); // إضافة المشروب للمصفوفة
+  
+  // تحديث العداد في الـ Navbar
+  if (cartCountEl) {
+    cartCountEl.textContent = cart.length;
+    // أنيميشن نبض للرقم
+    cartCountEl.classList.add("bump");
+    setTimeout(() => cartCountEl.classList.remove("bump"), 300);
+  }
+
+  // حفظ السلة في ذاكرة المتصفح
+  localStorage.setItem("myCart", JSON.stringify(cart));
+  
+  showToast(`✅ تمت إضافة ${drink.nameAr} للسلة!`);
+}
+
+// --- 🖼️ المودال (Modal) ---
 function openModal(drink) {
-  modalImg.src = drink.image; modalImg.alt = drink.nameEn;
+  modalImg.src = drink.image; 
+  modalImg.alt = drink.nameEn;
   modalNameAr.textContent = drink.nameAr;
   modalNameEn.textContent = drink.nameEn;
   modalPrice.textContent  = drink.price;
   modalDesc.textContent   = drink.desc;
   modalIngList.innerHTML  = drink.ingredients.map(i => `<li>${i}</li>`).join("");
-  modalOverlay.classList.remove("hidden","closing");
+  
+  modalOverlay.classList.remove("hidden", "closing");
   modalOverlay.classList.add("open");
   document.body.style.overflow = "hidden";
-  orderBtn.onclick = () => { closeModal(); showToast(`✅ تمت إضافة ${drink.nameAr} للطلب!`); };
+
+  // أهم جزء: برمجة زرار "أضف للطلب"
+  orderBtn.onclick = () => {
+    addToCart(drink); // تنفيذ دالة الإضافة للسلة
+    closeModal();     // قفل المودال بعد الإضافة
+  };
 }
+
 function closeModal() {
   modalOverlay.classList.remove("open");
   modalOverlay.classList.add("closing");
   document.body.style.overflow = "";
-  setTimeout(() => { modalOverlay.classList.add("hidden"); modalOverlay.classList.remove("closing"); }, 320);
+  setTimeout(() => { 
+    modalOverlay.classList.add("hidden"); 
+    modalOverlay.classList.remove("closing"); 
+  }, 320);
 }
+
+// مستمعي أحداث المودال (إغلاق)
 modalClose.addEventListener("click", closeModal);
 modalOverlay.addEventListener("click", e => { if (e.target === modalOverlay) closeModal(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 
-// Toast
+// --- 🍞 التنبيه (Toast) ---
 let toastTimer;
 function showToast(msg) {
   clearTimeout(toastTimer);
@@ -207,4 +251,6 @@ function showToast(msg) {
   }, 3000);
 }
 
+// تشغيل عرض الكروت لأول مرة
 renderCards("all");
+
