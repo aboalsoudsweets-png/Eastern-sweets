@@ -302,10 +302,10 @@ if (checkoutBtn) {
         let msg = "مرحباً MR CAFE، أريد طلب الآتي:%0a%0a";
         let total = 0;
         cart.forEach((item, i) => {
-            msg += `${i + 1}. *${item.nameAr}* (${item.price} ر.س)%0a`;
+            msg += `${i + 1}. *${item.nameAr}* (${item.price} ج.م)%0a`;
             total += item.price;
         });
-        msg += `%0a💰 *الإجمالي: ${total} ر.س*`;
+        msg += `%0a💰 *الإجمالي: ${total} ج.م*`;
         
         // استبدل الرقم بالرقم الخاص بك
         window.open(`https://wa.me/201125933005?text=${msg}`, "_blank");
