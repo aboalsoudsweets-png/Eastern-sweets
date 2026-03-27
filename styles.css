@@ -41,16 +41,7 @@ html.light {
   --primary-glow: rgba(199,31,47,0.25);
 }
 
-body {
-  background: var(--bg);
-  background-image: var(--islamic-bg);
-  background-size: cover;
-  background-attachment: fixed;
-  background-repeat: repeat;
-  background-position: center;
-  color: var(--text);
-  position: relative;
-}
+body::before {}
 
 body::before {
   content: '';
