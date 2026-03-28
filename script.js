@@ -56,7 +56,7 @@ const drinks = [
 const state = {
   cart: JSON.parse(localStorage.getItem("cart")) || [],
   theme: localStorage.getItem("theme") || "dark",
-  currentFilter: "all",
+  currentFilter: "none",
   selectedDrink: null
 };
 
@@ -142,6 +142,13 @@ function filterDrinks(category) {
 
 // ========== RENDER DRINKS ==========
 function renderDrinks() {
+  // لو الفلتر 'none' (الحالة الابتدائية)، فضي الشبكة واخرج من الوظيفة
+  if (state.currentFilter === "none") {
+    DOM.drinksGrid.innerHTML = "";
+    return;
+  }
+
+  // لو ضغط على 'all' يعرض الكل، غير كده يفلتر حسب التصنيف
   const filtered = state.currentFilter === "all"
     ? drinks
     : drinks.filter(d => d.category === state.currentFilter);
