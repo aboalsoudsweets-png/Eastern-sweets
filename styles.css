@@ -183,7 +183,7 @@ body::before {
   justify-content: space-between;
   padding: 1.5rem 2rem;
   transition: all 0.4s ease;
-  background: linear-gradient(to bottom, rgba(10,10,10,0.8), transparent);
+  background: transparent;
 }
 
 #navbar::before {
@@ -199,7 +199,7 @@ body::before {
 }
 
 #navbar.scrolled {
-  background: linear-gradient(to bottom, rgba(10,10,10,0.95), rgba(10,10,10,0.8));
+  background: transparent;
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
   padding: 0.9rem 2rem;
@@ -290,10 +290,7 @@ body::before {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, 
-    rgba(10,10,10,0.3) 0%, 
-    rgba(10,10,10,0.6) 50%, 
-    rgba(10,10,10,0.8) 100%);
+  background: transparent;
   z-index: 1;
 }
 
