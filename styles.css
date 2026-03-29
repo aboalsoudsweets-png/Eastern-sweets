@@ -350,7 +350,7 @@ body::before {
 .main-logo {
     display: block;
     margin: 0 auto 20px auto; /* مارجن تلقائي يمين وشمال للتوسيط */
-    max-width: 250px; /* كبر أو صغر الحجم من هنا */
+    max-width: 350px; /* كبر أو صغر الحجم من هنا */
     height: auto;
 }
 
