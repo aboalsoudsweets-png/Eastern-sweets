@@ -138,7 +138,10 @@ function filterDrinks(category) {
   renderDrinks();
 }
 
-// ========== RENDER DRINKS (المعدلة) ==========
+
+
+
+// ========== RENDER DRINKS ==========
 function renderDrinks() {
   if (state.currentFilter === "none") {
     DOM.drinksGrid.innerHTML = "";
@@ -161,12 +164,12 @@ function renderDrinks() {
   });
 }
 
-// ========== CREATE CARD (المعدلة لإضافة زر الطلب مباشرة) ==========
+// ========== CREATE CARD (المعدلة لإظهار الشرح والزرار بره) ==========
 function createDrinkCard(drink) {
   const card = document.createElement("div");
   card.className = "drink-card";
   
-  // فحص إذا كان المنتج موجود في السلة لعرض الكمية
+  // فحص الكمية في السلة
   const cartItem = state.cart.find(item => item.id === drink.id);
   const qty = cartItem ? cartItem.quantity : 0;
 
@@ -176,42 +179,48 @@ function createDrinkCard(drink) {
       <div class="card-overlay"></div>
       ${qty > 0 ? `<div class="card-qty-badge">${qty}</div>` : ''}
     </div>
-    <div class="card-body">
-      <div class="card-row">
-        <div style="text-align: right;">
-          <div class="card-name-ar">${drink.nameAr}</div>
-          <div class="card-name-en">${drink.nameEn}</div>
-        </div>
-        <div class="card-price">
-          <strong>${drink.price}</strong>
-          <small>ج.م</small>
+    <div class="card-body" style="padding: 12px;">
+      <div class="card-row" style="margin-bottom: 8px;">
+        <div style="text-align: right; width: 100%;">
+          <div class="card-name-ar" style="font-weight: 700; font-size: 1.1rem; color: #fff;">${drink.nameAr}</div>
+          
+          <div class="card-desc-simple" style="color: #aaa; font-size: 0.85rem; margin-top: 4px; line-height: 1.3;">
+            ${drink.desc || ''}
+          </div>
         </div>
       </div>
-      
-      <button class="quick-add-btn" onclick="handleQuickAdd(event, '${drink.id}')">
-        ${qty > 0 ? '➕ إضافة' : '🛍 أضف للسلة'}
-      </button>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+        <div class="card-price" style="margin: 0;">
+          <strong style="color: #d4af37; font-size: 1.2rem;">${drink.price}</strong>
+          <small style="color: #d4af37;">ج.م</small>
+        </div>
+        
+        <button class="quick-add-btn" 
+                onclick="handleQuickAdd(event, '${drink.id}')" 
+                style="background: #d4af37; color: #000; border: none; padding: 6px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
+          ${qty > 0 ? '➕ زد' : '🛍 اضف للسلة'}
+        </button>
+      </div>
     </div>
   `;
   
-  // لغينا فتح المودال هنا عشان الطلب يبقى من برا بس
   return card;
 }
 
-// دالة جديدة للتعامل مع الإضافة السريعة وإعادة الرسم فوراً
+// دالة التعامل مع الإضافة من بره وتحديث الصفحة
 function handleQuickAdd(event, drinkId) {
-  event.stopPropagation(); // منع أي أحداث أخرى
+  event.stopPropagation(); 
   const drink = drinks.find(d => d.id === drinkId);
   if (drink) {
-    addToCart(drink);
-    renderDrinks(); // تحديث المنيو فوراً عشان الرقم يظهر على الكرت
+    addToCartSimple(drink);
+    renderDrinks(); // عشان نحدث الرقم (الكمية) اللي ظهرت على الكرت فوراً
   }
 }
 
-// تعديل بسيط في addToCart عشان ميقفلش مودال مش مفتوح أصلاً
-function addToCart(drink) {
+// دالة إضافة للسلة مختصرة (بدون غلق المودال)
+function addToCartSimple(drink) {
   const existingItem = state.cart.find(item => item.id === drink.id);
-  
   if (existingItem) {
     existingItem.quantity += 1;
   } else {
@@ -224,13 +233,10 @@ function addToCart(drink) {
       image: drink.image
     });
   }
-  
   saveCart();
   updateCartUI();
   showToast(`تم إضافة ${drink.nameAr} ✓`);
-  // closeModal(); <-- لغينا السطر ده عشان ميعملش error
 }
-
 // ========== MODAL MANAGEMENT ==========
 function openModal(drink) {
   state.selectedDrink = drink;
