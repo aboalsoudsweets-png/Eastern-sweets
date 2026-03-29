@@ -68,7 +68,7 @@ const DOM = {
   filterBtns: document.querySelectorAll(".filter-btn"),
   modalOverlay: document.getElementById("modal-overlay"),
   cartModalOverlay: document.getElementById("cart-modal-overlay"),
-  themeToggle: document.getElementById("theme-toggle"),
+  
   cartIconWrap: document.getElementById("cart-icon-wrap"),
   cartCount: document.getElementById("cart-count"),
   toast: document.getElementById("toast"),
@@ -89,26 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ========== THEME MANAGEMENT ==========
-function initTheme() {
-  const html = document.documentElement;
-  if (state.theme === "light") {
-    html.classList.add("light");
-  } else {
-    html.classList.remove("light");
-  }
-}
 
-function toggleTheme() {
-  const html = document.documentElement;
-  state.theme = state.theme === "dark" ? "light" : "dark";
-  localStorage.setItem("theme", state.theme);
-  
-  if (state.theme === "light") {
-    html.classList.add("light");
-  } else {
-    html.classList.remove("light");
-  }
-}
 
 // ========== LOADING SCREEN ==========
 function hideLoadingScreen() {
