@@ -444,7 +444,7 @@ body::before {
 
 .filter-btn {
   padding: 0.7rem 1.5rem;
-  border-radius: 999px;
+  border-radius: 0px;
   font-family: 'Cairo', sans-serif;
   font-weight: 600;
   font-size: 0.95rem;
