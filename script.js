@@ -138,7 +138,7 @@ function filterDrinks(category) {
   renderDrinks();
 }
 
-// ========== RENDER DRINKS ==========
+// ========== RENDER DRINKS (المعدلة) ==========
 function renderDrinks() {
   if (state.currentFilter === "none") {
     DOM.drinksGrid.innerHTML = "";
@@ -161,19 +161,24 @@ function renderDrinks() {
   });
 }
 
+// ========== CREATE CARD (المعدلة لإضافة زر الطلب مباشرة) ==========
 function createDrinkCard(drink) {
   const card = document.createElement("div");
   card.className = "drink-card";
+  
+  // فحص إذا كان المنتج موجود في السلة لعرض الكمية
+  const cartItem = state.cart.find(item => item.id === drink.id);
+  const qty = cartItem ? cartItem.quantity : 0;
+
   card.innerHTML = `
     <div class="card-img-wrap">
-      <img src="${drink.image}" alt="${drink.nameAr}" loading="lazy" />
+      <img src="${drink.image || 'logo.png'}" alt="${drink.nameAr}" loading="lazy" />
       <div class="card-overlay"></div>
-      <div class="card-glow"></div>
-      ${drink.category === "coffee" ? '<span class="card-badge">☕</span>' : '<span class="card-badge">🍯</span>'}
+      ${qty > 0 ? `<div class="card-qty-badge">${qty}</div>` : ''}
     </div>
     <div class="card-body">
       <div class="card-row">
-        <div>
+        <div style="text-align: right;">
           <div class="card-name-ar">${drink.nameAr}</div>
           <div class="card-name-en">${drink.nameEn}</div>
         </div>
@@ -182,12 +187,48 @@ function createDrinkCard(drink) {
           <small>ج.م</small>
         </div>
       </div>
-      <div class="card-cta">اضغط لتفاصيل أكثر →</div>
+      
+      <button class="quick-add-btn" onclick="handleQuickAdd(event, '${drink.id}')">
+        ${qty > 0 ? '➕ إضافة المزيد' : '🛍 أضف للطلب'}
+      </button>
     </div>
   `;
   
-  card.addEventListener("click", () => openModal(drink));
+  // لغينا فتح المودال هنا عشان الطلب يبقى من برا بس
   return card;
+}
+
+// دالة جديدة للتعامل مع الإضافة السريعة وإعادة الرسم فوراً
+function handleQuickAdd(event, drinkId) {
+  event.stopPropagation(); // منع أي أحداث أخرى
+  const drink = drinks.find(d => d.id === drinkId);
+  if (drink) {
+    addToCart(drink);
+    renderDrinks(); // تحديث المنيو فوراً عشان الرقم يظهر على الكرت
+  }
+}
+
+// تعديل بسيط في addToCart عشان ميقفلش مودال مش مفتوح أصلاً
+function addToCart(drink) {
+  const existingItem = state.cart.find(item => item.id === drink.id);
+  
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    state.cart.push({
+      id: drink.id,
+      nameAr: drink.nameAr,
+      nameEn: drink.nameEn,
+      price: drink.price,
+      quantity: 1,
+      image: drink.image
+    });
+  }
+  
+  saveCart();
+  updateCartUI();
+  showToast(`تم إضافة ${drink.nameAr} ✓`);
+  // closeModal(); <-- لغينا السطر ده عشان ميعملش error
 }
 
 // ========== MODAL MANAGEMENT ==========
