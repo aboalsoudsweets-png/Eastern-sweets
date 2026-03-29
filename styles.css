@@ -442,19 +442,43 @@ body::before {
   margin-bottom: 4rem;
 }
 
+/* تحويل الأزرار إلى مستطيل مع ضبط الحجم */
 .filter-btn {
-  padding: 0.7rem 1.5rem;
-  border-radius: 999px;
+  padding: 0.8rem 2rem;      /* مساحة داخلية متوازنة للمستطيل */
+  border-radius: 6px;        /* قيمة صغيرة تعطي شكل المستطيل (بدلاً من 999px) */
   font-family: 'Cairo', sans-serif;
   font-weight: 600;
-  font-size: 0.95rem;
-  border: 2px solid var(--border);
-  background: linear-gradient(135deg, rgba(15,15,15,0.8), rgba(26,26,26,0.8));
-  backdrop-filter: blur(10px);
+  font-size: 1.1rem;
+  border: 2px solid var(--gold); /* برواز ذهبي ليناسب شعار أبو السعود */
+  background: rgba(26, 26, 26, 0.9); /* خلفية داكنة متناسقة مع الموقع */
   color: var(--text);
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  min-width: 150px;          /* عرض موحد للأزرار */
+  margin: 5px;
+}
+
+/* تأثير عند الوقوف بالماوس */
+.filter-btn:hover {
+  background: var(--gold);
+  color: #000;               /* تغيير لون الخط للأسود عند الوقوف عليه */
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+
+/* حالة الزر النشط */
+.filter-btn.active {
+  background: var(--gold);
+  color: #000;
+  border-color: var(--gold);
+}
+
+/* تعديل خاص للموبايل لضمان التوسيط */
+@media (max-width: 480px) {
+  .filter-btn {
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    min-width: 130px;
+  }
 }
 
 .filter-btn::before {
@@ -467,23 +491,6 @@ body::before {
   z-index: -1;
 }
 
-.filter-btn:hover {
-  border-color: var(--primary);
-  color: #fff;
-  transform: translateY(-2px);
-}
-
-.filter-btn:hover::before {
-  transform: translateX(0);
-}
-
-.filter-btn.active {
-  background: linear-gradient(135deg, var(--primary), var(--gold));
-  color: #fff;
-  border-color: var(--primary);
-  box-shadow: 0 8px 24px var(--primary-glow);
-  transform: scale(1.05);
-}
 
 /* GRID */
 .drinks-grid {
