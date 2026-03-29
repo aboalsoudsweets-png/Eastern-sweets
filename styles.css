@@ -444,30 +444,53 @@ body::before {
   margin-bottom: 4rem;
 }
 
+
+
+
+
+
+
+
+/* تنسيق أزرار الاختيارات (الحالة العادية) */
 .filter-btn {
-  padding: 1rem 2.5rem;
-  border-radius: 4px; /* تحويل لـ مستطيل */
-  font-family: 'Cairo', sans-serif;
-  font-weight: 600;
-  font-size: 1.2rem;
-  min-width: 140px;
-  border: 2px solid var(--border);
-  background: linear-gradient(135deg, rgba(15,15,15,0.8), rgba(26,26,26,0.8));
-  backdrop-filter: blur(10px);
-  color: var(--text);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  margin: 5px;
+    background-color: #ffffff !important; /* خلفية بيضاء صافية */
+    color: #800000 !important;          /* نص باللون النبيتي */
+    border: 2px solid #800000 !important; /* إطار نبيتي لتحديد الزرار */
+    padding: 1rem 2.5rem;
+    border-radius: 50px;                 /* شكل بيضاوي أنيق */
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    min-width: 140px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* ظل خفيف لإبراز الزرار */
+    margin: 5px;
+    backdrop-filter: none;               /* إلغاء الشفافية القديمة */
 }
 
+/* تنسيق الزرار عند الاختيار (القسم النشط) */
+/* يُفضل هنا عكس الألوان ليعرف العميل القسم الذي اختاره */
 .filter-btn.active {
-  background: linear-gradient(135deg, var(--primary), var(--gold));
-  color: #fff;
-  border-color: var(--primary);
-  box-shadow: 0 8px 24px var(--primary-glow);
-  transform: scale(1.05);
+    background: #800000 !important;      /* خلفية نبيتي عند الاختيار */
+    color: #ffffff !important;           /* نص أبيض */
+    border-color: #8b0000 !important;
+    box-shadow: 0 8px 20px rgba(128, 0, 0, 0.3);
+    transform: scale(1.05);
 }
+
+/* تأثير عند تمرير الماوس فوق الزرار */
+.filter-btn:hover:not(.active) {
+    background-color: #fff5f5 !important; /* تغيير خفيف جداً في الخلفية */
+    border-color: #a00000 !important;
+    color: #a00000 !important;
+    transform: translateY(-2px);
+}
+
+
+
+
+
 
 .filter-btn:hover {
   border-color: var(--primary);
