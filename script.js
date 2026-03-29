@@ -189,7 +189,7 @@ function createDrinkCard(drink) {
       </div>
       
       <button class="quick-add-btn" onclick="handleQuickAdd(event, '${drink.id}')">
-        ${qty > 0 ? '➕ إضافة المزيد' : '🛍 أضف للطلب'}
+        ${qty > 0 ? '➕ إضافة للسلة' : '🛍 أضف للطلب'}
       </button>
     </div>
   `;
