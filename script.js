@@ -6,7 +6,7 @@ const drinks = [
     nameEn: "",
     price: 500,
     category: "konafa",
-    image: "",
+    image: "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800&q=80",
     desc: "نوع كنـافة ناعمة بتتعمل بالسمنة البلدي محشية جبنة عكاوي ونابلسية.",
     ingredients: []
   },
