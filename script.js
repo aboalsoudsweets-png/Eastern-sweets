@@ -55,7 +55,6 @@ const drinks = [
 // ========== STATE MANAGEMENT ==========
 const state = {
   cart: JSON.parse(localStorage.getItem("cart")) || [],
-  theme: localStorage.getItem("theme") || "dark",
   currentFilter: "none",
   selectedDrink: null
 };
@@ -68,7 +67,6 @@ const DOM = {
   filterBtns: document.querySelectorAll(".filter-btn"),
   modalOverlay: document.getElementById("modal-overlay"),
   cartModalOverlay: document.getElementById("cart-modal-overlay"),
-  themeToggle: document.getElementById("theme-toggle"),
   cartIconWrap: document.getElementById("cart-icon-wrap"),
   cartCount: document.getElementById("cart-count"),
   toast: document.getElementById("toast"),
@@ -82,34 +80,11 @@ const DOM = {
 
 // ========== INITIALIZATION ==========
 document.addEventListener("DOMContentLoaded", () => {
-  initTheme();
   renderDrinks();
   setupEventListeners();
   hideLoadingScreen();
+  updateCartUI();
 });
-
-// ========== THEME MANAGEMENT ==========
-function initTheme() {
-  const html = document.documentElement;
-  if (state.theme === "light") {
-    html.classList.add("light");
-  } else {
-    html.classList.remove("light");
-  }
-}
-
-function toggleTheme() {
-  const html = document.documentElement;
-  state.theme = state.theme === "dark" ? "light" : "dark";
-  localStorage.setItem("theme", state.theme);
-  
-  if (state.theme === "light") {
-    html.classList.add("light");
-  } else {
-    html.classList.remove("light");
-  }
-}
-
 
 // ========== LOADING SCREEN ==========
 function hideLoadingScreen() {
@@ -143,13 +118,11 @@ function filterDrinks(category) {
 
 // ========== RENDER DRINKS ==========
 function renderDrinks() {
-  // لو الفلتر 'none' (الحالة الابتدائية)، فضي الشبكة واخرج من الوظيفة
   if (state.currentFilter === "none") {
     DOM.drinksGrid.innerHTML = "";
     return;
   }
 
-  // لو ضغط على 'all' يعرض الكل، غير كده يفلتر حسب التصنيف
   const filtered = state.currentFilter === "all"
     ? drinks
     : drinks.filter(d => d.category === state.currentFilter);
@@ -364,7 +337,7 @@ function showToast(message) {
 
 // ========== EVENT LISTENERS ==========
 function setupEventListeners() {
-  DOM.themeToggle.addEventListener("click", toggleTheme);
+  // تم حذف مستمع حدث التبديل هنا
   
   DOM.filterBtns.forEach(btn => {
     btn.addEventListener("click", () => filterDrinks(btn.dataset.filter));
@@ -396,6 +369,3 @@ function setupEventListeners() {
     }
   });
 }
-
-// ========== INITIALIZATION ==========
-updateCartUI();
