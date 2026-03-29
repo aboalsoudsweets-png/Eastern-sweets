@@ -1250,3 +1250,35 @@ footer p {
     z-index: 10;
     border: 2px solid white;
 }
+
+
+
+
+/* تنسيق جسم الكرت عشان يستوعب الشرح والسعر */
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* بيوزع العناصر ويخلي السعر تحت */
+    height: 180px; /* جرب الرقم ده عشان تدي مساحة للنص */
+    padding: 15px;
+}
+
+/* تنسيق السعر عشان يظهر لوحده بوضوح */
+.card-price {
+    background: rgba(212, 175, 55, 0.1); /* خلفية ذهبية خفيفة */
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+/* تعديل الصف اللي فيه السعر والزرار */
+.card-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: auto; /* بيزق السعر والزرار لآخر الكرت تحت */
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
