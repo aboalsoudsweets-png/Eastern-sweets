@@ -15,7 +15,7 @@ const drinks = [
     nameAr: "كابتشينو",
     nameEn: "Cappuccino",
     price: 25,
-    category: "coffee",
+    category: "baqlawa",
     image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800&q=80",
     desc: "قهوة إيطالية تقليدية مع حليب رقيق ورغوة كريمية",
     ingredients: ["إسبريسو", "حليب", "رغوة حليب", "قرفة"]
@@ -25,7 +25,7 @@ const drinks = [
     nameAr: "لاتيه",
     nameEn: "Latte",
     price: 22,
-    category: "coffee",
+    category: "baqlawa",
     image: "https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=800&q=80",
     desc: "مزيج حنين من القهوة والحليب الدافئ",
     ingredients: ["إسبريسو", "حليب ساخن", "رغوة حليب"]
@@ -35,7 +35,7 @@ const drinks = [
     nameAr: "كنافة",
     nameEn: "Kunafa",
     price: 35,
-    category: "sweets",
+    category: "konafa",
     image: "https://images.unsplash.com/photo-1585328957529-585aa541d24d?w=800&q=80",
     desc: "حلويات شرقية تقليدية بالفستق والعسل الذهبي",
     ingredients: ["دقيق", "زبدة", "فستق", "عسل", "شيرة"]
@@ -45,7 +45,7 @@ const drinks = [
     nameAr: "بقلاوة",
     nameEn: "Baklava",
     price: 40,
-    category: "sweets",
+    category: "konafa",
     image: "https://images.unsplash.com/photo-1599599810694-b5ac4dd3e79b?w=800&q=80",
     desc: "طبقات من العجين الرقيق مع فستق وعسل فاخر",
     ingredients: ["عجينة فيلو", "فستق مجروش", "عسل", "ماء الورد"]
