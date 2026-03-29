@@ -41,23 +41,17 @@ html.light {
   --primary-glow: rgba(199,31,47,0.25);
 }
 
+
 body {
-  font-family: 'Inter', sans-serif; 
-  transition: background 0.4s, color 0.4s; 
-  overflow-x: hidden;
   background: var(--bg);
   background-image: var(--islamic-bg);
-  
-  /* التعديلات المطلوبة لمنع التكرار */
-  background-repeat: no-repeat;  /* يمنع التكرار نهائياً */
-  background-size: cover;       /* يخلي الصورة تملأ الشاشة بالكامل */
-  background-position: center;  /* يخلي الصورة في النص */
-  background-attachment: fixed; /* يخلي الخلفية ثابتة والكلام بيتحرك فوقها */
-  
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: repeat;
+  background-position: center;
   color: var(--text);
   position: relative;
 }
-
 
 body::before {
   ;
@@ -1104,22 +1098,10 @@ footer p {
 
 
 
-body {
-  background-image: var(--islamic-bg) !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-  background-position: center top !important; /* خليناها top عشان تبدأ من فوق */
-  background-attachment: fixed !important;
-}
 
-/* لو لسه بتظهر مرتين، جرب تضيف ده كمان */
-#hero, #menu {
-  background: none !important; /* بيلغي أي خلفية مكررة في الأقسام الداخلية */
-}
 
 
 
 /* تنسيق قسم المنيو بالكامل لضمان التوسيط */
 
 /* تنسيق اللوجو */
-
