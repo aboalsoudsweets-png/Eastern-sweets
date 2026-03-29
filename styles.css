@@ -1157,3 +1157,54 @@ footer p {
   gap: 20px;       /* المسافة الأفقية بين الأيقونتين */
   margin-top: 25px; /* المسافة الرأسية اللي محتاجها فوق الأيقونات */
 }
+
+
+
+
+
+/* --- تنسيق الفوتر الجديد --- */
+.main-footer {
+  padding: 3rem 1.5rem;
+  background: linear-gradient(to top, var(--bg), transparent);
+  text-align: center;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  margin-top: 4rem;
+  direction: rtl; /* لضمان ترتيب الرموز العربية */
+}
+
+.establishment-date {
+  font-family: 'Cairo', sans-serif;
+  color: #ffffff; /* لون النص أبيض كما في الصورة */
+  font-size: 1.2rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 25px;       /* المسافة بين الفيس والانستا */
+  margin-top: 30px; /* المسافة اللي طلبتها بين النص والأيقونات */
+}
+
+.social-links a {
+  font-size: 2rem;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  text-decoration: none;
+}
+
+/* لون أيقونة إنستجرام */
+.fa-instagram {
+  color: #E1306C;
+}
+
+/* لون أيقونة فيسبوك */
+.fa-facebook-f {
+  color: #1877F2;
+}
+
+.social-links a:hover {
+  transform: translateY(-5px); /* حركة خفيفة عند الوقوف بالماوس */
+  opacity: 0.8;
+}
