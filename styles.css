@@ -434,43 +434,41 @@ body::before {
 }
 
 /* FILTERS */
-/* تحويل الأزرار إلى مستطيل مع ضبط الحجم */
+/* تنسيق الأزرار لتصبح مستطيلة وموحدة */
 .filter-btn {
-  padding: 0.8rem 2rem;      /* مساحة داخلية متوازنة للمستطيل */
-  border-radius: 6px;        /* قيمة صغيرة تعطي شكل المستطيل (بدلاً من 999px) */
-  font-family: 'Cairo', sans-serif;
-  font-weight: 600;
-  font-size: 1.1rem;
-  border: 2px solid var(--gold); /* برواز ذهبي ليناسب شعار أبو السعود */
-  background: rgba(26, 26, 26, 0.9); /* خلفية داكنة متناسقة مع الموقع */
-  color: var(--text);
+  /* تحويل الشكل لمستطيل */
+  border-radius: 8px !important; 
+  
+  /* توحيد الألوان (خلفية شفافة ببرواز ذهبي) */
+  background: rgba(0, 0, 0, 0.6) !important;
+  color: #d4af37 !important; /* لون الخط ذهبي */
+  border: 2px solid #d4af37 !important;
+  
+  /* ضبط الحجم والمساحات */
+  padding: 12px 20px !important;
+  font-family: 'Cairo', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 1.1rem !important;
+  min-width: 140px;
+  cursor: pointer;
   transition: all 0.3s ease;
-  min-width: 150px;          /* عرض موحد للأزرار */
-  margin: 5px;
 }
 
-/* تأثير عند الوقوف بالماوس */
-.filter-btn:hover {
-  background: var(--gold);
-  color: #000;               /* تغيير لون الخط للأسود عند الوقوف عليه */
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+/* تأثير عند الوقوف بالماوس أو لما يكون الزر نشط */
+.filter-btn:hover, .filter-btn.active {
+  background: #d4af37 !important;
+  color: #000 !important; /* الخط يقلب أسود عشان يظهر على الذهبي */
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
 }
 
-/* حالة الزر النشط */
-.filter-btn.active {
-  background: var(--gold);
-  color: #000;
-  border-color: var(--gold);
-}
-
-/* تعديل خاص للموبايل لضمان التوسيط */
-@media (max-width: 480px) {
-  .filter-btn {
-    padding: 0.7rem 1.5rem;
-    font-size: 1rem;
-    min-width: 130px;
-  }
+/* حاوية الأزرار لضمان التوسيط */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  max-width: 90%;
+  margin: 20px auto;
 }
 
 /* GRID */
