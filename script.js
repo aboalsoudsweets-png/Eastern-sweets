@@ -51,7 +51,7 @@ const drinks = [
     ingredients: []
   },
   {
-    id: "1",
+    id: "10",
     nameAr: "اسبريسو",
     nameEn: "Espresso",
     price: 15,
@@ -61,7 +61,7 @@ const drinks = [
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
   {
-    id: "",
+    id: "9",
     nameAr: "كابتشينو",
     nameEn: "Cappuccino",
     price: 25,
