@@ -6,7 +6,7 @@ const drinks = [
     nameEn: "",
     price: 500,
     category: "konafa",
-    image: "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800&q=80",
+    image: "4.png",
     desc: "نوع كنـافة ناعمة بتتعمل بالسمنة البلدي محشية جبنة عكاوي ونابلسية.",
     ingredients: []
   },
@@ -16,7 +16,7 @@ const drinks = [
     nameEn: "",
     price: 500 ,
     category: "konafa",
-    image: "",
+    image: "5.png",
     desc: "حلوى عربية مصنوعة من السمن والسكر والزبدة الفلاحي ومحشوة بالجوز",
     ingredients: []
   },
@@ -26,7 +26,7 @@ const drinks = [
     nameEn: "",
     price: 90,
     category: "konafa",
-    image: "",
+    image: "1.png",
     desc: "نوع كنـافة ناعمة بتتعمل بالسمنة البلدي محشية جبنة عكاوي ونابلسية.",
     ingredients: []
   },
@@ -36,8 +36,18 @@ const drinks = [
     nameEn: "",
     price: 90 ,
     category: "konafa",
-    image: "",
+    image: "2.png",
     desc: "حلوى عربية مصنوعة من السمن والسكر والزبدة الفلاحي ومحشوة بالجوز",
+    ingredients: []
+  },
+  {
+    id: "1000000",
+    nameAr: "اصابع كنافة",
+    nameEn: "",
+    price: 90 ,
+    category: "konafa",
+    image: "1000000.png",
+    desc: "معمول من شعيرات الكنافة، بتتلف على شكل أصابع ومحشية قشطة",
     ingredients: []
   },
   {
@@ -46,28 +56,279 @@ const drinks = [
     nameEn: "",
     price: 125,
     category: "konafa",
-    image: "",
+    image: "3.png",
     desc: "",
     ingredients: []
   },
   {
-    id: "10",
-    nameAr: "اسبريسو",
-    nameEn: "Espresso",
-    price: 15,
+    id: "6",
+    nameAr: "بورما فستق حلبي",
+    nameEn: "",
+    price: 1800,
     category: "baqlawa",
-    image: "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800&q=80",
-    desc: "قهوة مركزة عالية الجودة بنكهة غنية وعميقة",
+    image: "6.png",
+    desc: "حلوى عربية مصنوعة من عجينة الكــنافة و محشوة بالفستق نخب أول",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+   {
+    id: "7",
+    nameAr: "عش البلبل فستق حلبي",
+    nameEn: "",
+    price: 1650,
+    category: "baqlawa",
+    image: "7.png",
+    desc: "حلوى من الكــنافة على شكل عش دائري محشوة فستق نخب أول",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "8",
+    nameAr: "بلوريا حمراء",
+    nameEn: "",
+    price: 1800,
+    category: "baqlawa",
+    image: "8.png",
+    desc: "حلوي شامية من خيوط الكنافة محشوة فستق نخب أول",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
   {
     id: "9",
-    nameAr: "كابتشينو",
-    nameEn: "Cappuccino",
-    price: 25,
+    nameAr: "بلوريا بيضاء",
+    nameEn: "",
+    price: 1800,
+    category: "baqlawa",
+    image: "9.png",
+    desc: "حلوي شامية من خيوط الكنافة محشوة فستق نخب أول",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "10",
+    nameAr: "صره فستق حلبي",
+    nameEn: "",
+    price: 1950,
+    category: "baqlawa",
+    image: "10.png",
+    desc: "رقائق الجلاش محشوة بين الرقائق بالفستق نخب أول,ومحشوة بعدها بالفستق الصحيح أيضاً",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "11",
+    nameAr: "اسيا فستق حلبي",
+    nameEn: "",
+    price: 1950,
+    category: "baqlawa",
+    image: "11.png",
+    desc: "حلوى شرقية مصنوعة من طبقات الجلاش، تُحشى بالفستق نخب أول",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "12",
+    nameAr: "كل وشكر فستق حلبي",
+    nameEn: "",
+    price: 1550,
+    category: "baqlawa",
+    image: "12.png",
+    desc: "حلوي عربية فاخرة تصنع من عجينة الجلاش المحشوة فستق نخب أول",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "13",
+    nameAr: "دولمة فستق حلبي",
+    nameEn: "",
+    price: 1850,
+    category: "baqlawa",
+    image: "13.png",
+    desc: "حلوي ناعمة من رقائق الجلاش محشية علي طولها بالفستق نخب أول",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  
+  {
+    id: "15",
+    nameAr: "اساور الست فستق حلبي",
+    nameEn: "",
+    price: 750,
+    category: "baqlawa",
+    image: "15.png",
+    desc: "حلوى من عجينة الجلاش ملفوفة بشكل دائري وعليها رشة الفستق",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "16",
+    nameAr: "سنيورة فستق حلبي",
+    nameEn: "",
+    price: 1500,
+    category: "baqlawa",
+    image: "16.png",
+    desc: "حلوى من عجينة الجلاش ملفوفة وداخلها فستق",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "17",
+    nameAr: "بستاشيو ابو السعود",
+    nameEn: "",
+    price: 2200,
+    category: "baqlawa",
+    image: "17.png",
+    desc: "مزيج من الشيكولاتة البلجيكية وعجينة الكنافة محشوة بالفستق البستاشيو نخب أول",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "18",
+    nameAr: "بقلاوة فستق",
+    nameEn: "",
+    price: 1250,
+    category: "baqlawa",
+    image: "18.png",
+    desc: "حلوي شرقية عبارة عن طبقات الجلاش محشوة بالفستق الحلو نخب أول",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "19",
+    nameAr: "بقلاوة فستق",
+    nameEn: "",
+    price: 1250,
+    category: "baqlawa",
+    image: "19.png",
+    desc: "حلوي شرقية عبارة عن طبقات الجلاش محشوة بالفستق الحلو نخب أول",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "20",
+    nameAr: "بورما لوز",
+    nameEn: "",
+    price: 900,
+    category: "baqlawa",
+    image: "20.png",
+    desc: "حلوى عربية مصنوعة من عجينة الكــنافة و محشوة باللوز الحلو",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "21",
+    nameAr: "عش البلبل لوز",
+    nameEn: "",
+    price: 680,
+    category: "baqlawa",
+    image: "21.png",
+    desc: "حلوى من الكنافة على شكل دائري محشوة باللوز الحلو",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "23",
+    nameAr: "بقلاوة اسطنبولي لوز",
+    nameEn: "",
+    price: 750,
+    category: "baqlawa",
+    image: "23.png",
+    desc: "حلوى تركية عبارة عن طبقات جلاش محشية لوز الحلو",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "24",
+    nameAr: "بقلاوة لوز",
+    nameEn: "",
+    price: 600,
+    category: "baqlawa",
+    image: "24.png",
+    desc: "حلوي شرقية عبارة عن طبقات من الجلاش محشوة باللوز الحلو",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+   {
+    id: "25",
+    nameAr: "صرة لوز",
+    nameEn: "",
+    price: 600,
+    category: "baqlawa",
+    image: "25.png",
+    desc: "رقائق الجلاش محشوة بين الرقائق باللوز الحلو، محشوة بعدها باللوز المبشور أيضاً",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "26",
+    nameAr: "كل وشكر لوز",
+    nameEn: "",
+    price: 700,
+    category: "baqlawa",
+    image: "26.png",
+    desc: "حلوي عربية فاخرة تصنع من عجينة الجلاش المحشوة لوز حلو",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "27",
+    nameAr: "اصابع لوز",
+    nameEn: "",
+    price: 750,
+    category: "baqlawa",
+    image: "27.png",
+    desc: "حلوى من رقائق الجلاش محشية باللوز الحلو، ملفوفة على شكل أصابع ومحمّرة",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "28",
+    nameAr: "معمول عجوة",
+    nameEn: "",
+    price: 700,
+    category: "baqlawa",
+    image: "28.png",
+    desc: "حلوى تقليدية معمول من عجينة السميد ومحشو بمعجون التمر العجوة، يُشكّل بالقوالب",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "29",
+    nameAr: "بقلاوة اسطنبولي جوز",
+    nameEn: "",
+    price: 850,
+    category: "baqlawa",
+    image: "29.png",
+    desc: "حلوى تركية عبارة  عن طبقات جلاش رفيعة ومحشية بالجوز الحلو",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "30",
+    nameAr: "عش البلبل كاجو",
+    nameEn: "",
+    price: 800,
+    category: "baqlawa",
+    image: "30.png",
+    desc: "تصنع من شعر الكنافة على شكل عش دائري محشوة بحبات الكاجو",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "31",
+    nameAr: "اصابع كاجو",
+    nameEn: "",
+    price: 800,
+    category: "baqlawa",
+    image: "31.png",
+    desc: "حلوى من رقائق الجلاش ملفوفة على شكل أصابع ومحشية بالكاجو",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+   {
+    id: "32",
+    nameAr: "وربات لوز",
+    nameEn: "",
+    price: 900,
+    category: "baqlawa",
+    image: "32.png",
+    desc: "رقائق الجلاش المحشية بعجينة اللوز الحلو",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "33",
+    nameAr: "نمورة بالزبد البلدي",
+    nameEn: "",
+    price: 360,
     category: "namora",
-    image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800&q=80",
-    desc: "قهوة إيطالية تقليدية مع حليب رقيق ورغوة كريمية",
+    image: "33.png",
+    desc: "حلوى عربية مصنوعة من السمن والسكر والزبدة الفلاحي",
+    ingredients: ["إسبريسو", "حليب", "رغوة حليب", "قرفة"]
+  },
+  {
+    id: "34",
+    nameAr: "نمورة محشية لوز",
+    nameEn: "",
+    price: 420,
+    category: "namora",
+    image: "34.png",
+    desc: "حلوى عربية مصنوعة من السمن والسكر والزبدة الفلاحي ومحشوة باللوز الحلو",
     ingredients: ["إسبريسو", "حليب", "رغوة حليب", "قرفة"]
   },
   
