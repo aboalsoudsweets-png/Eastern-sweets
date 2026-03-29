@@ -65,7 +65,7 @@ const drinks = [
     nameAr: "كابتشينو",
     nameEn: "Cappuccino",
     price: 25,
-    category: "baqlawa",
+    category: "namora",
     image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800&q=80",
     desc: "قهوة إيطالية تقليدية مع حليب رقيق ورغوة كريمية",
     ingredients: ["إسبريسو", "حليب", "رغوة حليب", "قرفة"]
