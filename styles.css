@@ -1108,3 +1108,27 @@ footer p {
 .main-logo:hover {
   transform: scale(1.05); /* تكبير بسيط عند مرور الماوس */
 }
+
+
+
+
+
+
+
+/* التعديل لتكبير أزرار الأقسام */
+.filter-btn {
+  padding: 1rem 2.5rem;    /* زيادة المساحة الداخلية (الطول والعرض) */
+  font-size: 1.2rem;       /* تكبير حجم الخط */
+  min-width: 140px;        /* عرض أدنى موحد للأزرار لتبدو متناسقة */
+  border-radius: 50px;     /* جعل الزر بيضاوي أكثر */
+  margin: 5px;             /* مسافة بسيطة بين كل زر والآخر */
+}
+
+/* تعديل خاص للموبايل لضمان عدم خروجها عن الشاشة */
+@media (max-width: 480px) {
+  .filter-btn {
+    padding: 0.8rem 1.8rem;
+    font-size: 1rem;
+    min-width: 110px;
+  }
+}
