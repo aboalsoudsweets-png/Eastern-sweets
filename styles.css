@@ -347,7 +347,27 @@ body::before {
 }
 
 /* MENU SECTION */
+.main-logo {
+    display: block;
+    margin: 0 auto 20px auto; /* مارجن تلقائي يمين وشمال للتوسيط */
+    max-width: 250px; /* كبر أو صغر الحجم من هنا */
+    height: auto;
+}
+
+/* تنسيق حاوية الأزرار للتأكد إنها في النص */
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+}
 #menu {
+  display: flex;
+    flex-direction: column;
+    align-items: center; /* توسيط كل العناصر (لوجو وأزرار) في النص */
+    justify-content: center;
+    text-align: center;
+
   position: relative;
   z-index: 20;
   background: transparent;
@@ -1082,26 +1102,6 @@ footer p {
 
 
 /* تنسيق قسم المنيو بالكامل لضمان التوسيط */
-#menu {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* توسيط كل العناصر (لوجو وأزرار) في النص */
-    justify-content: center;
-    text-align: center;
-}
 
 /* تنسيق اللوجو */
-.main-logo {
-    display: block;
-    margin: 0 auto 20px auto; /* مارجن تلقائي يمين وشمال للتوسيط */
-    max-width: 180px; /* كبر أو صغر الحجم من هنا */
-    height: auto;
-}
 
-/* تنسيق حاوية الأزرار للتأكد إنها في النص */
-.filters {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    width: 100%;
-}
