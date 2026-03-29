@@ -1,17 +1,67 @@
 // ========== DATA ==========
 const drinks = [
   {
-    id: "c1",
+    id: "4",
+    nameAr: "1K.g كنافة نابلسية",
+    nameEn: "",
+    price: 500,
+    category: "konafa",
+    image: "",
+    desc: "نوع كنـافة ناعمة بتتعمل بالسمنة البلدي محشية جبنة عكاوي ونابلسية.",
+    ingredients: []
+  },
+   {
+    id: "5",
+    nameAr: "1K.g كنافة عربية",
+    nameEn: "",
+    price: 500 ,
+    category: "konafa",
+    image: "",
+    desc: "حلوى عربية مصنوعة من السمن والسكر والزبدة الفلاحي ومحشوة بالجوز",
+    ingredients: []
+  },
+   {
+    id: "1",
+    nameAr: "صحن نابلسية",
+    nameEn: "",
+    price: 90,
+    category: "konafa",
+    image: "",
+    desc: "نوع كنـافة ناعمة بتتعمل بالسمنة البلدي محشية جبنة عكاوي ونابلسية.",
+    ingredients: []
+  },
+  {
+    id: "2",
+    nameAr: "صحن عربية",
+    nameEn: "",
+    price: 90 ,
+    category: "konafa",
+    image: "",
+    desc: "حلوى عربية مصنوعة من السمن والسكر والزبدة الفلاحي ومحشوة بالجوز",
+    ingredients: []
+  },
+  {
+    id: "3",
+    nameAr: "صحن نابلسية و عربية",
+    nameEn: "",
+    price: 125,
+    category: "konafa",
+    image: "",
+    desc: "",
+    ingredients: []
+  },
+  {
+    id: "1",
     nameAr: "اسبريسو",
     nameEn: "Espresso",
     price: 15,
-    category: "coffee",
+    category: "baqlawa",
     image: "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800&q=80",
     desc: "قهوة مركزة عالية الجودة بنكهة غنية وعميقة",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
   {
-    id: "c2",
+    id: "",
     nameAr: "كابتشينو",
     nameEn: "Cappuccino",
     price: 25,
@@ -20,36 +70,8 @@ const drinks = [
     desc: "قهوة إيطالية تقليدية مع حليب رقيق ورغوة كريمية",
     ingredients: ["إسبريسو", "حليب", "رغوة حليب", "قرفة"]
   },
-  {
-    id: "c3",
-    nameAr: "لاتيه",
-    nameEn: "Latte",
-    price: 22,
-    category: "baqlawa",
-    image: "https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=800&q=80",
-    desc: "مزيج حنين من القهوة والحليب الدافئ",
-    ingredients: ["إسبريسو", "حليب ساخن", "رغوة حليب"]
-  },
-  {
-    id: "s1",
-    nameAr: "كنافة",
-    nameEn: "Kunafa",
-    price: 35,
-    category: "konafa",
-    image: "https://images.unsplash.com/photo-1585328957529-585aa541d24d?w=800&q=80",
-    desc: "حلويات شرقية تقليدية بالفستق والعسل الذهبي",
-    ingredients: ["دقيق", "زبدة", "فستق", "عسل", "شيرة"]
-  },
-  {
-    id: "s2",
-    nameAr: "بقلاوة",
-    nameEn: "Baklava",
-    price: 40,
-    category: "konafa",
-    image: "https://images.unsplash.com/photo-1599599810694-b5ac4dd3e79b?w=800&q=80",
-    desc: "طبقات من العجين الرقيق مع فستق وعسل فاخر",
-    ingredients: ["عجينة فيلو", "فستق مجروش", "عسل", "ماء الورد"]
-  }
+  
+  
 ];
 
 // ========== STATE MANAGEMENT ==========
