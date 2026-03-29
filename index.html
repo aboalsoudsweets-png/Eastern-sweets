@@ -27,17 +27,29 @@
     </div>
   </nav>
 
-  <section id="menu" style="padding-top: 100px;">
+ <section id="menu" style="padding-top: 100px;">
   <div class="menu-header" style="text-align: center; margin-bottom: 30px;">
     <img src="logo.png" alt="Logo" class="main-logo" style="max-width: 150px; height: auto; border-radius: 50%;">
+    
+    <h2 dir="rtl" style="color: #d4af37; font-family: 'Cairo', sans-serif; margin-top: 15px; font-weight: 700; font-size: 1.4rem; margin-bottom: 8px;">
+      أهلاً بكم في حلويات أبو السعود العربية
+    </h2>
+    
+    <p dir="rtl" style="color: #f8f9fa; background: rgba(212, 175, 55, 0.1); display: inline-block; padding: 5px 20px; border-radius: 20px; font-family: 'Cairo', sans-serif; font-weight: 400; font-size: 0.95rem; border: 1px solid rgba(212, 175, 55, 0.3);">
+      اختر من قائمة الأصناف
+    </p>
   </div>
 
-  <div class="filters" dir="rtl" style="text-align:center; margin-bottom: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-  <button class="filter-btn" data-filter="konafa">كنافة</button>
-  <button class="filter-btn" data-filter="baqlawa">بقلاوة</button>
+  <div class="filters" dir="rtl" style="text-align:center; margin-bottom: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
+    <button class="filter-btn" data-filter="konafa">كنافة</button>
+    <button class="filter-btn" data-filter="baqlawa">بقلاوة</button>
+    
+    <div style="flex-basis: 100%; height: 0;"></div> 
+    <button class="filter-btn" data-filter="coffee">حاجه مش فاكرها</button>
+  </div>
   
-  <div style="flex-basis: 100%; height: 0;"></div> <button class="filter-btn" data-filter="coffee" style="margin-top: 5px;">حاجه مش فاكرها</button>
-</div>
+  <div class="drinks-grid" id="drinks-grid"></div>
+</section>
   
   <div class="drinks-grid" id="drinks-grid"></div>
 </section>
