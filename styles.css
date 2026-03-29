@@ -1150,4 +1150,10 @@ footer p {
 
 
 
-
+/* الكود اللي محتاج تعدله في الـ CSS */
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;       /* المسافة الأفقية بين الأيقونتين */
+  margin-top: 25px; /* المسافة الرأسية اللي محتاجها فوق الأيقونات */
+}
