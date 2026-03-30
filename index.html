@@ -66,19 +66,34 @@
     </div>
   </div>
 
-  <div id="cart-modal-overlay" class="modal-overlay hidden">
-    <div class="modal-box" style="max-width: 400px; flex-direction: column;">
+ <div id="cart-modal-overlay" class="modal-overlay hidden">
+    <div class="modal-box" style="max-width: 450px; flex-direction: column; max-height: 90vh; overflow-y: auto;">
       <div class="modal-body" dir="rtl">
         <button class="modal-close" id="cart-modal-close">✕</button>
-        <h2>🛒 سلتك</h2>
-        <div id="cart-items-list" style="margin: 20px 0;"></div>
-        <hr>
-        <p>الإجمالي: <span id="cart-total-price">0</span> ج.م</p>
-        <button class="order-btn" id="checkout-whatsapp" style="background:#25D366;">إرسال واتساب</button>
+        <h2 style="text-align: center; color: #d4af37; margin-bottom: 20px;">🛒 سلتك</h2>
+        
+        <div id="cart-items-list" style="margin: 10px 0; border-bottom: 1px solid #444; padding-bottom: 10px;"></div>
+        
+        <div style="margin: 15px 0; font-weight: bold; font-size: 1.2rem;">
+            الإجمالي: <span id="cart-total-price">0</span> ج.م
+        </div>
+
+        <hr style="border: 0.5px solid #333; margin: 20px 0;">
+
+        <div class="customer-info" style="display: flex; flex-direction: column; gap: 12px;">
+            <h3 style="font-size: 1rem; color: #d4af37;">تفاصيل التوصيل:</h3>
+            <input type="text" id="cust-name" placeholder="الاسم الكامل" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #1a1a1a; color: white;">
+            <input type="tel" id="cust-phone" placeholder="رقم الهاتف" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #1a1a1a; color: white;">
+            <input type="text" id="cust-address" placeholder="العنوان بالتفصيل" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #1a1a1a; color: white;">
+            <textarea id="cust-notes" placeholder="ملاحظات إضافية (اختياري)" rows="2" style="padding: 10px; border-radius: 5px; border: 1px solid #444; background: #1a1a1a; color: white; font-family: 'Cairo';"></textarea>
+        </div>
+
+        <button id="checkout-whatsapp" style="background:#25D366; width: 100%; margin-top: 20px; padding: 12px; border-radius: 8px; color: white; border: none; font-weight: bold; cursor: pointer; font-size: 1.1rem;">
+            إرسال الطلب عبر واتساب
+        </button>
       </div>
     </div>
-  </div>
-
+</div>
   <div id="toast" class="toast hidden"></div>
   <script src="script.js"></script>
 
