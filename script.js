@@ -624,27 +624,42 @@ function closeCartModal() {
   }, 300);
 }
 
+// استبدل الدالة القديمة بهذا الكود بالكامل
 function renderCartItems() {
   if (state.cart.length === 0) {
-    DOM.cartItemsList.innerHTML = "<p style='text-align:center; color: var(--text-muted); padding: 2rem;'>لا توجد عناصر في السلة</p>";
+    DOM.cartItemsList.innerHTML = "<p style='text-align:center; color: #aaa; padding: 2rem;'>لا توجد عناصر في السلة</p>";
     return;
   }
   
-  DOM.cartItemsList.innerHTML = state.cart.map(item => `
-    <div class="cart-item">
-      <div class="cart-item-info">
-        <div class="cart-item-name">${item.nameAr}</div>
-        <div class="cart-item-name-en">${item.nameEn}</div>
+  // 1. الجزء الخاص بعرض المنتجات المضافة للسلة
+  let itemsHtml = state.cart.map(item => `
+    <div class="cart-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; direction: rtl;">
+      <div class="cart-item-info" style="flex: 1; text-align: right;">
+        <div class="cart-item-name" style="font-weight: bold; color: white;">${item.nameAr}</div>
+        <div style="color: #d4af37; font-size: 0.9rem;">${item.price * item.quantity} ج.م</div>
       </div>
-      <div class="cart-qty-control">
-        <button class="qty-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity - 1})">−</button>
-        <div class="qty-display">${item.quantity}</div>
-        <button class="qty-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity + 1})">+</button>
+      <div class="cart-qty-control" style="display: flex; align-items: center; gap: 10px; margin: 0 15px;">
+        <button class="qty-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity - 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">−</button>
+        <div class="qty-display" style="color: white;">${item.quantity}</div>
+        <button class="qty-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity + 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">+</button>
       </div>
-      <div class="cart-item-price">${item.price * item.quantity} ج.م</div>
-      <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">✕</button>
+      <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" style="background:transparent; border:none; color:#ff4444; cursor:pointer; font-size: 1.2rem;">✕</button>
     </div>
   `).join("");
+
+  // 2. الجزء الخاص بحقول البيانات (الاسم، الهاتف، العنوان، الملاحظات)
+  const formHtml = `
+    <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px; direction: rtl; text-align: right;" id="customer-form">
+      <h3 style="color: #d4af37; font-size: 1rem; border-right: 3px solid #d4af37; padding-right: 8px; margin-bottom: 5px;">بيانات التوصيل:</h3>
+      <input type="text" id="cust-name" placeholder="الاسم بالكامل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">
+      <input type="tel" id="cust-phone" placeholder="رقم الموبايل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">
+      <input type="text" id="cust-address" placeholder="العنوان بالتفصيل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">
+      <textarea id="cust-notes" placeholder="ملاحظات (اختياري)" rows="2" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box; resize: none;"></textarea>
+    </div>
+  `;
+
+  // دمج المنتجات مع النموذج وعرضهم في السلة
+  DOM.cartItemsList.innerHTML = itemsHtml + formHtml;
 }
 
 // ========== WHATSAPP CHECKOUT ==========
@@ -653,18 +668,50 @@ function sendToWhatsapp() {
     showToast("السلة فارغة");
     return;
   }
+
+  // جلب قيم الحقول
+  const name = document.getElementById('cust-name').value.trim();
+  const phone = document.getElementById('cust-phone').value.trim();
+  const address = document.getElementById('cust-address').value.trim();
+  const notes = document.getElementById('cust-notes').value.trim();
+
+  // التحقق من البيانات الأساسية
+  if (!name || !phone || !address) {
+    showToast("⚠️ يرجى إكمال بيانات التوصيل");
+    document.getElementById('customer-form').scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
   
+  // بناء نص المنتجات
   const cartSummary = state.cart.map(item => 
-    `📍 ${item.nameAr} (${item.nameEn})\n  الكمية: ${item.quantity} × ${item.price} = ${item.price * item.quantity} ج.م`
-  ).join("\n\n");
+    `• ${item.nameAr} [الكمية: ${item.quantity}]`
+  ).join("\n");
   
   const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   
-  const message = `🍴 *طلب جديد من ABU ALSOUDE* 🍴\n\n${cartSummary}\n\n${'='.repeat(40)}\n💰 *الإجمالي: ${totalPrice} ج.م*`;
+  // بناء الرسالة النهائية
+  const message = `
+*طلب جديد من حلويات أبو السعود* 🍰
+
+*البيانات الشخصية:*
+👤 الاسم: ${name}
+📞 الهاتف: ${phone}
+📍 العنوان: ${address}
+${notes ? `📝 ملاحظات: ${notes}` : ''}
+
+*الطلبات:*
+${cartSummary}
+
+*ــــــــــــــــــــــــــــــــــــــــــــــــــ*
+💰 *الإجمالي: ${totalPrice} ج.م*
+*ــــــــــــــــــــــــــــــــــــــــــــــــــ*
+  `.trim();
   
+  // رقم الواتساب الخاص بك
   const whatsappURL = `https://wa.me/201125933005?text=${encodeURIComponent(message)}`;
   window.open(whatsappURL, "_blank");
   
+  // تفريغ السلة بعد نجاح العملية (اختياري)
   state.cart = [];
   saveCart();
   updateCartUI();
