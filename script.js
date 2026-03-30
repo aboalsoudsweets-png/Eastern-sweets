@@ -51,6 +51,26 @@ const drinks = [
     ingredients: []
   },
   {
+    id: "10000",
+    nameAr: "كنافة لوز",
+    nameEn: "",
+    price: 1400 ,
+    category: "konafa",
+    image: "10000.png",
+    desc: "معمول من شعيرات الكنافة، بتتلف على شكل أصابع ومحشية قشطة",
+    ingredients: []
+  },
+   {
+    id: "10080",
+    nameAr: "كنافة لوز",
+    nameEn: "",
+    price: 1400 ,
+    category: "konafa",
+    image: "10080.png",
+    desc: "معمول من شعيرات الكنافة، بتتلف على شكل أصابع ومحشية قشطة",
+    ingredients: []
+  },
+  {
     id: "3",
     nameAr: "صحن نابلسية و عربية",
     nameEn: "",
@@ -259,6 +279,16 @@ const drinks = [
     price: 700,
     category: "baqlawa",
     image: "28.png",
+    desc: "حلوى تقليدية معمول من عجينة السميد ومحشو بمعجون التمر العجوة، يُشكّل بالقوالب",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "280",
+    nameAr: "معمول جوز",
+    nameEn: "",
+    price: 900,
+    category: "baqlawa",
+    image: "280.png",
     desc: "حلوى تقليدية معمول من عجينة السميد ومحشو بمعجون التمر العجوة، يُشكّل بالقوالب",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
