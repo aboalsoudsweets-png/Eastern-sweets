@@ -53,11 +53,11 @@ const drinks = [
   {
     id: "2",
     nameAr: "صحن اسطنبولية",
-    nameEn: "",
+    nameEn: " نوع خشنة ناعمة بتتعمل بالسمنة البلدي محشية جبنة عكاوي ونابلسية",
     price: 90 ,
     category: "konafa",
     image: "2000.jpg",
-    desc: "حلوى عربية مصنوعة من السمن والسكر والزبدة الفلاحي ومحشوة بالجوز",
+    desc: "",
     ingredients: []
   },
   {
@@ -68,6 +68,16 @@ const drinks = [
     category: "konafa",
     image: "2.png",
     desc: "حلوى عربية مصنوعة من السمن والسكر والزبدة الفلاحي ومحشوة بالجوز",
+    ingredients: []
+  },
+  {
+    id: "3",
+    nameAr: "صحن اسطنبولية و عربية",
+    nameEn: "",
+    price: 135,
+    category: "konafa",
+    image: "3.png",
+    desc: "",
     ingredients: []
   },
   {
@@ -84,32 +94,23 @@ const drinks = [
     id: "10000",
     nameAr: "كنافة لوز",
     nameEn: "",
-    price: 1400 ,
+    price: 950 ,
     category: "baqlawa",
     image: "10000.png",
-    desc: " ",
+    desc: "حلوى شرقية من خيوط الكنافة المحمّصة ومحشية لوز ",
     ingredients: []
   },
    {
     id: "10080",
     nameAr: "كنافة لوز",
     nameEn: "",
-    price: 1400 ,
+    price: 950 ,
     category: "konafa",
     image: "10080.png",
     desc: "معمول من شعيرات الكنافة، بتتلف على شكل أصابع ومحشية قشطة",
     ingredients: []
   },
-  {
-    id: "3",
-    nameAr: "صحن اسطنبولية و عربية",
-    nameEn: "",
-    price: 135,
-    category: "konafa",
-    image: "3.png",
-    desc: "",
-    ingredients: []
-  },
+  
   {
     id: "6",
     nameAr: "بورما فستق حلبي",
@@ -172,7 +173,7 @@ const drinks = [
   },
   {
     id: "12",
-    nameAr: "كل وشكر فستق حلبي",
+    nameAr: "كل واشكر فستق حلبي",
     nameEn: "",
     price: 1550,
     category: "baqlawa",
@@ -284,7 +285,7 @@ const drinks = [
   },
   {
     id: "26",
-    nameAr: "كل وشكر لوز",
+    nameAr: "كل واشكر لوز",
     nameEn: "",
     price: 700,
     category: "baqlawa",
@@ -462,7 +463,7 @@ window.addEventListener("scroll", () => {
 // ========== FILTER FUNCTIONALITY ==========
 // 1. تعريف الأقسام الفرعية للبقلاوة (الـ 3 خانات)
 const baqlawaTypes = [
-  { id: 'fustuk', name: 'بقلاوة فستق', keys: ['فستق', 'بستاشيو', 'بلوريا', 'صره', 'اسيا', 'كل وشكر فستق', 'دولمة', 'اساور', 'سنيورة'] },
+  { id: 'fustuk', name: 'بقلاوة فستق', keys: ['فستق', 'بستاشيو', 'بلوريا', 'صره', 'اسيا', 'كل واشكر فستق', 'دولمة', 'اساور', 'سنيورة'] },
   { id: 'loz', name: 'بقلاوة لوز', keys: ['لوز'] },
   { id: 'mix', name: 'أصناف متنوعة', keys: ['كاجو', 'جوز', 'عجوة', 'نمورة'] }
 ];
