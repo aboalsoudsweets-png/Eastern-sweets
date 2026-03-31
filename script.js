@@ -82,9 +82,9 @@ const drinks = [
   },
   {
     id: "1000000",
-    nameAr: "بورمة قشطة",
+    nameAr: " بورمة قشطة ",
     nameEn: "",
-    price: 90 ,
+    price: 500 ,
     category: "konafa",
     image: "1000000.png",
     desc: "معمول من شعيرات الكنافة، بتتلف على شكل أصابع ومحشية قشطة",
