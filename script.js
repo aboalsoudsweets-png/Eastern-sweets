@@ -24,7 +24,7 @@ const drinks = [
     id: "400",
     nameAr: " 1K.g  نابلسية و عربية نصف و نصف",
     nameEn: "",
-    price: 125,
+    price: 500,
     category: "konafa",
     image: "3.png",
     desc: "",
@@ -55,7 +55,7 @@ const drinks = [
     nameAr: "بورمة قشطة",
     nameEn: "",
     price: 90 ,
-    category: "konafa",
+    category: "baqlawa",
     image: "1000000.png",
     desc: "معمول من شعيرات الكنافة، بتتلف على شكل أصابع ومحشية قشطة",
     ingredients: []
@@ -65,7 +65,7 @@ const drinks = [
     nameAr: "كنافة لوز",
     nameEn: "",
     price: 1400 ,
-    category: "konafa",
+    category: "baqlawa",
     image: "10000.png",
     desc: "معمول من شعيرات الكنافة، بتتلف على شكل أصابع ومحشية قشطة",
     ingredients: []
