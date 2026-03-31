@@ -22,9 +22,19 @@ const drinks = [
   },
   {
     id: "400",
-    nameAr: " 1K.g  نابلسية و عربية نصف و نصف",
+    nameAr: " 1K.g  اسطنبولية و عربية نصف و نصف",
     nameEn: "",
-    price: 500,
+    price: 540,
+    category: "konafa",
+    image: "3.png",
+    desc: "",
+    ingredients: []
+  },
+  {
+    id: "400",
+    nameAr: " 1K.g  اسطنبولية و نابلسية نصف و نصف",
+    nameEn: "",
+    price: 540,
     category: "konafa",
     image: "3.png",
     desc: "",
@@ -55,7 +65,7 @@ const drinks = [
     nameAr: "بورمة قشطة",
     nameEn: "",
     price: 90 ,
-    category: "baqlawa",
+    category: "konafa",
     image: "1000000.png",
     desc: "معمول من شعيرات الكنافة، بتتلف على شكل أصابع ومحشية قشطة",
     ingredients: []
@@ -82,9 +92,9 @@ const drinks = [
   },
   {
     id: "3",
-    nameAr: "صحن نابلسية و عربية",
+    nameAr: "صحن اسطنبولية و عربية",
     nameEn: "",
-    price: 125,
+    price: 135,
     category: "konafa",
     image: "3.png",
     desc: "",
@@ -340,6 +350,26 @@ const drinks = [
     category: "baqlawa",
     image: "32.png",
     desc: "رقائق الجلاش المحشية بعجينة اللوز الحلو",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "28",
+    nameAr: "معمول عجوة",
+    nameEn: "",
+    price: 700,
+    category: "baqlawa",
+    image: "28.png",
+    desc: "حلوى تقليدية معمول من عجينة السميد ومحشو بمعجون التمر العجوة، يُشكّل بالقوالب",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "280",
+    nameAr: "معمول جوز",
+    nameEn: "",
+    price: 900,
+    category: "baqlawa",
+    image: "280.png",
+    desc: "حلوى تقليدية معمول من عجينة السميد ومحشو بمعجون التمر العجوة، يُشكّل بالقوالب",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
   {
