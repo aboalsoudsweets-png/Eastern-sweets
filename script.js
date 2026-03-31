@@ -55,7 +55,7 @@ const drinks = [
     nameEn: "",
     price: 135,
     category: "konafa",
-    image: "504.jpg",
+    image: "504.JPG",
     desc: "",
     ingredients: []
   },
@@ -75,7 +75,7 @@ const drinks = [
     nameEn: " نوع خشنة ناعمة بتتعمل بالسمنة البلدي محشية جبنة عكاوي ونابلسية",
     price: 90 ,
     category: "konafa",
-    image: "2000.jpg",
+    image: "2000.JPG",
     desc: "",
     ingredients: []
   },
@@ -115,7 +115,7 @@ const drinks = [
     nameEn: "",
     price: 135,
     category: "konafa",
-    image: "504.jpg",
+    image: "504.JPG",
     desc: "",
     ingredients: []
   },
@@ -408,7 +408,7 @@ const drinks = [
     nameEn: "",
     price: 900,
     category: "baqlawa",
-    image: "501.jpg",
+    image: "501.JPG",
     desc: "رقائق الجلاش المحشية بعجينة اللوز الحلو",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
@@ -438,7 +438,7 @@ const drinks = [
     nameEn: "",
     price: 1950,
     category: "baqlawa",
-    image: "505.jpg",
+    image: "505.JPG",
     desc: "حلوى تقليدية معمول من عجينة السميد ومحشو بمعجون التمر العجوة، يُشكّل بالقوالب",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
@@ -448,7 +448,7 @@ const drinks = [
     nameEn: "",
     price: 950,
     category: "baqlawa",
-    image: "505.jpg",
+    image: "505.JPG",
     desc: "حلوى تقليدية معمول من عجينة السميد ومحشو بمعجون التمر العجوة، يُشكّل بالقوالب",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
