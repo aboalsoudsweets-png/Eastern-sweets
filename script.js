@@ -67,7 +67,7 @@ const drinks = [
     price: 1400 ,
     category: "baqlawa",
     image: "10000.png",
-    desc: "معمول من شعيرات الكنافة، بتتلف على شكل أصابع ومحشية قشطة",
+    desc: " ",
     ingredients: []
   },
    {
