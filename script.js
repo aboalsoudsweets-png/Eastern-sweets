@@ -6,7 +6,7 @@ const drinks = [
     nameEn: "",
     price: 500,
     category: "konafa",
-    image: "4.png",
+    image: "1.png",
     desc: "نوع كنـافة ناعمة بتتعمل بالسمنة البلدي محشية جبنة عكاوي ونابلسية.",
     ingredients: []
   },
@@ -16,7 +16,7 @@ const drinks = [
     nameEn: "",
     price: 500 ,
     category: "konafa",
-    image: "5.png",
+    image: "2.png",
     desc: "حلوى عربية مصنوعة من السمن والسكر والزبدة الفلاحي ومحشوة بالجوز",
     ingredients: []
   },
