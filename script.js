@@ -20,6 +20,16 @@ const drinks = [
     desc: "حلوى عربية مصنوعة من السمن والسكر والزبدة الفلاحي ومحشوة بالجوز",
     ingredients: []
   },
+  {
+    id: "400",
+    nameAr: " 1K.g  نابلسية و عربية نصف و نصف",
+    nameEn: "",
+    price: 125,
+    category: "konafa",
+    image: "3.png",
+    desc: "",
+    ingredients: []
+  },
    {
     id: "1",
     nameAr: "صحن نابلسية",
