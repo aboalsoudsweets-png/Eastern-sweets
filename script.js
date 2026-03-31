@@ -25,7 +25,7 @@ const drinks = [
     nameEn: "",
     price: 580 ,
     category: "konafa",
-    image: "2000.png",
+    image: "2000.jpg",
     desc: "نوع كنـافة خشنة بتتعمل بالسمنة البلدي محشية جبنة عكاوي ونابلسية",
     ingredients: []
   },
@@ -45,7 +45,7 @@ const drinks = [
     nameEn: "",
     price: 540,
     category: "konafa",
-    image: "3.png",
+    image: "503.JPG",
     desc: "",
     ingredients: []
   },
@@ -75,7 +75,7 @@ const drinks = [
     nameEn: " نوع خشنة ناعمة بتتعمل بالسمنة البلدي محشية جبنة عكاوي ونابلسية",
     price: 90 ,
     category: "konafa",
-    image: "2000.JPG",
+    image: "2000.jpg",
     desc: "",
     ingredients: []
   },
@@ -135,7 +135,7 @@ const drinks = [
     nameEn: "",
     price: 400 ,
     category: "konafa",
-    image: "500.jpg",
+    image: "500.JPG",
     desc: "رقائق الجلاش محشوة بالقشطة مع اللبن والزبدة",
     ingredients: []
   },
@@ -386,12 +386,12 @@ const drinks = [
   },
      {
     id: "501",
-    nameAr: "وربات لوز",
+    nameAr: "وربات قشطة" ,
     nameEn: "",
     price: 900,
-    category: "baqlawa",
+    category: "konafa",
     image: "501.JPG",
-    desc: "رقائق الجلاش المحشية بعجينة اللوز الحلو",
+    desc: "رقائق جلاش محشية قشطة",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
   {
