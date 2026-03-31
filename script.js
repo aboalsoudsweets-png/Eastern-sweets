@@ -20,6 +20,15 @@ const drinks = [
     desc: "حلوى عربية مصنوعة من السمن والسكر والزبدة الفلاحي ومحشوة بالجوز",
     ingredients: []
   },
+  { id: "9000",
+    nameAr: "1K.g كنافة اسطنبولية",
+    nameEn: "",
+    price: 580 ,
+    category: "konafa",
+    image: "2000.png",
+    desc: "نوع كنـافة خشنة بتتعمل بالسمنة البلدي محشية جبنة عكاوي ونابلسية",
+    ingredients: []
+  },
   {
     id: "400",
     nameAr: " 1K.g  اسطنبولية و عربية نصف و نصف",
@@ -37,6 +46,16 @@ const drinks = [
     price: 540,
     category: "konafa",
     image: "3.png",
+    desc: "",
+    ingredients: []
+  },
+  {
+    id: "504",
+    nameAr: "1k.g صحن نابلسية و عربية نصف و نصف ",
+    nameEn: "",
+    price: 135,
+    category: "konafa",
+    image: "504.jpg",
     desc: "",
     ingredients: []
   },
@@ -81,12 +100,42 @@ const drinks = [
     ingredients: []
   },
   {
+    id: "503",
+    nameAr: "صحن اسطنبولية و نابلسية",
+    nameEn: "",
+    price: 135,
+    category: "konafa",
+    image: "3.png",
+    desc: "",
+    ingredients: []
+  },
+  {
+    id: "504",
+    nameAr: "صحن نابلسية و عربية",
+    nameEn: "",
+    price: 135,
+    category: "konafa",
+    image: "504.jpg",
+    desc: "",
+    ingredients: []
+  },
+  {
     id: "1000000",
     nameAr: " بورمة قشطة ",
     nameEn: "",
     price: 500 ,
     category: "konafa",
     image: "1000000.png",
+    desc: "معمول من شعيرات الكنافة، بتتلف على شكل أصابع ومحشية قشطة",
+    ingredients: []
+  },
+  {
+    id: "500",
+    nameAr: " كلاچ ",
+    nameEn: "",
+    price: 400 ,
+    category: "konafa",
+    image: "500.jpg",
     desc: "معمول من شعيرات الكنافة، بتتلف على شكل أصابع ومحشية قشطة",
     ingredients: []
   },
@@ -353,6 +402,16 @@ const drinks = [
     desc: "رقائق الجلاش المحشية بعجينة اللوز الحلو",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
+     {
+    id: "501",
+    nameAr: "وربات لوز",
+    nameEn: "",
+    price: 900,
+    category: "baqlawa",
+    image: "501.jpg",
+    desc: "رقائق الجلاش المحشية بعجينة اللوز الحلو",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
   {
     id: "28",
     nameAr: "معمول عجوة",
@@ -370,6 +429,26 @@ const drinks = [
     price: 900,
     category: "baqlawa",
     image: "280.png",
+    desc: "حلوى تقليدية معمول من عجينة السميد ومحشو بمعجون التمر العجوة، يُشكّل بالقوالب",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "505",
+    nameAr: "لوكم فسدق حلبي",
+    nameEn: "",
+    price: 1950,
+    category: "baqlawa",
+    image: "505.jpg",
+    desc: "حلوى تقليدية معمول من عجينة السميد ومحشو بمعجون التمر العجوة، يُشكّل بالقوالب",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+  {
+    id: "505",
+    nameAr: "لوكم بندق ",
+    nameEn: "",
+    price: 950,
+    category: "baqlawa",
+    image: "505.jpg",
     desc: "حلوى تقليدية معمول من عجينة السميد ومحشو بمعجون التمر العجوة، يُشكّل بالقوالب",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
@@ -455,7 +534,7 @@ window.addEventListener("scroll", () => {
 const baqlawaTypes = [
   { id: 'fustuk', name: 'بقلاوة فستق', keys: ['فستق', 'بستاشيو', 'بلوريا', 'صره', 'اسيا', 'كل واشكر فستق', 'دولمة', 'اساور', 'سنيورة'] },
   { id: 'loz', name: 'بقلاوة لوز', keys: ['لوز'] },
-  { id: 'mix', name: 'أصناف متنوعة', keys: ['كاجو', 'جوز', 'عجوة', 'نمورة'] }
+  { id: 'mix', name: 'أصناف متنوعة', keys: ['كاجو', 'جوز', 'عجوة', 'نمورة','لوكم بندق'] }
 ];
 
 // 2. تحديث الدالة الأساسية
