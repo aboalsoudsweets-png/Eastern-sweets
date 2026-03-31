@@ -73,7 +73,7 @@ const drinks = [
     id: "2",
     nameAr: "صحن اسطنبولية",
     nameEn: " نوع خشنة ناعمة بتتعمل بالسمنة البلدي محشية جبنة عكاوي ونابلسية",
-    price: 90 ,
+    price: 100 ,
     category: "konafa",
     image: "2000.jpg",
     desc: "",
@@ -95,7 +95,7 @@ const drinks = [
     nameEn: "",
     price: 135,
     category: "konafa",
-    image: "503.JPG",
+    image: "3.png",
     desc: "",
     ingredients: []
   },
