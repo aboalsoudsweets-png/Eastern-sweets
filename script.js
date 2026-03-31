@@ -42,7 +42,7 @@ const drinks = [
   },
   {
     id: "1000000",
-    nameAr: "اصابع كنافة",
+    nameAr: "بورمة قشطة",
     nameEn: "",
     price: 90 ,
     category: "konafa",
