@@ -52,6 +52,16 @@ const drinks = [
   },
   {
     id: "2",
+    nameAr: "صحن اسطنبولية",
+    nameEn: "",
+    price: 90 ,
+    category: "konafa",
+    image: "2000.jpg",
+    desc: "حلوى عربية مصنوعة من السمن والسكر والزبدة الفلاحي ومحشوة بالجوز",
+    ingredients: []
+  },
+  {
+    id: "2",
     nameAr: "صحن عربية",
     nameEn: "",
     price: 90 ,
