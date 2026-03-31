@@ -388,7 +388,7 @@ const drinks = [
     id: "501",
     nameAr: "وربات قشطة" ,
     nameEn: "",
-    price: 900,
+    price: 500,
     category: "konafa",
     image: "501.JPG",
     desc: "رقائق جلاش محشية قشطة",
