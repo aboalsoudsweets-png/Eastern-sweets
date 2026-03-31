@@ -100,16 +100,6 @@ const drinks = [
     desc: "حلوى شرقية من خيوط الكنافة المحمّصة ومحشية لوز ",
     ingredients: []
   },
-   {
-    id: "10080",
-    nameAr: "كنافة لوز",
-    nameEn: "",
-    price: 950 ,
-    category: "konafa",
-    image: "10080.png",
-    desc: "معمول من شعيرات الكنافة، بتتلف على شكل أصابع ومحشية قشطة",
-    ingredients: []
-  },
   
   {
     id: "6",
