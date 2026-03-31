@@ -450,15 +450,74 @@ window.addEventListener("scroll", () => {
 });
 
 // ========== FILTER FUNCTIONALITY ==========
+// 1. تعريف الأقسام الفرعية للبقلاوة (الـ 3 خانات)
+const baqlawaTypes = [
+  { id: 'fustuk', name: 'بقلاوة فستق', keys: ['فستق', 'بستاشيو', 'بلوريا', 'صره', 'اسيا', 'كل وشكر', 'دولمة', 'اساور', 'سنيورة'] },
+  { id: 'loz', name: 'بقلاوة لوز', keys: ['لوز'] },
+  { id: 'mix', name: 'أصناف متنوعة', keys: ['كاجو', 'جوز', 'عجوة', 'نمورة'] }
+];
+
+// 2. تحديث الدالة الأساسية
 function filterDrinks(category) {
   state.currentFilter = category;
+  const subContainer = document.getElementById("sub-filters-container");
   
   DOM.filterBtns.forEach(btn => {
     btn.classList.toggle("active", btn.dataset.filter === category);
   });
-  
-  renderDrinks();
+
+  // إذا اختار بقلاوة، نظهر الخانات الفرعية
+  if (category === "baqlawa") {
+    subContainer.style.display = "flex";
+    subContainer.innerHTML = baqlawaTypes.map(type => `
+      <button class="filter-btn sub-btn" onclick="filterSubCategory('${type.id}')" style="background: #1a1a1a; border: 1px solid #d4af37; font-size: 0.9rem; padding: 5px 15px;">
+        ${type.name}
+      </button>
+    `).join("");
+    
+    // اختياري: فضي الجريد لحد ما يختار نوع بقلاوة معين
+    DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center;">اختر نوع البقلاوة المفضل لديك</p>`;
+  } else {
+    // لو اختار كنافة أو نمورة، اخفي الخانات واعرض الصور علطول
+    subContainer.style.display = "none";
+    renderDrinks();
+  }
 }
+
+// 3. دالة الفلترة الفرعية للبقلاوة
+function filterSubCategory(subId) {
+  const typeData = baqlawaTypes.find(t => t.id === subId);
+  
+  // فلترة الصور بناءً على الكلمات المفتاحية في الاسم
+  const filtered = drinks.filter(d => 
+    d.category === "baqlawa" && 
+    typeData.keys.some(key => d.nameAr.includes(key))
+  );
+
+  // تحديث شكل الزراير الفرعية (active state)
+  document.querySelectorAll('.sub-btn').forEach(btn => {
+    btn.style.background = (btn.innerText === typeData.name) ? "#d4af37" : "#1a1a1a";
+    btn.style.color = (btn.innerText === typeData.name) ? "#000" : "#fff";
+  });
+
+  displayFilteredDrinks(filtered);
+}
+
+// 4. دالة عرض النتائج المفلترة
+function displayFilteredDrinks(data) {
+  DOM.drinksGrid.innerHTML = "";
+  if (data.length === 0) {
+    DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center;">قريباً...</p>`;
+    return;
+  }
+  
+  data.forEach((drink, index) => {
+    const card = createDrinkCard(drink);
+    DOM.drinksGrid.appendChild(card);
+    setTimeout(() => card.classList.add("visible"), index * 50);
+  });
+}
+
 
 
 
