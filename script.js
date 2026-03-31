@@ -95,7 +95,7 @@ const drinks = [
     nameEn: "",
     price: 135,
     category: "konafa",
-    image: "3.png",
+    image: "503.png",
     desc: "",
     ingredients: []
   },
