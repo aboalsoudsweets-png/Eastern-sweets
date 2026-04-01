@@ -430,7 +430,7 @@ const drinks = [
     nameEn: "",
     price: 950,
     category: "baqlawa",
-    image: "505.JPG",
+    image: "506.JPG",
     desc: " لوكم طري محشو بكثافة بقطع البندق المحمص",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
