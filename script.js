@@ -255,7 +255,7 @@ const drinks = [
     id: "900",
     nameAr: "لوكم فستق حلبي",
     nameEn: "",
-    price: 1500,
+    price: 1950,
     category: "baqlawa",
     image: "505.JPG",
     desc: "لوكم طري محشو بكثافة بقطع الفسدق المحمص",
