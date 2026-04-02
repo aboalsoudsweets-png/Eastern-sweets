@@ -890,7 +890,7 @@ ${cartSummary}
   `.trim();
   
   // رقم الواتساب الخاص بك
-  const whatsappURL = `https://wa.me/201125933005?text=${encodeURIComponent(message)}`;
+  const whatsappURL = `https://wa.me/201070100122?text=${encodeURIComponent(message)}`;
   window.open(whatsappURL, "_blank");
   
   // تفريغ السلة بعد نجاح العملية (اختياري)
