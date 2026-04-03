@@ -62,13 +62,24 @@
         <button class="modal-close" id="modal-close">✕</button>
         <h2 id="modal-name-ar"></h2>
         <p id="modal-name-en"></p>
+        
+        <div style="margin: 15px 0;">
+            <label for="weight-select" style="color: #fff; display: block; margin-bottom: 5px;">اختر الوزن:</label>
+            <select id="weight-select" style="width: 100%; padding: 8px; border-radius: 5px; background: #222; color: #fff; border: 1px solid #d4af37;">
+                <option value="1">1 كيلو</option>
+                <option value="0.5">نصف كيلو</option>
+                <option value="0.25">ربع كيلو</option>
+            </select>
+        </div>
+
         <div class="modal-price-box"><span id="modal-price"></span> ج.م</div>
         <p id="modal-desc"></p>
         <ul id="modal-ing-list"></ul>
         <button class="order-btn" id="order-btn">🛍 أضف للطلب</button>
       </div>
     </div>
-  </div>
+</div>
+
 
  <div id="cart-modal-overlay" class="modal-overlay hidden">
     <div class="modal-box" style="max-width: 450px; flex-direction: column; max-height: 90vh; overflow-y: auto;">
