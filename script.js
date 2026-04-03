@@ -478,7 +478,6 @@ const drinks = [
   
   
 ];
-
 // ========== STATE MANAGEMENT ==========
 const state = {
   cart: JSON.parse(localStorage.getItem("cart")) || [],
@@ -502,45 +501,30 @@ const DOM = {
   orderBtn: document.getElementById("order-btn"),
   cartItemsList: document.getElementById("cart-items-list"),
   cartTotalPrice: document.getElementById("cart-total-price"),
-  checkoutWhatsapp: document.getElementById("checkout-whatsapp")
+  checkoutWhatsapp: document.getElementById("checkout-whatsapp"),
+  
+  // --- التعديل هنا: إضافة عناصر مودال الأوزان ---
+  weightModalOverlay: document.getElementById("weight-modal-overlay"),
+  weightModalClose: document.getElementById("weight-modal-close")
 };
 
 // ========== INITIALIZATION ==========
 document.addEventListener("DOMContentLoaded", () => {
-  renderDrinks();
+  // renderDrinks() اتمسحت من هنا عشان الموقع يبدأ بـ currentFilter: "none"
   setupEventListeners();
   hideLoadingScreen();
   updateCartUI();
 });
 
-// ========== LOADING SCREEN ==========
-function hideLoadingScreen() {
-  setTimeout(() => {
-    DOM.loadingScreen.classList.add("fade-out");
-    setTimeout(() => {
-      DOM.loadingScreen.style.display = "none";
-    }, 800);
-  }, 2000);
-}
-
-// ========== NAVBAR SCROLL EFFECT ==========
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 50) {
-    DOM.navbar.classList.add("scrolled");
-  } else {
-    DOM.navbar.classList.remove("scrolled");
-  }
-});
+// ... (دالات الـ Loading والـ Scroll سيبها زي ما هي) ...
 
 // ========== FILTER FUNCTIONALITY ==========
-// 1. تعريف الأقسام الفرعية للبقلاوة (الـ 3 خانات)
 const baqlawaTypes = [
   { id: 'fustuk', name: 'بقلاوة فستق', keys: ['فستق', 'بستاشيو', 'بلوريا', 'صره', 'اسيا', 'كل واشكر فستق', 'دولمة', 'اساور', 'سنيورة'] },
   { id: 'loz', name: 'بقلاوة لوز', keys: ['لوز','لوكم بندق','كاجو','بقلاوة اسطنبولي جوز'] },
   { id: 'mix', name: 'أصناف متنوعة', keys: [  'عجوة' ,'معمول جوز','غريبة'] }
 ];
 
-// 2. تحديث الدالة الأساسية
 function filterDrinks(category) {
   state.currentFilter = category;
   const subContainer = document.getElementById("sub-filters-container");
@@ -549,44 +533,39 @@ function filterDrinks(category) {
     btn.classList.toggle("active", btn.dataset.filter === category);
   });
 
-  // إذا اختار بقلاوة، نظهر الخانات الفرعية
   if (category === "baqlawa") {
     subContainer.style.display = "flex";
     subContainer.innerHTML = baqlawaTypes.map(type => `
-      <button class="filter-btn sub-btn" onclick="filterSubCategory('${type.id}')" style="background: #1a1a1a; border: 1px solid #d4af37; font-size: 0.9rem; padding: 5px 15px;">
+      <button class="filter-btn sub-btn" onclick="filterSubCategory('${type.id}')" style="background: #1a1a1a; border: 1px solid #d4af37; font-size: 0.9rem; padding: 5px 15px; border-radius: 4px;">
         ${type.name}
       </button>
     `).join("");
     
-    // اختياري: فضي الجريد لحد ما يختار نوع بقلاوة معين
-    DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center;">اختر نوع البقلاوة المفضل لديك</p>`;
+    DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center; padding: 20px;">اختر نوع البقلاوة المفضل لديك</p>`;
   } else {
-    // لو اختار كنافة أو نمورة، اخفي الخانات واعرض الصور علطول
     subContainer.style.display = "none";
-    renderDrinks();
+    renderDrinks(); // دي هتنادي createDrinkCard اللي فيها حساب الـ Badge الجديد
   }
 }
 
-// 3. دالة الفلترة الفرعية للبقلاوة
 function filterSubCategory(subId) {
   const typeData = baqlawaTypes.find(t => t.id === subId);
   
-  // فلترة الصور بناءً على الكلمات المفتاحية في الاسم
   const filtered = drinks.filter(d => 
     d.category === "baqlawa" && 
     typeData.keys.some(key => d.nameAr.includes(key))
   );
 
-  // تحديث شكل الزراير الفرعية (active state)
   document.querySelectorAll('.sub-btn').forEach(btn => {
-    btn.style.background = (btn.innerText === typeData.name) ? "#d4af37" : "#1a1a1a";
-    btn.style.color = (btn.innerText === typeData.name) ? "#000" : "#fff";
+    // تعديل بسيط لضمان دقة اختيار اللون النشط
+    const isActive = btn.innerText.trim() === typeData.name;
+    btn.style.background = isActive ? "#d4af37" : "#1a1a1a";
+    btn.style.color = isActive ? "#000" : "#fff";
   });
 
   displayFilteredDrinks(filtered);
 }
 
-// 4. دالة عرض النتائج المفلترة
 function displayFilteredDrinks(data) {
   DOM.drinksGrid.innerHTML = "";
   if (data.length === 0) {
@@ -595,13 +574,12 @@ function displayFilteredDrinks(data) {
   }
   
   data.forEach((drink, index) => {
+    // نستخدم createDrinkCard عشان نضمن إن زرار الإضافة والـ Badge يشتغلوا صح
     const card = createDrinkCard(drink);
     DOM.drinksGrid.appendChild(card);
     setTimeout(() => card.classList.add("visible"), index * 50);
   });
 }
-
-
 
 
 
@@ -628,26 +606,26 @@ function renderDrinks() {
   });
 }
 
-// ========== CREATE CARD (المعدلة لإظهار الشرح والزرار بره) ==========
+// ========== CREATE CARD (المعدلة لفتح المودال واختيار الوزن) ==========
 function createDrinkCard(drink) {
   const card = document.createElement("div");
   card.className = "drink-card";
   
-  // فحص الكمية في السلة
-  const cartItem = state.cart.find(item => item.id === drink.id);
-  const qty = cartItem ? cartItem.quantity : 0;
+  // حساب إجمالي الكمية لكل الأوزان من نفس الصنف لتظهر على الكارت
+  const totalQty = state.cart
+    .filter(item => item.id === drink.id)
+    .reduce((sum, item) => sum + item.quantity, 0);
 
   card.innerHTML = `
     <div class="card-img-wrap">
       <img src="${drink.image || 'logo.png'}" alt="${drink.nameAr}" loading="lazy" />
       <div class="card-overlay"></div>
-      ${qty > 0 ? `<div class="card-qty-badge">${qty}</div>` : ''}
+      ${totalQty > 0 ? `<div class="card-qty-badge">${totalQty}</div>` : ''}
     </div>
     <div class="card-body" style="padding: 12px;">
       <div class="card-row" style="margin-bottom: 8px;">
         <div style="text-align: right; width: 100%;">
           <div class="card-name-ar" style="font-weight: 700; font-size: 1.1rem; color: #fff;">${drink.nameAr}</div>
-          
           <div class="card-desc-simple" style="color: #aaa; font-size: 0.85rem; margin-top: 4px; line-height: 1.3;">
             ${drink.desc || ''}
           </div>
@@ -661,9 +639,9 @@ function createDrinkCard(drink) {
         </div>
         
         <button class="quick-add-btn" 
-                onclick="handleQuickAdd(event, '${drink.id}')" 
+                onclick='openModal(${JSON.stringify(drink).replace(/'/g, "&apos;")})' 
                 style="background: #d4af37; color: #000; border: none; padding: 6px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
-          ${qty > 0 ? '➕ المزيد' : '🛍 اضف للسلة'}
+          ${totalQty > 0 ? '➕ المزيد' : '🛍 اضف للسلة'}
         </button>
       </div>
     </div>
@@ -672,35 +650,8 @@ function createDrinkCard(drink) {
   return card;
 }
 
-// دالة التعامل مع الإضافة من بره وتحديث الصفحة
-function handleQuickAdd(event, drinkId) {
-  event.stopPropagation(); 
-  const drink = drinks.find(d => d.id === drinkId);
-  if (drink) {
-    addToCartSimple(drink);
-    renderDrinks(); // عشان نحدث الرقم (الكمية) اللي ظهرت على الكرت فوراً
-  }
-}
+// ملاحظة: تم حذف handleQuickAdd و addToCartSimple لأننا نستخدم openModal الآن.
 
-// دالة إضافة للسلة مختصرة (بدون غلق المودال)
-function addToCartSimple(drink) {
-  const existingItem = state.cart.find(item => item.id === drink.id);
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    state.cart.push({
-      id: drink.id,
-      nameAr: drink.nameAr,
-      nameEn: drink.nameEn,
-      price: drink.price,
-      quantity: 1,
-      image: drink.image
-    });
-  }
-  saveCart();
-  updateCartUI();
-  showToast(`تم إضافة ${drink.nameAr} ✓`);
-}
 // ========== MODAL MANAGEMENT ==========
 function openModal(drink) {
   state.selectedDrink = drink;
@@ -708,11 +659,19 @@ function openModal(drink) {
   document.getElementById("modal-img").src = drink.image;
   document.getElementById("modal-name-ar").textContent = drink.nameAr;
   document.getElementById("modal-name-en").textContent = drink.nameEn;
-  document.getElementById("modal-price").textContent = drink.price;
+  document.getElementById("modal-price").textContent = drink.price; 
   document.getElementById("modal-desc").textContent = drink.desc;
   
+  // إعادة تعيين اختيار الوزن لـ 1 كيلو عند فتح المودال
+  const weightSelect = document.getElementById("weight-select");
+  if (weightSelect) {
+      weightSelect.value = "1";
+  }
+
   const ingList = document.getElementById("modal-ing-list");
-  ingList.innerHTML = drink.ingredients.map(ing => `<li>${ing}</li>`).join("");
+  if (ingList) {
+      ingList.innerHTML = drink.ingredients ? drink.ingredients.map(ing => `<li>${ing}</li>`).join("") : "";
+  }
   
   DOM.modalOverlay.classList.remove("hidden");
   DOM.modalOverlay.classList.add("open");
@@ -727,6 +686,10 @@ function closeModal() {
     DOM.modalOverlay.classList.remove("closing");
   }, 300);
 }
+
+
+
+
 
 // ========== CART MANAGEMENT ==========
 function addToCart(drink) {
@@ -800,20 +763,106 @@ function closeCartModal() {
   DOM.cartModalOverlay.classList.remove("open");
   DOM.cartModalOverlay.classList.add("closing");
   
+// ========== CART MANAGEMENT ==========
+
+// 1. دالة الإضافة للسلة (تعتمد على الوزن والسعر المحسوب)
+function addToCart(drink) {
+  const weightVal = document.getElementById("weight-select").value;
+  // بناخد السعر اللي العميل شايفه قدامه في المودال حالياً
+  const calculatedPrice = parseFloat(document.getElementById("modal-price").textContent);
+  
+  const weightLabels = { "1": "كيلو", "0.5": "نصف كيلو", "0.25": "ربع كيلو" };
+  const selectedLabel = weightLabels[weightVal] || "";
+
+  // إنشاء معرف فريد يجمع بين (الـ ID والوزن)
+  const cartItemId = `${drink.id}-${weightVal}`;
+  
+  const existingItem = state.cart.find(item => item.cartId === cartItemId);
+  
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    state.cart.push({
+      cartId: cartItemId, // المعرف الفريد الجديد
+      id: drink.id,
+      nameAr: `${drink.nameAr.replace('1K.g ', '')} (${selectedLabel})`, // اسم نظيف مع الوزن
+      price: calculatedPrice, 
+      quantity: 1,
+      image: drink.image
+    });
+  }
+  
+  saveCart();
+  updateCartUI();
+  showToast(`تم إضافة ${drink.nameAr} ✓`);
+  closeModal();
+  renderDrinks(); // لتحديث العداد على الكروت في الصفحة الرئيسية
+}
+
+// 2. دالة الحذف (تستخدم cartId)
+function removeFromCart(cartId) {
+  state.cart = state.cart.filter(item => item.cartId !== cartId);
+  saveCart();
+  updateCartUI();
+  renderCartItems();
+  showToast("تم الحذف من السلة");
+}
+
+// 3. تحديث الكمية (تستخدم cartId)
+function updateCartQuantity(cartId, quantity) {
+  const item = state.cart.find(item => item.cartId === cartId);
+  if (item) {
+    if (quantity <= 0) {
+      removeFromCart(cartId);
+    } else {
+      item.quantity = quantity;
+      saveCart();
+      updateCartUI();
+      renderCartItems();
+    }
+  }
+}
+
+function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(state.cart));
+}
+
+function updateCartUI() {
+  const totalItems = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+  DOM.cartCount.textContent = totalItems;
+  
+  const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  DOM.cartTotalPrice.textContent = totalPrice;
+}
+
+function openCartModal() {
+  if (state.cart.length === 0) {
+    showToast("السلة فارغة");
+    return;
+  }
+  
+  renderCartItems();
+  DOM.cartModalOverlay.classList.remove("hidden");
+  DOM.cartModalOverlay.classList.add("open");
+}
+
+function closeCartModal() {
+  DOM.cartModalOverlay.classList.remove("open");
+  DOM.cartModalOverlay.classList.add("closing");
+  
   setTimeout(() => {
     DOM.cartModalOverlay.classList.add("hidden");
     DOM.cartModalOverlay.classList.remove("closing");
   }, 300);
 }
 
-// استبدل الدالة القديمة بهذا الكود بالكامل
+// 4. عرض عناصر السلة (معدلة لتعمل مع cartId)
 function renderCartItems() {
   if (state.cart.length === 0) {
     DOM.cartItemsList.innerHTML = "<p style='text-align:center; color: #aaa; padding: 2rem;'>لا توجد عناصر في السلة</p>";
     return;
   }
   
-  // 1. الجزء الخاص بعرض المنتجات المضافة للسلة
   let itemsHtml = state.cart.map(item => `
     <div class="cart-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; direction: rtl;">
       <div class="cart-item-info" style="flex: 1; text-align: right;">
@@ -821,15 +870,14 @@ function renderCartItems() {
         <div style="color: #d4af37; font-size: 0.9rem;">${item.price * item.quantity} ج.م</div>
       </div>
       <div class="cart-qty-control" style="display: flex; align-items: center; gap: 10px; margin: 0 15px;">
-        <button class="qty-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity - 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">−</button>
+        <button class="qty-btn" onclick="updateCartQuantity('${item.cartId}', ${item.quantity - 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">−</button>
         <div class="qty-display" style="color: white;">${item.quantity}</div>
-        <button class="qty-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity + 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">+</button>
+        <button class="qty-btn" onclick="updateCartQuantity('${item.cartId}', ${item.quantity + 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">+</button>
       </div>
-      <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" style="background:transparent; border:none; color:#ff4444; cursor:pointer; font-size: 1.2rem;">✕</button>
+      <button class="cart-item-remove" onclick="removeFromCart('${item.cartId}')" style="background:transparent; border:none; color:#ff4444; cursor:pointer; font-size: 1.2rem;">✕</button>
     </div>
   `).join("");
 
-  // 2. الجزء الخاص بحقول البيانات (الاسم، الهاتف، العنوان، الملاحظات)
   const formHtml = `
     <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px; direction: rtl; text-align: right;" id="customer-form">
       <h3 style="color: #d4af37; font-size: 1rem; border-right: 3px solid #d4af37; padding-right: 8px; margin-bottom: 5px;">بيانات التوصيل:</h3>
@@ -840,9 +888,9 @@ function renderCartItems() {
     </div>
   `;
 
-  // دمج المنتجات مع النموذج وعرضهم في السلة
   DOM.cartItemsList.innerHTML = itemsHtml + formHtml;
 }
+
 
 // ========== WHATSAPP CHECKOUT ==========
 function sendToWhatsapp() {
@@ -860,15 +908,18 @@ function sendToWhatsapp() {
   // التحقق من البيانات الأساسية
   if (!name || !phone || !address) {
     showToast("⚠️ يرجى إكمال بيانات التوصيل");
-    document.getElementById('customer-form').scrollIntoView({ behavior: 'smooth' });
+    const form = document.getElementById('customer-form');
+    if(form) form.scrollIntoView({ behavior: 'smooth' });
     return;
   }
   
-  // بناء نص المنتجات
-  const cartSummary = state.cart.map(item => 
-    `• ${item.nameAr} [الكمية: ${item.quantity}]`
-  ).join("\n");
+  // بناء نص المنتجات (تم التعديل ليشمل تفاصيل السعر لكل صنف)
+  const cartSummary = state.cart.map(item => {
+    const itemTotal = item.price * item.quantity;
+    return `• ${item.nameAr}\n  الكمية: ${item.quantity} | السعر: ${itemTotal} ج.م`;
+  }).join("\n\n");
   
+  // حساب الإجمالي النهائي
   const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   
   // بناء الرسالة النهائية
@@ -885,7 +936,7 @@ ${notes ? `📝 ملاحظات: ${notes}` : ''}
 ${cartSummary}
 
 *ــــــــــــــــــــــــــــــــــــــــــــــــــ*
-💰 *الإجمالي: ${totalPrice} ج.م*
+💰 *الإجمالي النهائي: ${totalPrice} ج.م*
 *ــــــــــــــــــــــــــــــــــــــــــــــــــ*
   `.trim();
   
@@ -893,16 +944,18 @@ ${cartSummary}
   const whatsappURL = `https://wa.me/201070100122?text=${encodeURIComponent(message)}`;
   window.open(whatsappURL, "_blank");
   
-  // تفريغ السلة بعد نجاح العملية (اختياري)
+  // تفريغ السلة بعد نجاح العملية
   state.cart = [];
   saveCart();
   updateCartUI();
   closeCartModal();
+  renderDrinks(); // لتحديث العدادات على الكروت بعد تفريغ السلة
   showToast("تم إرسال الطلب بنجاح ✓");
 }
 
 // ========== TOAST NOTIFICATIONS ==========
 function showToast(message) {
+  if (!DOM.toast) return;
   DOM.toast.textContent = message;
   DOM.toast.classList.remove("hidden");
   DOM.toast.classList.add("show");
@@ -917,23 +970,25 @@ function showToast(message) {
 
 // ========== EVENT LISTENERS ==========
 function setupEventListeners() {
-  // تم حذف مستمع حدث التبديل هنا
-  
+  // مستمعات فلاتر التصنيفات
   DOM.filterBtns.forEach(btn => {
     btn.addEventListener("click", () => filterDrinks(btn.dataset.filter));
   });
   
+  // إغلاق المودال
   DOM.modalClose.addEventListener("click", closeModal);
   DOM.modalOverlay.addEventListener("click", (e) => {
     if (e.target === DOM.modalOverlay) closeModal();
   });
   
+  // زر الإضافة من داخل المودال (يستخدم addToCart التي تدعم الأوزان)
   DOM.orderBtn.addEventListener("click", () => {
     if (state.selectedDrink) {
       addToCart(state.selectedDrink);
     }
   });
   
+  // السلة
   DOM.cartModalClose.addEventListener("click", closeCartModal);
   DOM.cartModalOverlay.addEventListener("click", (e) => {
     if (e.target === DOM.cartModalOverlay) closeCartModal();
@@ -942,6 +997,7 @@ function setupEventListeners() {
   DOM.checkoutWhatsapp.addEventListener("click", sendToWhatsapp);
   DOM.cartIconWrap.addEventListener("click", openCartModal);
   
+  // اختصارات الكيبورد
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       closeModal();
@@ -949,4 +1005,3 @@ function setupEventListeners() {
     }
   });
 }
-و التعديل الي هنا
