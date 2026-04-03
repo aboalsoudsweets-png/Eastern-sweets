@@ -488,11 +488,6 @@ const state = {
 
 // ========== DOM ELEMENTS ==========
 const DOM = {
-  // أضف هذه الأسطر داخل كائن DOM
-weightModalOverlay: document.getElementById("weight-modal-overlay"),
-weightModalClose: document.getElementById("weight-modal-close"),
-weightButtons: document.querySelectorAll(".weight-btn"),
-
   loadingScreen: document.getElementById("loading-screen"),
   navbar: document.getElementById("navbar"),
   drinksGrid: document.getElementById("drinks-grid"),
@@ -679,22 +674,13 @@ function createDrinkCard(drink) {
 
 // دالة التعامل مع الإضافة من بره وتحديث الصفحة
 function handleQuickAdd(event, drinkId) {
-  event.stopPropagation();
+  event.stopPropagation(); 
   const drink = drinks.find(d => d.id === drinkId);
-  if (!drink) return;
-
-  // فحص هل المنتج "صحن" (لا يحتاج اختيار وزن)
-  if (drink.nameAr.includes("صحن") || drink.nameAr.includes("قطعة")) {
-    addToCartSimple(drink, 1, " (صحن)"); 
-    return;
+  if (drink) {
+    addToCartSimple(drink);
+    renderDrinks(); // عشان نحدث الرقم (الكمية) اللي ظهرت على الكرت فوراً
   }
-
-  // إذا كان بالوزن، نفتح نافذة اختيار الأوزان
-  state.selectedDrink = drink; // تخزين المنتج المختار حالياً
-  DOM.weightModalOverlay.classList.remove("hidden");
-  DOM.weightModalOverlay.classList.add("open");
 }
-
 
 // دالة إضافة للسلة مختصرة (بدون غلق المودال)
 function addToCartSimple(drink) {
@@ -963,59 +949,4 @@ function setupEventListeners() {
     }
   });
 }
-
-
-
-
-
-// إغلاق نافذة الوزن
-DOM.weightModalClose.addEventListener("click", () => {
-    DOM.weightModalOverlay.classList.add("hidden");
-});
-
-// منطق أزرار الأوزان (كيلو - نصف - ربع)
-DOM.weightButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-        const multiplier = parseFloat(btn.dataset.multiplier);
-        const drink = state.selectedDrink;
-        
-        if (drink) {
-            let weightText = "";
-            if (multiplier === 1) weightText = " (كيلو)";
-            else if (multiplier === 0.5) weightText = " (نصف كيلو)";
-            else if (multiplier === 0.25) weightText = " (ربع كيلو)";
-
-            // حساب السعر الجديد
-            const calculatedPrice = drink.price * multiplier;
-
-            // إضافة للسلة بالبيانات الجديدة
-            addToCartWithWeight(drink, calculatedPrice, weightText);
-        }
-        
-        // إغلاق النافذة بعد الاختيار
-        DOM.weightModalOverlay.classList.add("hidden");
-    });
-});
-
-// دالة إضافة مخصصة للأوزان
-function addToCartWithWeight(drink, price, weightLabel) {
-    const itemId = drink.id + weightLabel; // معرف فريد لكل وزن عشان "نصف كيلو" ميتجمعش مع "كيلو"
-    const existingItem = state.cart.find(item => item.id === itemId);
-
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        state.cart.push({
-            id: itemId,
-            nameAr: drink.nameAr.replace("1K.g", "").trim() + weightLabel,
-            price: price,
-            quantity: 1,
-            image: drink.image
-        });
-    }
-    
-    saveCart();
-    updateCartUI();
-    renderDrinks();
-    showToast(`تم إضافة ${weightLabel} ✓`);
-}
+و التعديل الي هنا
