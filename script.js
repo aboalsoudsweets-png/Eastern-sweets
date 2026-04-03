@@ -2,7 +2,7 @@
 const drinks = [
   {
     id: "4",
-    nameAr: "1K.g كنافة نابلسية",
+    nameAr: " كنافة نابلسية",
     nameEn: "",
     price: 500,
     category: "konafa",
@@ -12,7 +12,7 @@ const drinks = [
   },
    {
     id: "5",
-    nameAr: "1K.g كنافة عربية",
+    nameAr: " كنافة عربية",
     nameEn: "",
     price: 500 ,
     category: "konafa",
@@ -21,7 +21,7 @@ const drinks = [
     ingredients: []
   },
   { id: "9000",
-    nameAr: "1K.g كنافة اسطنبولية",
+    nameAr: " كنافة اسطنبولية",
     nameEn: "",
     price: 580 ,
     category: "konafa",
@@ -31,7 +31,7 @@ const drinks = [
   },
   {
     id: "400",
-    nameAr: " 1K.g  اسطنبولية و عربية نصف و نصف",
+    nameAr: "  اسطنبولية و عربية نصف و نصف",
     nameEn: "",
     price: 540,
     category: "konafa",
@@ -41,7 +41,7 @@ const drinks = [
   },
   {
     id: "400",
-    nameAr: " 1K.g  اسطنبولية و نابلسية نصف و نصف",
+    nameAr: "   اسطنبولية و نابلسية نصف و نصف",
     nameEn: "",
     price: 540,
     category: "konafa",
@@ -51,7 +51,7 @@ const drinks = [
   },
   {
     id: "504",
-    nameAr: "1K.g نابلسية و عربية نصف و نصف ",
+    nameAr: " نابلسية و عربية نصف و نصف ",
     nameEn: "",
     price: 135,
     category: "konafa",
