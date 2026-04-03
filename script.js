@@ -704,21 +704,19 @@ function addToCartSimple(drink) {
 // ========== MODAL MANAGEMENT ==========
 function openModal(drink) {
   state.selectedDrink = drink;
-
+  
   document.getElementById("modal-img").src = drink.image;
   document.getElementById("modal-name-ar").textContent = drink.nameAr;
   document.getElementById("modal-name-en").textContent = drink.nameEn;
   document.getElementById("modal-price").textContent = drink.price;
   document.getElementById("modal-desc").textContent = drink.desc;
-
-  // 👇 هنا التعديل
-  const weightBox = document.getElementById("weight-box");
-
-  if (drink.nameAr.includes("صحن")) {
-    weightBox.style.display = "none";
-  } else {
-    weightBox.style.display = "block";
-  }
+  
+  const ingList = document.getElementById("modal-ing-list");
+  ingList.innerHTML = drink.ingredients.map(ing => `<li>${ing}</li>`).join("");
+  
+  DOM.modalOverlay.classList.remove("hidden");
+  DOM.modalOverlay.classList.add("open");
+}
 
 function closeModal() {
   DOM.modalOverlay.classList.remove("open");
@@ -732,38 +730,24 @@ function closeModal() {
 
 // ========== CART MANAGEMENT ==========
 function addToCart(drink) {
-
-  let finalPrice = drink.price;
-  let weightText = "1 كيلو";
-
-  const weightSelect = document.getElementById("weight-select");
-
-  if (weightSelect && !drink.nameAr.includes("صحن")) {
-    const weight = parseFloat(weightSelect.value);
-    finalPrice = drink.price * weight;
-
-    if (weight == 0.5) weightText = "نص كيلو";
-    if (weight == 0.25) weightText = "ربع كيلو";
-  }
-
-  const existingItem = state.cart.find(item => item.id === drink.id && item.weightText === weightText);
-
+  const existingItem = state.cart.find(item => item.id === drink.id);
+  
   if (existingItem) {
     existingItem.quantity += 1;
   } else {
     state.cart.push({
       id: drink.id,
-      nameAr: drink.nameAr + " (" + weightText + ")",
-      price: finalPrice,
+      nameAr: drink.nameAr,
+      nameEn: drink.nameEn,
+      price: drink.price,
       quantity: 1,
-      image: drink.image,
-      weightText: weightText
+      image: drink.image
     });
   }
-
+  
   saveCart();
   updateCartUI();
-  showToast(`تم إضافة ${drink.nameAr} ${weightText} ✓`);
+  showToast(`تم إضافة ${drink.nameAr} للسلة ✓`);
   closeModal();
 }
 
