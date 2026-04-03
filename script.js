@@ -1074,3 +1074,63 @@ function setupEventListeners() {
 function confirmWeightSelection() {
   addToCartWithWeight();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========== UPDATE WEIGHT PRICE (FIXED) ==========
+function updateWeightPrice(drink, multiplier) {
+  // ✅ استخدام الـ ID الصحيح
+  const priceDisplay = document.getElementById("weight-display-price");
+  const newPrice = Math.round(drink.price * multiplier);
+  priceDisplay.textContent = newPrice;
+  
+  // Update button styles
+  const weightButtons = document.querySelectorAll(".weight-btn");
+  weightButtons.forEach(btn => {
+    if (parseFloat(btn.dataset.multiplier) === multiplier) {
+      btn.style.background = "#d4af37";
+      btn.style.color = "#000";
+    } else {
+      btn.style.background = "#444";
+      btn.style.color = "white";
+    }
+  });
+}
+
+// ========== OPEN WEIGHT MODAL (FIXED) ==========
+function openWeightModal(drink) {
+  state.selectedDrink = drink;
+  state.selectedWeight = 1; // Default weight
+  
+  const weightModalOverlay = document.getElementById("weight-modal-overlay");
+  const weightButtons = document.querySelectorAll(".weight-btn");
+  
+  // Reset button styles
+  weightButtons.forEach(btn => {
+    btn.style.background = "#444";
+    btn.style.color = "white";
+  });
+  
+  // Set first button as selected
+  weightButtons[0].style.background = "#d4af37";
+  weightButtons[0].style.color = "#000";
+  
+  weightModalOverlay.classList.remove("hidden");
+  weightModalOverlay.classList.add("open");
+  
+  // ✅ حدّث السعر تلقائياً عند فتح النافذة
+  updateWeightPrice(drink, 1);
+}
