@@ -685,14 +685,13 @@ function createDrinkCard(drink) {
 }
 
 // دالة التعامل مع الإضافة من بره وتحديث الصفحة
-function handleQuickAdd(event, drinkId) {
-  event.stopPropagation(); 
-  const drink = drinks.find(d => d.id === drinkId);
-  if (drink) {
-    addToCartSimple(drink);
-    renderDrinks(); // عشان نحدث الرقم (الكمية) اللي ظهرت على الكرت فوراً
-  }
-}
+
+// التعديل: إزالة handleQuickAdd واستخدام openModal
+<button class="quick-add-btn" 
+        onclick="openModal(${JSON.stringify(drink).replace(/"/g, '&quot;')})" 
+        style="background: #d4af37; color: #000; border: none; padding: 6px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
+  ${qty > 0 ? '➕ المزيد' : '🛍 اضف للسلة'}
+</button>
 
 // دالة إضافة للسلة مختصرة (بدون غلق المودال)
 function addToCartSimple(drink) {
@@ -783,19 +782,20 @@ function addToCart(drink) {
 }
 
 
-function removeFromCart(itemId) {
-  state.cart = state.cart.filter(item => item.id !== itemId);
+function removeFromCart(cartId) { // تغيير من id لـ cartId
+  state.cart = state.cart.filter(item => item.cartId !== cartId);
   saveCart();
   updateCartUI();
   renderCartItems();
   showToast("تم الحذف من السلة");
 }
 
-function updateCartQuantity(itemId, quantity) {
-  const item = state.cart.find(item => item.id === itemId);
+
+function updateCartQuantity(cartId, quantity) {
+  const item = state.cart.find(item => item.cartId === cartId);
   if (item) {
     if (quantity <= 0) {
-      removeFromCart(itemId);
+      removeFromCart(cartId);
     } else {
       item.quantity = quantity;
       saveCart();
@@ -803,6 +803,8 @@ function updateCartQuantity(itemId, quantity) {
       renderCartItems();
     }
   }
+}
+
 }
 
 function saveCart() {
