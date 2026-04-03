@@ -1337,3 +1337,61 @@ footer p {
     color: #000;
 }
 
+
+
+
+/* تنسيق حاوية اختيار الوزن داخل المودال */
+.weight-selection-container {
+    margin: 20px 0;
+    text-align: right;
+    direction: rtl;
+}
+
+.weight-selection-container label {
+    display: block;
+    color: #d4af37; /* اللون الذهبي */
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+/* تنسيق القائمة المنسدلة نفسها */
+#weight-select {
+    width: 100%;
+    padding: 12px;
+    background-color: #1a1a1a; /* أسود متناسق مع الخلفية */
+    border: 1px solid #d4af37; /* إطار ذهبي */
+    border-radius: 8px;
+    color: #ffffff;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    appearance: none; /* إزالة السهم الافتراضي للمتصفح */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23d4af37'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); /* سهم ذهبي مخصص */
+    background-repeat: no-repeat;
+    background-position: left 10px center;
+    background-size: 20px;
+}
+
+/* تأثير عند الضغط أو التمرير */
+#weight-select:focus {
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+    border-color: #fff;
+}
+
+/* تنسيق السعر داخل المودال عشان يبان بوضوح بعد التعديل */
+.modal-price-box {
+    background: rgba(212, 175, 55, 0.1);
+    padding: 10px;
+    border-radius: 6px;
+    border-right: 4px solid #d4af37;
+    margin: 15px 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #d4af37;
+}
+
+
