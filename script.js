@@ -513,18 +513,6 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCartUI();
 });
 
-// كود تحديث السعر عند تغيير الوزن داخل المودال
-document.getElementById('weight-select').addEventListener('change', function() {
-    if (!state.selectedDrink) return;
-    
-    const weight = parseFloat(this.value); // 1 أو 0.5 أو 0.25
-    const basePrice = state.selectedDrink.price;
-    const finalPrice = Math.round(basePrice * weight); // تقريب الرقم
-    
-    document.getElementById("modal-price").textContent = finalPrice;
-});
-
-
 // ========== LOADING SCREEN ==========
 function hideLoadingScreen() {
   setTimeout(() => {
@@ -685,13 +673,14 @@ function createDrinkCard(drink) {
 }
 
 // دالة التعامل مع الإضافة من بره وتحديث الصفحة
-
-// التعديل: إزالة handleQuickAdd واستخدام openModal
-<button class="quick-add-btn" 
-        onclick="openModal(${JSON.stringify(drink).replace(/"/g, '&quot;')})" 
-        style="background: #d4af37; color: #000; border: none; padding: 6px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
-  ${qty > 0 ? '➕ المزيد' : '🛍 اضف للسلة'}
-</button>
+function handleQuickAdd(event, drinkId) {
+  event.stopPropagation(); 
+  const drink = drinks.find(d => d.id === drinkId);
+  if (drink) {
+    addToCartSimple(drink);
+    renderDrinks(); // عشان نحدث الرقم (الكمية) اللي ظهرت على الكرت فوراً
+  }
+}
 
 // دالة إضافة للسلة مختصرة (بدون غلق المودال)
 function addToCartSimple(drink) {
@@ -718,18 +707,9 @@ function openModal(drink) {
   
   document.getElementById("modal-img").src = drink.image;
   document.getElementById("modal-name-ar").textContent = drink.nameAr;
+  document.getElementById("modal-name-en").textContent = drink.nameEn;
   document.getElementById("modal-price").textContent = drink.price;
   document.getElementById("modal-desc").textContent = drink.desc;
-
-  // إظهار/إخفاء قائمة الأوزان بناءً على نوع الصنف
-  const weightSelect = document.getElementById("weight-select");
-  if (drink.nameAr.includes("صحن") || drink.nameAr.includes("وربات") || drink.nameAr.includes("كلاچ")) {
-      weightSelect.parentElement.style.display = "none"; 
-      weightSelect.value = "1"; // السعر يبقى كما هو
-  } else {
-      weightSelect.parentElement.style.display = "block";
-      weightSelect.value = "1"; // افتراضي كيلو
-  }
   
   const ingList = document.getElementById("modal-ing-list");
   ingList.innerHTML = drink.ingredients.map(ing => `<li>${ing}</li>`).join("");
@@ -737,7 +717,6 @@ function openModal(drink) {
   DOM.modalOverlay.classList.remove("hidden");
   DOM.modalOverlay.classList.add("open");
 }
-
 
 function closeModal() {
   DOM.modalOverlay.classList.remove("open");
@@ -751,25 +730,16 @@ function closeModal() {
 
 // ========== CART MANAGEMENT ==========
 function addToCart(drink) {
-  const weightVal = document.getElementById("weight-select").value;
-  const calculatedPrice = parseFloat(document.getElementById("modal-price").textContent);
-  
-  const weightLabels = { "1": "كيلو", "0.5": "نصف كيلو", "0.25": "ربع كيلو" };
-  const selectedLabel = weightLabels[weightVal] || "";
-
-  // إنشاء معرف فريد يجمع بين (الـ ID والوزن) عشان لو طلب كيلو ونص كيلو من نفس النوع ينزلوا سطرين منفصلين
-  const cartItemId = `${drink.id}-${weightVal}`;
-  
-  const existingItem = state.cart.find(item => item.cartId === cartItemId);
+  const existingItem = state.cart.find(item => item.id === drink.id);
   
   if (existingItem) {
     existingItem.quantity += 1;
   } else {
     state.cart.push({
-      cartId: cartItemId, // المعرف الجديد
       id: drink.id,
-      nameAr: `${drink.nameAr} (${selectedLabel})`, // إضافة الوزن للاسم
-      price: calculatedPrice / 1, // سعر القطعة المختارة (ربع أو نص أو كيلو)
+      nameAr: drink.nameAr,
+      nameEn: drink.nameEn,
+      price: drink.price,
       quantity: 1,
       image: drink.image
     });
@@ -777,25 +747,23 @@ function addToCart(drink) {
   
   saveCart();
   updateCartUI();
-  showToast(`تم إضافة ${drink.nameAr} ✓`);
+  showToast(`تم إضافة ${drink.nameAr} للسلة ✓`);
   closeModal();
 }
 
-
-function removeFromCart(cartId) { // تغيير من id لـ cartId
-  state.cart = state.cart.filter(item => item.cartId !== cartId);
+function removeFromCart(itemId) {
+  state.cart = state.cart.filter(item => item.id !== itemId);
   saveCart();
   updateCartUI();
   renderCartItems();
   showToast("تم الحذف من السلة");
 }
 
-
-function updateCartQuantity(cartId, quantity) {
-  const item = state.cart.find(item => item.cartId === cartId);
+function updateCartQuantity(itemId, quantity) {
+  const item = state.cart.find(item => item.id === itemId);
   if (item) {
     if (quantity <= 0) {
-      removeFromCart(cartId);
+      removeFromCart(itemId);
     } else {
       item.quantity = quantity;
       saveCart();
@@ -803,8 +771,6 @@ function updateCartQuantity(cartId, quantity) {
       renderCartItems();
     }
   }
-}
-
 }
 
 function saveCart() {
@@ -898,13 +864,13 @@ function sendToWhatsapp() {
     return;
   }
   
-  // بناء نص المنتجات (تعديل السطور من 900 تقريباً)
-const cartSummary = state.cart.map(item => {
-    // حساب إجمالي سعر الصنف (السعر المختار × الكمية)
-    const itemTotal = item.price * item.quantity;
-    return `• ${item.nameAr} \n  الكمية: ${item.quantity} | السعر: ${itemTotal} ج.م`;
-}).join("\n\n");
-
+  // بناء نص المنتجات
+  const cartSummary = state.cart.map(item => 
+    `• ${item.nameAr} [الكمية: ${item.quantity}]`
+  ).join("\n");
+  
+  const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  
   // بناء الرسالة النهائية
   const message = `
 *طلب جديد من حلويات أبو السعود* 🍰
@@ -983,3 +949,4 @@ function setupEventListeners() {
     }
   });
 }
+و التعديل الي هنا
