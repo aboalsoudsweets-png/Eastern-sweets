@@ -853,45 +853,15 @@ function updateImageDots(carouselId, index) {
 // ========== WEIGHT MODAL ==========
 function openWeightModal(drink) {
   state.selectedDrink = drink;
-  state.selectedWeight = 1; // الوزن الافتراضي كيلو
+  state.selectedWeight = 1;
   
   const weightModalOverlay = document.getElementById("weight-modal-overlay");
   const weightButtons = document.querySelectorAll(".weight-btn");
   
-  // 1. تحديد هل الصنف "مشكل" أم صنف عادي
-  // بنفحص الـ ID أو الاسم لو فيه كلمة "مشكل"
-  const isMishkal = drink.id.includes("mishkal") || drink.nameAr.includes("مشكل");
-
-  // 2. التحكم في ظهور الأزرار
   weightButtons.forEach(btn => {
-    const multiplier = parseFloat(btn.dataset.multiplier);
-    
-    // إرجاع التنسيق الافتراضي للألوان
     btn.style.background = "#444";
     btn.style.color = "white";
-
-    // المنطق الجديد: 
-    // لو الوزن (كيلو وربع أو كيلو ونص) والصنف مش مشكل -> اخفِ الزرار
-    if ((multiplier === 1.25 || multiplier === 1.5) && !isMishkal) {
-      btn.style.display = "none";
-    } else {
-      btn.style.display = "inline-block"; // أظهر الزرار للصناف المشكلة أو الأوزان الأساسية
-    }
   });
-
-  // 3. تمييز زر الـ "كيلو" كاختيار افتراضي عند الفتح
-  const kiloBtn = Array.from(weightButtons).find(b => b.dataset.multiplier == "1");
-  if (kiloBtn) {
-    kiloBtn.style.background = "#d4af37";
-    kiloBtn.style.color = "#000";
-  }
-
-  // 4. إظهار المودال وتحديث السعر
-  weightModalOverlay.classList.remove("hidden");
-  weightModalOverlay.classList.add("open");
-  
-  updateWeightPrice(drink, 1);
-}
   
   weightButtons[0].style.background = "#d4af37";
   weightButtons[0].style.color = "#000";
@@ -1001,13 +971,7 @@ function addToCartWithWeight() {
   saveCart();
   updateCartUI();
   
- const weightLabels = {
-  0.25: "ربع كيلو",
-  0.5: "نصف كيلو",
-  1: "كيلو",
-  1.25: "كيلو وربع",
-  1.5: "كيلو ونصف"
-};
+  const weightLabel = weight === 1 ? "كيلو" : weight === 0.5 ? "نصف كيلو" : "ربع كيلو";
   showToast(`تم إضافة ${drink.nameAr} (${weightLabel}) ✓`);
   
   closeWeightModal();
