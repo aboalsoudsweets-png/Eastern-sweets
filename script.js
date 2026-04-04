@@ -544,8 +544,7 @@ const state = {
   cart: JSON.parse(localStorage.getItem("cart")) || [],
   currentFilter: "none",
   selectedDrink: null,
-  selectedWeight: 1,
-  carouselPositions: {} // ✅ حفظ موضع الكاروسيل
+  selectedWeight: 1 // Default weight
 };
 
 // ========== DOM ELEMENTS ==========
@@ -603,8 +602,8 @@ function isPlateItem(drink) {
 
 // ========== FILTER FUNCTIONALITY ==========
 const baqlawaTypes = [
-  { id: 'fustuk', name: 'بقلاوة فستق', keys: ['فستق', 'بستاشيو', 'بلوريا', 'صره', 'اسيا', 'كل واشكر فستق', 'دولمة', 'اساور', 'سنيورة', 'لوكم فستق'] },
-  { id: 'loz', name: 'بقلاوة لوز', keys: ['لوز','لوكم بندق','كاجو','بقلاوة اسطنبولي جوز', 'وربات لوز'] },
+  { id: 'fustuk', name: 'بقلاوة فستق', keys: ['فستق', 'بستاشيو', 'بلوريا', 'صره', 'اسيا', 'كل واشكر فستق', 'دولمة', 'اساور', 'سنيورة'] },
+  { id: 'loz', name: 'بقلاوة لوز', keys: ['لوز','لوكم بندق','كاجو','بقلاوة اسطنبولي جوز'] },
   { id: 'mix', name: 'أصناف متنوعة', keys: [  'عجوة' ,'معمول جوز','غريبة'] }
 ];
 
@@ -631,7 +630,6 @@ function filterDrinks(category) {
   }
 }
 
-// ✅ دالة تصفية الفئات الفرعية مع الكاروسيل
 function filterSubCategory(subId) {
   const typeData = baqlawaTypes.find(t => t.id === subId);
   
@@ -645,11 +643,10 @@ function filterSubCategory(subId) {
     btn.style.color = (btn.innerText === typeData.name) ? "#000" : "#fff";
   });
 
-  displayFilteredDrinks(filtered, subId); // ✅ أرسل معرّف الفئة
+  displayFilteredDrinks(filtered);
 }
 
-// ✅ دالة عرض المنتجات مع الكاروسيل في أول كرت
-function displayFilteredDrinks(data, subCategoryId) {
+function displayFilteredDrinks(data) {
   DOM.drinksGrid.innerHTML = "";
   if (data.length === 0) {
     DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center;">قريباً...</p>`;
@@ -657,95 +654,36 @@ function displayFilteredDrinks(data, subCategoryId) {
   }
   
   data.forEach((drink, index) => {
-    let card;
-    
-    // ✅ أول كرت = كاروسيل يعرض أول 6 منتجات
-    if (index === 0) {
-      const first6Products = data.slice(0, 6);
-      card = createCarouselCard(first6Products, subCategoryId);
-    } else {
-      card = createDrinkCard(drink);
-    }
-    
+    const card = createDrinkCard(drink);
     DOM.drinksGrid.appendChild(card);
     setTimeout(() => card.classList.add("visible"), index * 50);
   });
 }
 
-// ✅ دالة إنشاء كرت الكاروسيل
-function createCarouselCard(products, subCategoryId) {
-  const card = document.createElement("div");
-  card.className = "drink-card carousel-card";
-  
-  const carouselId = `carousel-${subCategoryId}`;
-  
-  // ✅ إنشاء السلايدات من أول 6 منتجات
-  const slidesHTML = products.map((product, index) => `
-    <div class="carousel-slide">
-      <img src="${product.image}" alt="${product.nameAr}" loading="lazy" />
-      <div class="slide-info">
-        <div class="slide-name">${product.nameAr}</div>
-        <div class="slide-price">${product.price} ج.م</div>
-      </div>
-    </div>
-  `).join('');
+// ========== RENDER DRINKS ==========
+function renderDrinks() {
+  if (state.currentFilter === "none") {
+    DOM.drinksGrid.innerHTML = "";
+    return;
+  }
 
-  card.innerHTML = `
-    <div class="carousel-wrapper">
-      <div class="carousel-container" id="${carouselId}-container">
-        <div class="carousel-track" id="${carouselId}-track">
-          ${slidesHTML}
-        </div>
-        
-        <!-- ✅ أزرار التحكم -->
-        <button class="carousel-btn carousel-prev" onclick="moveCarousel('${carouselId}', -1)">
-          ❮
-        </button>
-        <button class="carousel-btn carousel-next" onclick="moveCarousel('${carouselId}', 1)">
-          ❯
-        </button>
-        
-        <!-- ✅ النقاط السفلية -->
-        <div class="carousel-dots">
-          ${products.map((_, i) => `
-            <span class="dot ${i === 0 ? 'active' : ''}" onclick="goToSlide('${carouselId}', ${i})"></span>
-          `).join('')}
-        </div>
-      </div>
-    </div>
+  const filtered = state.currentFilter === "all"
+    ? drinks
+    : drinks.filter(d => d.category === state.currentFilter);
+  
+  DOM.drinksGrid.innerHTML = "";
+  
+  filtered.forEach((drink, index) => {
+    const card = createDrinkCard(drink);
+    DOM.drinksGrid.appendChild(card);
     
-    <div class="card-body" style="padding: 12px;">
-      <div style="text-align: right; width: 100%;">
-        <div class="card-name-ar" style="font-weight: 700; font-size: 1.1rem; color: #fff;">
-          ${products[0].nameAr} + 5 أصناف أخرى
-        </div>
-        <div class="card-desc-simple" style="color: #aaa; font-size: 0.85rem; margin-top: 4px;">
-          مجموعة مختارة من أفضل الأصناف
-        </div>
-      </div>
-
-      <div style="display: flex; justify-content: center; gap: 10px; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; flex-wrap: wrap;">
-        <button class="quick-add-btn" 
-                onclick="selectProductFromCarousel(event, ${products[0].id})" 
-                style="background: #d4af37; color: #000; border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
-          🛍 اضف الأول
-        </button>
-        <button class="quick-add-btn" 
-                onclick="selectProductFromCarousel(event, ${products[1]?.id || products[0].id})" 
-                style="background: #d4af37; color: #000; border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
-          🛍 اضف الحالي
-        </button>
-      </div>
-    </div>
-  `;
-  
-  // ✅ تهيئة موضع الكاروسيل
-  state.carouselPositions[carouselId] = 0;
-  
-  return card;
+    setTimeout(() => {
+      card.classList.add("visible");
+    }, index * 50);
+  });
 }
 
-// ========== CREATE REGULAR CARD ==========
+// ========== CREATE CARD ==========
 function createDrinkCard(drink) {
   const card = document.createElement("div");
   card.className = "drink-card";
@@ -788,82 +726,28 @@ function createDrinkCard(drink) {
   return card;
 }
 
-// ✅ دالة تحريك الكاروسيل
-function moveCarousel(carouselId, direction) {
-  const track = document.getElementById(`${carouselId}-track`);
-  const container = document.getElementById(`${carouselId}-container`);
-  
-  if (!track || !container) return;
-  
-  const slides = track.querySelectorAll('.carousel-slide').length;
-  let newPosition = (state.carouselPositions[carouselId] || 0) + direction;
-  
-  // ✅ التكرار اللانهائي
-  if (newPosition >= slides) newPosition = 0;
-  if (newPosition < 0) newPosition = slides - 1;
-  
-  state.carouselPositions[carouselId] = newPosition;
-  
-  track.style.transform = `translateX(-${newPosition * 100}%)`;
-  updateDots(carouselId, newPosition);
-}
-
-// ✅ الانتقال المباشر للسلايد
-function goToSlide(carouselId, index) {
-  const track = document.getElementById(`${carouselId}-track`);
-  
-  if (!track) return;
-  
-  state.carouselPositions[carouselId] = index;
-  track.style.transform = `translateX(-${index * 100}%)`;
-  updateDots(carouselId, index);
-}
-
-// ✅ تحديث النقاط
-function updateDots(carouselId, index) {
-  const container = document.getElementById(`${carouselId}-container`);
-  
-  if (!container) return;
-  
-  const dots = container.querySelectorAll('.dot');
-  dots.forEach((dot, i) => {
-    dot.classList.toggle('active', i === index);
-  });
-}
-
-// ✅ إضافة المنتج من الكاروسيل
-function selectProductFromCarousel(event, drinkId) {
-  event.stopPropagation();
-  const drink = drinks.find(d => d.id == drinkId);
-  
-  if (drink) {
-    if (isPlateItem(drink)) {
-      addToCartSimple(drink);
-    } else {
-      openWeightModal(drink);
-    }
-  }
-}
-
 // ========== WEIGHT MODAL ==========
 function openWeightModal(drink) {
   state.selectedDrink = drink;
-  state.selectedWeight = 1;
+  state.selectedWeight = 1; // Reset to default
   
   const weightModalOverlay = document.getElementById("weight-modal-overlay");
   const weightButtons = document.querySelectorAll(".weight-btn");
   
+  // Reset button styles
   weightButtons.forEach(btn => {
     btn.style.background = "#444";
     btn.style.color = "white";
   });
   
+  // Set first button as selected
   weightButtons[0].style.background = "#d4af37";
   weightButtons[0].style.color = "#000";
   
   weightModalOverlay.classList.remove("hidden");
   weightModalOverlay.classList.add("open");
   
+  // Update price display
   updateWeightPrice(drink, 1);
 }
 
@@ -879,10 +763,11 @@ function closeWeightModal() {
 }
 
 function updateWeightPrice(drink, multiplier) {
-  const priceDisplay = document.getElementById("weight-display-price");
+  const priceDisplay = document.getElementById("modal-price");
   const newPrice = Math.round(drink.price * multiplier);
   priceDisplay.textContent = newPrice;
   
+  // Update button styles
   const weightButtons = document.querySelectorAll(".weight-btn");
   weightButtons.forEach(btn => {
     if (parseFloat(btn.dataset.multiplier) === multiplier) {
@@ -909,8 +794,10 @@ function handleQuickAdd(event, drinkId) {
   
   if (drink) {
     if (isPlateItem(drink)) {
+      // Plates: Add directly without weight selection
       addToCartSimple(drink);
     } else {
+      // Non-plates: Show weight selection
       openWeightModal(drink);
     }
   }
@@ -928,7 +815,7 @@ function addToCartSimple(drink) {
       price: drink.price,
       quantity: 1,
       image: drink.image,
-      weight: 1
+      weight: 1 // Default weight for plates
     });
   }
   saveCart();
@@ -966,7 +853,7 @@ function addToCartWithWeight() {
   saveCart();
   updateCartUI();
   
-  const weightLabel = weight === 1 ? "كيلو" : weight === 0.5 ? "نصف كيلو" : "ربع كيلو";
+  const weightLabel = weight === 1 ? "كيلو" : weight === 0.5 ? "نصف كيلو" : "ربع كي��و";
   showToast(`تم إضافة ${drink.nameAr} (${weightLabel}) ✓`);
   
   closeWeightModal();
@@ -1206,6 +1093,7 @@ function setupEventListeners() {
     }
   });
   
+  // Weight modal close buttons
   const weightModalClose = document.getElementById("weight-modal-close");
   if (weightModalClose) {
     weightModalClose.addEventListener("click", closeWeightModal);
@@ -1218,6 +1106,7 @@ function setupEventListeners() {
     });
   }
   
+  // Weight selection buttons
   const weightBtns = document.querySelectorAll(".weight-btn");
   weightBtns.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -1243,29 +1132,67 @@ function setupEventListeners() {
   });
 }
 
+// Add function to confirm weight selection
 function confirmWeightSelection() {
   addToCartWithWeight();
 }
 
-// ========== RENDER DRINKS ==========
-function renderDrinks() {
-  if (state.currentFilter === "none") {
-    DOM.drinksGrid.innerHTML = "";
-    return;
-  }
 
-  const filtered = state.currentFilter === "all"
-    ? drinks
-    : drinks.filter(d => d.category === state.currentFilter);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========== UPDATE WEIGHT PRICE (FIXED) ==========
+function updateWeightPrice(drink, multiplier) {
+  // ✅ استخدام الـ ID الصحيح
+  const priceDisplay = document.getElementById("weight-display-price");
+  const newPrice = Math.round(drink.price * multiplier);
+  priceDisplay.textContent = newPrice;
   
-  DOM.drinksGrid.innerHTML = "";
-  
-  filtered.forEach((drink, index) => {
-    const card = createDrinkCard(drink);
-    DOM.drinksGrid.appendChild(card);
-    
-    setTimeout(() => {
-      card.classList.add("visible");
-    }, index * 50);
+  // Update button styles
+  const weightButtons = document.querySelectorAll(".weight-btn");
+  weightButtons.forEach(btn => {
+    if (parseFloat(btn.dataset.multiplier) === multiplier) {
+      btn.style.background = "#d4af37";
+      btn.style.color = "#000";
+    } else {
+      btn.style.background = "#444";
+      btn.style.color = "white";
+    }
   });
 }
+
+// ========== OPEN WEIGHT MODAL (FIXED) ==========
+function openWeightModal(drink) {
+  state.selectedDrink = drink;
+  state.selectedWeight = 1; // Default weight
+  
+  const weightModalOverlay = document.getElementById("weight-modal-overlay");
+  const weightButtons = document.querySelectorAll(".weight-btn");
+  
+  // Reset button styles
+  weightButtons.forEach(btn => {
+    btn.style.background = "#444";
+    btn.style.color = "white";
+  });
+  
+  // Set first button as selected
+  weightButtons[0].style.background = "#d4af37";
+  weightButtons[0].style.color = "#000";
+  
+  weightModalOverlay.classList.remove("hidden");
+  weightModalOverlay.classList.add("open");
+  
+  // ✅ حدّث السعر تلقائياً عند فتح النافذة
+  updateWeightPrice(drink, 1);
+} 
