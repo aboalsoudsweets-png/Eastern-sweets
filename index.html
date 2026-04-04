@@ -109,37 +109,31 @@
   </div>
 </footer>
 
+
 <div id="weight-modal-overlay" class="modal-overlay hidden">
-    <div class="modal-box" style="max-width: 350px;">
-        <div class="modal-body" dir="rtl" style="text-align: center;">
-            <button class="modal-close" id="weight-modal-close">✕</button>
-            <h3 style="color: #d4af37; margin-bottom: 20px; font-family: 'Cairo', sans-serif;">اختر الكمية المطلوبة</h3>
-            
-            <div class="weight-options" style="display: flex; flex-direction: column; gap: 10px;">
-                <button class="weight-btn" data-multiplier="1" onclick="selectWeight(1)" style="background: #444; color: white; padding: 12px; border: 1px solid #d4af37; border-radius: 8px; cursor: pointer; font-family: 'Cairo'; transition: all 0.3s ease;">
-                    ١ كيلو (السعر كامل)
-                </button>
-                <button class="weight-btn" data-multiplier="0.5" onclick="selectWeight(0.5)" style="background: #444; color: white; padding: 12px; border: 1px solid #d4af37; border-radius: 8px; cursor: pointer; font-family: 'Cairo'; transition: all 0.3s ease;">
-                    نصف كيلو (نصف السعر)
-                </button>
-                <button class="weight-btn" data-multiplier="0.25" onclick="selectWeight(0.25)" style="background: #444; color: white; padding: 12px; border: 1px solid #d4af37; border-radius: 8px; cursor: pointer; font-family: 'Cairo'; transition: all 0.3s ease;">
-                    ربع كيلو (ربع السعر)
-                </button>
-            </div>
-
-            <div style="margin-top: 20px; text-align: center;">
-                <p style="color: #d4af37; font-size: 1.5rem; font-weight: bold; margin-bottom: 15px;">
-                    السعر: <span id="weight-display-price">0</span> ج.م
-                </p>
-            </div>
-
-            <button onclick="confirmWeightSelection()" 
-                    style="background: #d4af37; color: #000; width: 100%; padding: 12px; border-radius: 8px; margin-top: 20px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; font-size: 1rem; border: none; transition: all 0.3s ease;">
-              ✓ إضافة للسلة
-            </button>
-        </div>
+  <div class="weight-modal" style="background: #1a1a1a; padding: 20px; border-radius: 12px; border: 1px solid #d4af37; width: 90%; max-width: 400px; text-align: center; direction: rtl;">
+    <h3 style="color: #d4af37; margin-bottom: 20px; font-family: 'Cairo';">اختر الوزن المطلوب</h3>
+    
+    <div class="weight-options" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px;">
+      <button class="weight-btn" data-multiplier="0.25" style="padding: 8px 15px; border-radius: 6px; border: none; cursor: pointer; font-family: 'Cairo';">ربع كيلو</button>
+      <button class="weight-btn" data-multiplier="0.5" style="padding: 8px 15px; border-radius: 6px; border: none; cursor: pointer; font-family: 'Cairo';">نصف كيلو</button>
+      <button class="weight-btn" data-multiplier="1" style="padding: 8px 15px; border-radius: 6px; border: none; cursor: pointer; font-family: 'Cairo';">كيلو</button>
+      
+      <button class="weight-btn" data-multiplier="1.25" style="padding: 8px 15px; border-radius: 6px; border: none; cursor: pointer; font-family: 'Cairo';">كيلو وربع</button>
+      <button class="weight-btn" data-multiplier="1.5" style="padding: 8px 15px; border-radius: 6px; border: none; cursor: pointer; font-family: 'Cairo';">كيلو ونصف</button>
     </div>
+
+    <div class="weight-price-display" style="color: #fff; font-size: 1.1rem; margin-bottom: 20px;">
+      السعر: <span id="weight-display-price" style="color: #d4af37; font-weight: bold;">0</span> ج.م
+    </div>
+
+    <div style="display: flex; gap: 10px;">
+      <button onclick="addToCartWithWeight()" style="flex: 2; background: #d4af37; color: #000; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">إضافة للسلة</button>
+      <button id="weight-modal-close" style="flex: 1; background: #333; color: #fff; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-family: 'Cairo';">إلغاء</button>
+    </div>
+  </div>
 </div>
+  
   
 </body>
 </html>
