@@ -86,7 +86,7 @@ const drinks = [
     price: 90 ,
     category: "konafa",
     image: "2.png",
-    desc: "حلوى عربية مصنوعة من السمن والسكر والزبدة الفلاحي ومحشوة بالجوز",
+    desc: "حلوى عربية مصنوعة من السمن والسكر والزبدة الفلاح�� ومحشوة بالجوز",
     ingredients: []
   },
   {
@@ -139,9 +139,8 @@ const drinks = [
     desc: "رقائق الجلاش محشوة بالقشطة مع اللبن والزبدة",
     ingredients: []
   },
- 
   
-  // ✅ مشكل فستق حلبي - مع 6 صور
+  // ✅ مشكل فستق حلبي
   {
     id: "mishkal-fustuk",
     nameAr: "مشكل فستق حلبي",
@@ -161,8 +160,8 @@ const drinks = [
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
 
-   {
-    id: "mishkal-fustuk",
+  {
+    id: "mishkal-fustuk-mix",
     nameAr: " مشكل فستق حلبي مع لوز و كاجو",
     nameEn: "",
     price: 1250,
@@ -174,14 +173,11 @@ const drinks = [
       "6.png",
       "23.png",
       "20.png",
-      "11.png",
-      "29.png"
+      "11.png"
     ],
     desc: "مزيج فاخر من أفضل أنواع البقلاوة بالفستق الحلبي الممتاز( قابل لتعديل الاصناف علي حسب زوقك)",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
-
-   
 
   {
     id: "6",
@@ -276,7 +272,7 @@ const drinks = [
   },
   {
     id: "16",
-    nameAr: "سنيورة فستق حلبي",
+    nameAr: "سنيور�� فستق حلبي",
     nameEn: "",
     price: 1500,
     category: "baqlawa",
@@ -315,7 +311,7 @@ const drinks = [
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
  
-  // ✅ مشكل لوز حلبي - مع 6 صور
+  // ✅ مشكل لوز
   {
     id: "mishkal-loz",
     nameAr: "مشكل لوز",
@@ -329,14 +325,13 @@ const drinks = [
       "23.png",
       "24.png",
       "26.png",
-      "30.png",
-      "29.png"
+      "30.png"
     ],
     desc: "مزيج فاخر من أفضل أنواع البقلاوة باللوز الممتاز( قابل لتعديل الاصناف علي حسب زوقك)",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
 
-{
+  {
     id: "10000",
     nameAr: "كنافة لوز",
     nameEn: "",
@@ -418,7 +413,6 @@ const drinks = [
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
   
-  
   {
     id: "29",
     nameAr: "بقلاوة اسطنبولي جوز",
@@ -456,7 +450,7 @@ const drinks = [
     price: 900,
     category: "baqlawa",
     image: "32.png",
-    desc: "رقائق الجلاش المحشية بعجينة اللوز الحلو",
+    desc: "رقائق ��لجلاش المحشية بعجينة اللوز الحلو",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
      {
@@ -466,7 +460,7 @@ const drinks = [
     price: 500,
     category: "konafa",
     image: "501.JPG",
-    desc: "رقائق جلاش محشية قشطة",
+    desc: "رقائق جلاش محشية قش��ة",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
   {
@@ -500,7 +494,7 @@ const drinks = [
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
   {
-    id: "505",
+    id: "505b",
     nameAr: "لوكم بندق ",
     nameEn: "",
     price: 950,
@@ -548,8 +542,7 @@ const state = {
   currentFilter: "none",
   selectedDrink: null,
   selectedWeight: 1,
-  carouselPositions: {},
-  currentImageIndex: {} // ✅ تتبع الصورة الحالية لكل منتج
+  currentImageIndex: {}
 };
 
 // ========== DOM ELEMENTS ==========
@@ -651,7 +644,7 @@ function filterSubCategory(subId) {
   displayFilteredDrinks(filtered);
 }
 
-// ✅ دالة عرض المنتجات مع الكاروسيل للمنتجات التي لها صور متعددة
+// ✅ دالة عرض المنتجات
 function displayFilteredDrinks(data) {
   DOM.drinksGrid.innerHTML = "";
   if (data.length === 0) {
@@ -662,7 +655,6 @@ function displayFilteredDrinks(data) {
   data.forEach((drink, index) => {
     let card;
     
-    // ✅ إذا كان المنتج له صور متعددة = أضف كاروسيل
     if (drink.images && drink.images.length > 1) {
       card = createCarouselCard(drink);
     } else {
@@ -674,7 +666,7 @@ function displayFilteredDrinks(data) {
   });
 }
 
-// ✅ دالة إنشاء كرت الكاروسيل (صور متعددة فقط - بدون أزرار)
+// ✅ دالة إنشاء كرت الكاروسيل
 function createCarouselCard(drink) {
   const card = document.createElement("div");
   card.className = "drink-card carousel-card";
@@ -685,12 +677,10 @@ function createCarouselCard(drink) {
   const carouselId = `carousel-${drink.id}`;
   const images = drink.images || [drink.image];
   
-  // ✅ تهيئة موضع الصورة
   if (!state.currentImageIndex[carouselId]) {
     state.currentImageIndex[carouselId] = 0;
   }
 
-  // ✅ إنشاء السلايدات
   const slidesHTML = images.map((img, index) => `
     <div class="carousel-slide" data-index="${index}">
       <img src="${img}" alt="${drink.nameAr}" loading="lazy" />
@@ -704,7 +694,6 @@ function createCarouselCard(drink) {
           ${slidesHTML}
         </div>
         
-        <!-- ✅ النقاط السفلية فقط (بدون أزرار) -->
         <div class="carousel-dots">
           ${images.map((_, i) => `
             <span class="dot ${i === 0 ? 'active' : ''}" onclick="goToImageSlide('${carouselId}', ${i})"></span>
@@ -739,7 +728,6 @@ function createCarouselCard(drink) {
     </div>
   `;
   
-  // ✅ إضافة حدث Wheel/Scroll على الكاروسيل فقط
   setTimeout(() => {
     const container = document.getElementById(`${carouselId}-container`);
     if (container) {
@@ -749,7 +737,6 @@ function createCarouselCard(drink) {
         changeImageSlide(carouselId, direction);
       }, { passive: false });
       
-      // ✅ إضافة دعم التمرير اللمسي (Swipe)
       let touchStartX = 0;
       container.addEventListener('touchstart', (e) => {
         touchStartX = e.touches[0].clientX;
@@ -811,7 +798,7 @@ function createDrinkCard(drink) {
   return card;
 }
 
-// ✅ دالة تحريك الكاروسيل عند السكرول
+// ✅ تحريك الكاروسيل عند السكرول
 function changeImageSlide(carouselId, direction) {
   const track = document.getElementById(`${carouselId}-track`);
   
@@ -820,7 +807,6 @@ function changeImageSlide(carouselId, direction) {
   const slides = track.querySelectorAll('.carousel-slide').length;
   let newIndex = (state.currentImageIndex[carouselId] || 0) + direction;
   
-  // ✅ تكرار لانهائي
   if (newIndex >= slides) newIndex = 0;
   if (newIndex < 0) newIndex = slides - 1;
   
@@ -853,63 +839,6 @@ function updateImageDots(carouselId, index) {
   });
 }
 
-// ========== WEIGHT MODAL ==========
-function openWeightModal(drink) {
-  state.selectedDrink = drink;
-  state.selectedWeight = 1;
-  
-  const weightModalOverlay = document.getElementById("weight-modal-overlay");
-  const weightButtons = document.querySelectorAll(".weight-btn");
-  
-  weightButtons.forEach(btn => {
-    btn.style.background = "#444";
-    btn.style.color = "white";
-  });
-  
-  weightButtons[0].style.background = "#d4af37";
-  weightButtons[0].style.color = "#000";
-  
-  weightModalOverlay.classList.remove("hidden");
-  weightModalOverlay.classList.add("open");
-  
-  updateWeightPrice(drink, 1);
-}
-
-function closeWeightModal() {
-  const weightModalOverlay = document.getElementById("weight-modal-overlay");
-  weightModalOverlay.classList.remove("open");
-  weightModalOverlay.classList.add("closing");
-  
-  setTimeout(() => {
-    weightModalOverlay.classList.add("hidden");
-    weightModalOverlay.classList.remove("closing");
-  }, 300);
-}
-
-function updateWeightPrice(drink, multiplier) {
-  const priceDisplay = document.getElementById("weight-display-price");
-  const newPrice = Math.round(drink.price * multiplier);
-  priceDisplay.textContent = newPrice;
-  
-  const weightButtons = document.querySelectorAll(".weight-btn");
-  weightButtons.forEach(btn => {
-    if (parseFloat(btn.dataset.multiplier) === multiplier) {
-      btn.style.background = "#d4af37";
-      btn.style.color = "#000";
-    } else {
-      btn.style.background = "#444";
-      btn.style.color = "white";
-    }
-  });
-}
-
-function selectWeight(multiplier) {
-  state.selectedWeight = multiplier;
-  if (state.selectedDrink) {
-    updateWeightPrice(state.selectedDrink, multiplier);
-  }
-}
-
 // ========== HANDLE QUICK ADD ==========
 function handleQuickAdd(event, drinkId) {
   event.stopPropagation(); 
@@ -919,33 +848,87 @@ function handleQuickAdd(event, drinkId) {
     if (isPlateItem(drink)) {
       addToCartSimple(drink);
     } else {
-      openWeightModal(drink);
+      // ✅ تحقق إذا كان مشكل
+      if (drink.nameAr.includes("مشكل")) {
+        openMishkalWeightModal(drink);
+      } else {
+        openWeightModal(drink);
+      }
     }
   }
 }
 
-function addToCartSimple(drink) {
-  const existingItem = state.cart.find(item => item.id === drink.id);
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    state.cart.push({
-      id: drink.id,
-      nameAr: drink.nameAr,
-      nameEn: drink.nameEn,
-      price: drink.price,
-      quantity: 1,
-      image: drink.image,
-      weight: 1
-    });
-  }
-  saveCart();
-  updateCartUI();
-  showToast(`تم إضافة ${drink.nameAr} ✓`);
-  renderDrinks();
+// ✅ WEIGHT MODAL للمشكل (6 أوزان)
+function openMishkalWeightModal(drink) {
+  state.selectedDrink = drink;
+  state.selectedWeight = 1;
+  
+  const weightModalOverlay = document.getElementById("weight-modal-overlay");
+  
+  weightModalOverlay.innerHTML = `
+    <div class="weight-modal-content" style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 12px; padding: 30px; max-width: 450px; text-align: center; color: white; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+      <h2 style="color: #d4af37; margin-bottom: 20px; font-size: 1.3rem;">اختر الوزن المفضل</h2>
+      
+      <div class="weights-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+        <button class="mishkal-weight-btn" onclick="selectMishkalWeight(0.25)" data-multiplier="0.25" style="background: #d4af37; color: #000; border: 2px solid #d4af37; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; font-size: 0.95rem; transition: all 0.3s;">
+          ربع كيلو<br><small style="color: #666; font-size: 0.85rem;">${Math.round(drink.price * 0.25)} ج.م</small>
+        </button>
+        
+        <button class="mishkal-weight-btn" onclick="selectMishkalWeight(0.5)" data-multiplier="0.5" style="background: #444; color: white; border: 2px solid #d4af37; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; font-size: 0.95rem; transition: all 0.3s;">
+          نصف كيلو<br><small style="color: #aaa; font-size: 0.85rem;">${Math.round(drink.price * 0.5)} ج.م</small>
+        </button>
+        
+        <button class="mishkal-weight-btn" onclick="selectMishkalWeight(1)" data-multiplier="1" style="background: #444; color: white; border: 2px solid #d4af37; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; font-size: 0.95rem; transition: all 0.3s;">
+          كيلو<br><small style="color: #aaa; font-size: 0.85rem;">${Math.round(drink.price * 1)} ج.م</small>
+        </button>
+        
+        <button class="mishkal-weight-btn" onclick="selectMishkalWeight(1.25)" data-multiplier="1.25" style="background: #444; color: white; border: 2px solid #d4af37; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; font-size: 0.95rem; transition: all 0.3s;">
+          كيلو وربع<br><small style="color: #aaa; font-size: 0.85rem;">${Math.round(drink.price * 1.25)} ج.م</small>
+        </button>
+        
+        <button class="mishkal-weight-btn" onclick="selectMishkalWeight(1.5)" data-multiplier="1.5" style="background: #444; color: white; border: 2px solid #d4af37; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; font-size: 0.95rem; transition: all 0.3s;">
+          كيلو ونصف<br><small style="color: #aaa; font-size: 0.85rem;">${Math.round(drink.price * 1.5)} ج.م</small>
+        </button>
+        
+        <button class="mishkal-weight-btn" onclick="selectMishkalWeight(2)" data-multiplier="2" style="background: #444; color: white; border: 2px solid #d4af37; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; font-size: 0.95rem; transition: all 0.3s;">
+          كيلوين<br><small style="color: #aaa; font-size: 0.85rem;">${Math.round(drink.price * 2)} ج.م</small>
+        </button>
+      </div>
+      
+      <div style="display: flex; gap: 10px;">
+        <button onclick="addMishkalToCart()" style="flex: 1; background: #d4af37; color: #000; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; transition: all 0.3s;">
+          إضافة للسلة
+        </button>
+        <button onclick="closeMishkalWeightModal()" style="flex: 1; background: #444; color: white; border: 1px solid #d4af37; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; transition: all 0.3s;">
+          إلغاء
+        </button>
+      </div>
+    </div>
+  `;
+  
+  weightModalOverlay.classList.remove("hidden");
+  weightModalOverlay.classList.add("open");
 }
 
-function addToCartWithWeight() {
+// ✅ تحديد وزن المشكل
+function selectMishkalWeight(multiplier) {
+  state.selectedWeight = multiplier;
+  
+  const buttons = document.querySelectorAll(".mishkal-weight-btn");
+  buttons.forEach(btn => {
+    const btnMultiplier = parseFloat(btn.dataset.multiplier);
+    if (btnMultiplier === multiplier) {
+      btn.style.background = "#d4af37";
+      btn.style.color = "#000";
+    } else {
+      btn.style.background = "#444";
+      btn.style.color = "white";
+    }
+  });
+}
+
+// ✅ إضافة المشكل للسلة
+function addMishkalToCart() {
   if (!state.selectedDrink) return;
   
   const drink = state.selectedDrink;
@@ -974,10 +957,165 @@ function addToCartWithWeight() {
   saveCart();
   updateCartUI();
   
-  const weightLabel = weight === 1 ? "كيلو" : weight === 0.5 ? "نصف كيلو" : "ربع كيلو";
+  const weightLabels = {
+    0.25: "ربع كيلو",
+    0.5: "نصف كيلو",
+    1: "كيلو",
+    1.25: "كيلو وربع",
+    1.5: "كيلو ونصف",
+    2: "كيلوين"
+  };
+  
+  const weightLabel = weightLabels[weight] || "وزن";
+  showToast(`تم إضافة ${drink.nameAr} (${weightLabel}) ✓`);
+  
+  closeMishkalWeightModal();
+  renderDrinks();
+}
+
+// ✅ إغلاق نافذة المشكل
+function closeMishkalWeightModal() {
+  const weightModalOverlay = document.getElementById("weight-modal-overlay");
+  weightModalOverlay.classList.remove("open");
+  weightModalOverlay.classList.add("closing");
+  
+  setTimeout(() => {
+    weightModalOverlay.classList.add("hidden");
+    weightModalOverlay.classList.remove("closing");
+  }, 300);
+}
+
+// ========== WEIGHT MODAL (للمنتجات العادية - 3 أوزان) ==========
+function openWeightModal(drink) {
+  state.selectedDrink = drink;
+  state.selectedWeight = 1;
+  
+  const weightModalOverlay = document.getElementById("weight-modal-overlay");
+  
+  weightModalOverlay.innerHTML = `
+    <div class="weight-modal-content" style="background: #1a1a1a; border: 2px solid #d4af37; border-radius: 12px; padding: 30px; max-width: 400px; text-align: center; color: white; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+      <h2 style="color: #d4af37; margin-bottom: 20px; font-size: 1.3rem;">اختر الوزن المفضل</h2>
+      
+      <div class="weights-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+        <button class="weight-btn-normal" onclick="selectNormalWeight(0.25)" data-multiplier="0.25" style="background: #d4af37; color: #000; border: 2px solid #d4af37; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; transition: all 0.3s;">
+          ربع كيلو<br><small style="color: #666; font-size: 0.85rem;">${Math.round(drink.price * 0.25)} ج.م</small>
+        </button>
+        
+        <button class="weight-btn-normal" onclick="selectNormalWeight(0.5)" data-multiplier="0.5" style="background: #444; color: white; border: 2px solid #d4af37; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; transition: all 0.3s;">
+          نصف كيلو<br><small style="color: #aaa; font-size: 0.85rem;">${Math.round(drink.price * 0.5)} ج.م</small>
+        </button>
+        
+        <button class="weight-btn-normal" onclick="selectNormalWeight(1)" data-multiplier="1" style="background: #444; color: white; border: 2px solid #d4af37; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; transition: all 0.3s;">
+          كيلو<br><small style="color: #aaa; font-size: 0.85rem;">${Math.round(drink.price * 1)} ج.م</small>
+        </button>
+      </div>
+      
+      <div style="display: flex; gap: 10px;">
+        <button onclick="addNormalToCart()" style="flex: 1; background: #d4af37; color: #000; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; transition: all 0.3s;">
+          إضافة للسلة
+        </button>
+        <button onclick="closeWeightModal()" style="flex: 1; background: #444; color: white; border: 1px solid #d4af37; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; transition: all 0.3s;">
+          إلغاء
+        </button>
+      </div>
+    </div>
+  `;
+  
+  weightModalOverlay.classList.remove("hidden");
+  weightModalOverlay.classList.add("open");
+}
+
+// ✅ تحديد الوزن العادي
+function selectNormalWeight(multiplier) {
+  state.selectedWeight = multiplier;
+  
+  const buttons = document.querySelectorAll(".weight-btn-normal");
+  buttons.forEach(btn => {
+    const btnMultiplier = parseFloat(btn.dataset.multiplier);
+    if (btnMultiplier === multiplier) {
+      btn.style.background = "#d4af37";
+      btn.style.color = "#000";
+    } else {
+      btn.style.background = "#444";
+      btn.style.color = "white";
+    }
+  });
+}
+
+// ✅ إضافة المنتج العادي للسلة
+function addNormalToCart() {
+  if (!state.selectedDrink) return;
+  
+  const drink = state.selectedDrink;
+  const weight = state.selectedWeight;
+  const finalPrice = Math.round(drink.price * weight);
+  
+  const existingItem = state.cart.find(item => 
+    item.id === drink.id && item.weight === weight
+  );
+  
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    state.cart.push({
+      id: drink.id,
+      nameAr: drink.nameAr,
+      nameEn: drink.nameEn,
+      price: finalPrice,
+      quantity: 1,
+      image: drink.image,
+      weight: weight,
+      originalPrice: drink.price
+    });
+  }
+  
+  saveCart();
+  updateCartUI();
+  
+  const weightLabels = {
+    0.25: "ربع كيلو",
+    0.5: "نصف كيلو",
+    1: "كيلو"
+  };
+  
+  const weightLabel = weightLabels[weight] || "وزن";
   showToast(`تم إضافة ${drink.nameAr} (${weightLabel}) ✓`);
   
   closeWeightModal();
+  renderDrinks();
+}
+
+// ✅ إغلاق نافذة الأوزان العادية
+function closeWeightModal() {
+  const weightModalOverlay = document.getElementById("weight-modal-overlay");
+  weightModalOverlay.classList.remove("open");
+  weightModalOverlay.classList.add("closing");
+  
+  setTimeout(() => {
+    weightModalOverlay.classList.add("hidden");
+    weightModalOverlay.classList.remove("closing");
+  }, 300);
+}
+
+// ========== ADD TO CART SIMPLE (للصحون) ==========
+function addToCartSimple(drink) {
+  const existingItem = state.cart.find(item => item.id === drink.id);
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    state.cart.push({
+      id: drink.id,
+      nameAr: drink.nameAr,
+      nameEn: drink.nameEn,
+      price: drink.price,
+      quantity: 1,
+      image: drink.image,
+      weight: 1
+    });
+  }
+  saveCart();
+  updateCartUI();
+  showToast(`تم إضافة ${drink.nameAr} ✓`);
   renderDrinks();
 }
 
@@ -1093,187 +1231,25 @@ function renderCartItems() {
     return;
   }
   
+  const weightLabels = {
+    0.25: "ربع كيلو",
+    0.5: "نصف كيلو",
+    0.75: "ثلاث أرباع كيلو",
+    1: "كيلو",
+    1.25: "كيلو وربع",
+    1.5: "كيلو ونصف",
+    2: "كيلوين"
+  };
+
   let itemsHtml = state.cart.map(item => {
-    const weightLabel = item.weight === 1 ? "كيلو" : item.weight === 0.5 ? "نصف كيلو" : "ربع كيلو";
+    const weightLabel = weightLabels[item.weight] || "وزن";
+    const drink = drinks.find(d => d.id === item.id);
     return `
     <div class="cart-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; direction: rtl;">
       <div class="cart-item-info" style="flex: 1; text-align: right;">
         <div class="cart-item-name" style="font-weight: bold; color: white;">${item.nameAr}</div>
-        <div style="color: #aaa; font-size: 0.85rem;">${!isPlateItem(drinks.find(d => d.id === item.id)) ? weightLabel : ''}</div>
+        <div style="color: #aaa; font-size: 0.85rem;">${!isPlateItem(drink) ? weightLabel : ''}</div>
         <div style="color: #d4af37; font-size: 0.9rem;">${item.price * item.quantity} ج.م</div>
       </div>
       <div class="cart-qty-control" style="display: flex; align-items: center; gap: 10px; margin: 0 15px;">
-        <button class="qty-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity - 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">−</button>
-        <div class="qty-display" style="color: white;">${item.quantity}</div>
-        <button class="qty-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity + 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">+</button>
-      </div>
-      <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" style="background:transparent; border:none; color:#ff4444; cursor:pointer; font-size: 1.2rem;">✕</button>
-    </div>
-  `;
-  }).join("");
-
-  const formHtml = `
-    <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px; direction: rtl; text-align: right;" id="customer-form">
-      <h3 style="color: #d4af37; font-size: 1rem; border-right: 3px solid #d4af37; padding-right: 8px; margin-bottom: 5px;">بيانات التوصيل:</h3>
-      <input type="text" id="cust-name" placeholder="الاسم بالكامل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">
-      <input type="tel" id="cust-phone" placeholder="رقم الموبايل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">
-      <input type="text" id="cust-address" placeholder="العنوان بالتفصيل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">
-      <textarea id="cust-notes" placeholder="ملاحظات (اختياري)" rows="2" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box; resize: none;"></textarea>
-    </div>
-  `;
-
-  DOM.cartItemsList.innerHTML = itemsHtml + formHtml;
-}
-
-// ========== WHATSAPP CHECKOUT ==========
-function sendToWhatsapp() {
-  if (state.cart.length === 0) {
-    showToast("السلة فارغة");
-    return;
-  }
-
-  const name = document.getElementById('cust-name').value.trim();
-  const phone = document.getElementById('cust-phone').value.trim();
-  const address = document.getElementById('cust-address').value.trim();
-  const notes = document.getElementById('cust-notes').value.trim();
-
-  if (!name || !phone || !address) {
-    showToast("⚠️ يرجى إكمال بيانات التوصيل");
-    document.getElementById('customer-form').scrollIntoView({ behavior: 'smooth' });
-    return;
-  }
-  
-  const cartSummary = state.cart.map(item => {
-    const weightLabel = item.weight === 1 ? "كيلو" : item.weight === 0.5 ? "نصف كيلو" : "ربع كيلو";
-    const weight = !isPlateItem(drinks.find(d => d.id === item.id)) ? ` [${weightLabel}]` : '';
-    return `• ${item.nameAr}${weight} [الكمية: ${item.quantity}]`;
-  }).join("\n");
-  
-  const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  
-  const message = `
-*طلب جديد من حلويات أبو السعود* 🍰
-
-*البيانات الشخصية:*
-👤 الاسم: ${name}
-📞 الهاتف: ${phone}
-📍 العنوان: ${address}
-${notes ? `📝 ملاحظات: ${notes}` : ''}
-
-*الطلبات:*
-${cartSummary}
-
-*ــــــــــــــــــــــــــــــــــــــــــــــــــ*
-💰 *الإجمالي: ${totalPrice} ج.م*
-*ــــــــــــــــــــــــــــــــــــــــــــــــــ*
-  `.trim();
-  
-  const whatsappURL = `https://wa.me/201070100122?text=${encodeURIComponent(message)}`;
-  window.open(whatsappURL, "_blank");
-  
-  state.cart = [];
-  saveCart();
-  updateCartUI();
-  closeCartModal();
-  showToast("تم إرسال الطلب بنجاح ✓");
-}
-
-// ========== TOAST NOTIFICATIONS ==========
-function showToast(message) {
-  DOM.toast.textContent = message;
-  DOM.toast.classList.remove("hidden");
-  DOM.toast.classList.add("show");
-  
-  setTimeout(() => {
-    DOM.toast.classList.remove("show");
-    setTimeout(() => {
-      DOM.toast.classList.add("hidden");
-    }, 400);
-  }, 2500);
-}
-
-// ========== EVENT LISTENERS ==========
-function setupEventListeners() {
-  DOM.filterBtns.forEach(btn => {
-    btn.addEventListener("click", () => filterDrinks(btn.dataset.filter));
-  });
-  
-  DOM.modalClose.addEventListener("click", closeModal);
-  DOM.modalOverlay.addEventListener("click", (e) => {
-    if (e.target === DOM.modalOverlay) closeModal();
-  });
-  
-  DOM.orderBtn.addEventListener("click", () => {
-    if (state.selectedDrink) {
-      if (isPlateItem(state.selectedDrink)) {
-        addToCart(state.selectedDrink);
-      } else {
-        closeModal();
-        openWeightModal(state.selectedDrink);
-      }
-    }
-  });
-  
-  const weightModalClose = document.getElementById("weight-modal-close");
-  if (weightModalClose) {
-    weightModalClose.addEventListener("click", closeWeightModal);
-  }
-  
-  const weightModalOverlay = document.getElementById("weight-modal-overlay");
-  if (weightModalOverlay) {
-    weightModalOverlay.addEventListener("click", (e) => {
-      if (e.target === weightModalOverlay) closeWeightModal();
-    });
-  }
-  
-  const weightBtns = document.querySelectorAll(".weight-btn");
-  weightBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const multiplier = parseFloat(btn.dataset.multiplier);
-      selectWeight(multiplier);
-    });
-  });
-  
-  DOM.cartModalClose.addEventListener("click", closeCartModal);
-  DOM.cartModalOverlay.addEventListener("click", (e) => {
-    if (e.target === DOM.cartModalOverlay) closeCartModal();
-  });
-  
-  DOM.checkoutWhatsapp.addEventListener("click", sendToWhatsapp);
-  DOM.cartIconWrap.addEventListener("click", openCartModal);
-  
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      closeModal();
-      closeCartModal();
-      closeWeightModal();
-    }
-  });
-}
-
-function confirmWeightSelection() {
-  addToCartWithWeight();
-}
-
-// ========== RENDER DRINKS ==========
-function renderDrinks() {
-  if (state.currentFilter === "none") {
-    DOM.drinksGrid.innerHTML = "";
-    return;
-  }
-
-  const filtered = state.currentFilter === "all"
-    ? drinks
-    : drinks.filter(d => d.category === state.currentFilter);
-  
-  DOM.drinksGrid.innerHTML = "";
-  
-  filtered.forEach((drink, index) => {
-    const card = createDrinkCard(drink);
-    DOM.drinksGrid.appendChild(card);
-    
-    setTimeout(() => {
-      card.classList.add("visible");
-    }, index * 50);
-  });
-}
+        <button class="qty-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity - 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor
