@@ -549,6 +549,16 @@ const state = {
   currentImageIndex: {} // ✅ تتبع الصورة الحالية لكل منتج
 };
 
+// ========== STATE MANAGEMENT ==========
+const state = {
+  cart: JSON.parse(localStorage.getItem("cart")) || [],
+  currentFilter: "none",
+  selectedDrink: null,
+  selectedWeight: 1,
+  carouselPositions: {},
+  currentImageIndex: {} // ✅ تتبع الصورة الحالية لكل منتج
+};
+
 // ========== DOM ELEMENTS ==========
 const DOM = {
   loadingScreen: document.getElementById("loading-screen"),
