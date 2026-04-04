@@ -40,7 +40,7 @@ const drinks = [
     ingredients: []
   },
   {
-    id: "400",
+    id: "401",
     nameAr: "   اسطنبولية و نابلسية نصف و نصف",
     nameEn: "",
     price: 540,
@@ -80,7 +80,7 @@ const drinks = [
     ingredients: []
   },
   {
-    id: "2",
+    id: "2.5",
     nameAr: "صحن عربية",
     nameEn: "",
     price: 90 ,
@@ -475,7 +475,7 @@ const drinks = [
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
   {
-    id: "505",
+    id: "506",
     nameAr: "لوكم بندق ",
     nameEn: "",
     price: 950,
