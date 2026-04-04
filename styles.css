@@ -1410,8 +1410,6 @@ footer p {
 
 
 
-
-
 /* ========== CAROUSEL STYLES ========== */
 .carousel-card {
   position: relative;
@@ -1430,87 +1428,36 @@ footer p {
   height: 280px;
   overflow: hidden;
   background: #1a1a1a;
+  cursor: grab;
+}
+
+.carousel-container:active {
+  cursor: grabbing;
 }
 
 .carousel-track {
   display: flex;
   width: 100%;
   height: 100%;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.6s ease-out;
 }
 
 .carousel-slide {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   min-width: 100%;
   height: 100%;
-  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-  position: relative;
+  background: #1a1a1a;
 }
 
 .carousel-slide img {
-  position: absolute;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  top: 0;
-  left: 0;
 }
 
-.slide-info {
-  position: relative;
-  z-index: 5;
-  text-align: center;
-  color: white;
-  margin-bottom: 15px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
-
-.slide-name {
-  font-weight: 700;
-  font-size: 1rem;
-  color: #fff;
-}
-
-.slide-price {
-  color: #d4af37;
-  font-weight: bold;
-  margin-top: 5px;
-}
-
-/* Navigation Buttons */
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(212, 175, 55, 0.85);
-  color: #000;
-  border: none;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  font-size: 1.5rem;
-  cursor: pointer;
-  z-index: 10;
-  transition: all 0.3s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-
-.carousel-prev {
-  left: 10px;
-}
-
-.carousel-next {
-  right: 10px;
-}
-
-.carousel-btn:hover {
-  background: #d4af37;
-  transform: translateY(-50%) scale(1.1);
-}
-
-/* Dots */
+/* Dots Only (No Buttons) */
 .carousel-dots {
   position: absolute;
   bottom: 12px;
@@ -1525,7 +1472,7 @@ footer p {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.4);
   cursor: pointer;
   transition: all 0.3s;
   border: 2px solid transparent;
@@ -1533,10 +1480,12 @@ footer p {
 
 .dot.active {
   background: #d4af37;
-  box-shadow: 0 0 8px #d4af37;
+  box-shadow: 0 0 10px #d4af37;
+  transform: scale(1.2);
 }
 
 .dot:hover {
   background: rgba(212, 175, 55, 0.9);
-  transform: scale(1.2);
 }
+
+
