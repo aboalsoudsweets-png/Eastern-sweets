@@ -139,16 +139,7 @@ const drinks = [
     desc: "رقائق الجلاش محشوة بالقشطة مع اللبن والزبدة",
     ingredients: []
   },
-  {
-    id: "10000",
-    nameAr: "كنافة لوز",
-    nameEn: "",
-    price: 950 ,
-    category: "baqlawa",
-    image: "10000.png",
-    desc: "حلوى شرقية من خيوط الكنافة المحمّصة ومحشية لوز ",
-    ingredients: []
-  },
+ 
   
   // ✅ مشكل فستق حلبي - مع 6 صور
   {
@@ -157,18 +148,20 @@ const drinks = [
     nameEn: "",
     price: 2500,
     category: "baqlawa",
-    image: "mishkal-fustuk-1.png",
+    image: "7.png",
     images: [
-      "mishkal-fustuk-1.png",
-      "mishkal-fustuk-2.png",
-      "mishkal-fustuk-3.png",
-      "mishkal-fustuk-4.png",
-      "mishkal-fustuk-5.png",
-      "mishkal-fustuk-6.png"
+      "7.png",
+      "6.png",
+      "8.png",
+      "10.png",
+      "11.png",
+      "15.png"
     ],
     desc: "مزيج فاخر من أفضل أنواع البقلاوة بالفستق الحلبي الممتاز",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
+
+   
 
   {
     id: "6",
@@ -309,19 +302,31 @@ const drinks = [
     nameEn: "",
     price: 2500,
     category: "baqlawa",
-    image: "mishkal-loz-1.png",
+    image: "20.png",
     images: [
-      "mishkal-loz-1.png",
-      "mishkal-loz-2.png",
-      "mishkal-loz-3.png",
-      "mishkal-loz-4.png",
-      "mishkal-loz-5.png",
-      "mishkal-loz-6.png"
+      "20.png",
+      "21.png",
+      "23.png",
+      "24.png",
+      "26.png",
+      "30.png",
+      "29.png"
     ],
     desc: "مزيج فاخر من أفضل أنواع البقلاوة باللوز الحلبي الممتاز",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
 
+{
+    id: "10000",
+    nameAr: "كنافة لوز",
+    nameEn: "",
+    price: 950 ,
+    category: "baqlawa",
+    image: "10000.png",
+    desc: "حلوى شرقية من خيوط الكنافة المحمّصة ومحشية لوز ",
+    ingredients: []
+  },
+  
   {
     id: "20",
     nameAr: "بورما لوز",
@@ -344,7 +349,7 @@ const drinks = [
   },
   {
     id: "23",
-    nameAr: "بقلاوة اسطنبولي ��وز",
+    nameAr: "بقلاوة اسطنبولي لوز",
     nameEn: "",
     price: 750,
     category: "baqlawa",
