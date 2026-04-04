@@ -1274,3 +1274,200 @@ function renderDrinks() {
     }, index * 50);
   });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ✅ تعديل دالة handleQuickAdd للتحقق من المشكل
+function handleQuickAdd(event, drinkId) {
+  event.stopPropagation(); 
+  const drink = drinks.find(d => d.id === drinkId);
+  
+  if (drink) {
+    // ✅ إذا كان مشكل → افتح modal الأوزان
+    if (drink.nameAr.includes("مشكل")) {
+      openWeightModalForMeshkal(drink);
+    } 
+    // ✅ إذا كان صحن → أضف مباشرة
+    else if (isPlateItem(drink)) {
+      addToCartSimple(drink);
+    } 
+    // ✅ باقي المنتجات → افتح modal الأوزان العادي
+    else {
+      openWeightModal(drink);
+    }
+  }
+}
+
+// ✅ دالة جديدة: modal خاص بالمشكل مع أوزان مختلفة
+function openWeightModalForMeshkal(drink) {
+  state.selectedDrink = drink;
+  state.selectedWeight = 0.25; // ربع كيلو افتراضي
+  
+  const weightModalOverlay = document.getElementById("weight-modal-overlay");
+  
+  // ✅ تحديث محتوى الـ modal
+  const modalContent = weightModalOverlay.querySelector(".modal-content");
+  
+  // ✅ إنشاء أزرار الأوزان الجديدة
+  const weightsHTML = `
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; justify-content: center;">
+      <button class="weight-btn meshkal-weight-btn" data-multiplier="0.25" onclick="selectMeshkalWeight(0.25)" style="background: #d4af37; color: #000; border: none; padding: 10px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
+        ربع كيلو
+      </button>
+      <button class="weight-btn meshkal-weight-btn" data-multiplier="0.5" onclick="selectMeshkalWeight(0.5)" style="background: #444; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
+        نصف كيلو
+      </button>
+      <button class="weight-btn meshkal-weight-btn" data-multiplier="1" onclick="selectMeshkalWeight(1)" style="background: #444; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
+        كيلو
+      </button>
+      <button class="weight-btn meshkal-weight-btn" data-multiplier="1.25" onclick="selectMeshkalWeight(1.25)" style="background: #444; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
+        كيلو وربع
+      </button>
+      <button class="weight-btn meshkal-weight-btn" data-multiplier="1.5" onclick="selectMeshkalWeight(1.5)" style="background: #444; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
+        كيلو ونصف
+      </button>
+    </div>
+  `;
+  
+  // ✅ تحديث السعر
+  const priceDisplay = document.getElementById("weight-display-price");
+  if (priceDisplay) {
+    const newPrice = Math.round(drink.price * 0.25);
+    priceDisplay.textContent = newPrice;
+  }
+  
+  // ✅ إعادة بناء modal (يفترض أن لديك div معين لأزرار الوزن)
+  const weightsContainer = modalContent.querySelector(".weights-container") || document.createElement("div");
+  weightsContainer.className = "weights-container";
+  weightsContainer.innerHTML = weightsHTML;
+  
+  if (!modalContent.querySelector(".weights-container")) {
+    modalContent.insertBefore(weightsContainer, modalContent.querySelector(".modal-buttons"));
+  }
+  
+  weightModalOverlay.classList.remove("hidden");
+  weightModalOverlay.classList.add("open");
+}
+
+// ✅ دالة اختيار وزن المشكل
+function selectMeshkalWeight(multiplier) {
+  state.selectedWeight = multiplier;
+  
+  // ✅ تحديث السعر
+  if (state.selectedDrink) {
+    updateWeightPrice(state.selectedDrink, multiplier);
+  }
+  
+  // ✅ تحديث ألوان الأزرار
+  document.querySelectorAll('.meshkal-weight-btn').forEach(btn => {
+    if (parseFloat(btn.dataset.multiplier) === multiplier) {
+      btn.style.background = "#d4af37";
+      btn.style.color = "#000";
+    } else {
+      btn.style.background = "#444";
+      btn.style.color = "white";
+    }
+  });
+}
+
+// ✅ تعديل دالة addToCartWithWeight لتدعم الأوزان الجديدة
+function addToCartWithWeight() {
+  if (!state.selectedDrink) return;
+  
+  const drink = state.selectedDrink;
+  const weight = state.selectedWeight;
+  const finalPrice = Math.round(drink.price * weight);
+  
+  const existingItem = state.cart.find(item => 
+    item.id === drink.id && item.weight === weight
+  );
+  
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    state.cart.push({
+      id: drink.id,
+      nameAr: drink.nameAr,
+      nameEn: drink.nameEn,
+      price: finalPrice,
+      quantity: 1,
+      image: drink.image,
+      weight: weight,
+      originalPrice: drink.price
+    });
+  }
+  
+  saveCart();
+  updateCartUI();
+  
+  // ✅ تحديث تسميات الوزن للأوزان الجديدة
+  const weightLabel = getWeightLabel(weight);
+  showToast(`تم إضافة ${drink.nameAr} (${weightLabel}) ✓`);
+  
+  closeWeightModal();
+  renderDrinks();
+}
+
+// ✅ دالة مساعدة لتحويل الرقم إلى اسم الوزن
+function getWeightLabel(weight) {
+  const weightMap = {
+    0.25: "ربع كيلو",
+    0.5: "نصف كيلو",
+    1: "كيلو",
+    1.25: "كيلو وربع",
+    1.5: "كيلو و��صف"
+  };
+  return weightMap[weight] || weight + " كيلو";
+}
+
+// ✅ تحديث renderCartItems لعرض الأوزان الجديدة بشكل صحيح
+function renderCartItems() {
+  if (state.cart.length === 0) {
+    DOM.cartItemsList.innerHTML = "<p style='text-align:center; color: #aaa; padding: 2rem;'>لا توجد عناصر في السلة</p>";
+    return;
+  }
+  
+  let itemsHtml = state.cart.map(item => {
+    const weightLabel = getWeightLabel(item.weight);
+    return `
+    <div class="cart-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; direction: rtl;">
+      <div class="cart-item-info" style="flex: 1; text-align: right;">
+        <div class="cart-item-name" style="font-weight: bold; color: white;">${item.nameAr}</div>
+        <div style="color: #aaa; font-size: 0.85rem;">${!isPlateItem(drinks.find(d => d.id === item.id)) ? weightLabel : ''}</div>
+        <div style="color: #d4af37; font-size: 0.9rem;">${item.price * item.quantity} ج.م</div>
+      </div>
+      <div class="cart-qty-control" style="display: flex; align-items: center; gap: 10px; margin: 0 15px;">
+        <button class="qty-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity - 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">−</button>
+        <div class="qty-display" style="color: white;">${item.quantity}</div>
+        <button class="qty-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity + 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">+</button>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" style="background:transparent; border:none; color:#ff4444; cursor:pointer; font-size: 1.2rem;">✕</button>
+    </div>
+  `;
+  }).join("");
+
+  const formHtml = `
+    <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px; direction: rtl; text-align: right;" id="customer-form">
+      <h3 style="color: #d4af37; font-size: 1rem; border-right: 3px solid #d4af37; padding-right: 8px; margin-bottom: 5px;">بيانات التوصيل:</h3>
+      <input type="text" id="cust-name" placeholder="الاسم بالكامل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">
+      <input type="tel" id="cust-phone" placeholder="رقم الموبايل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">
+      <input type="text" id="cust-address" placeholder="العنوان بالتفصيل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">
+      <textarea id="cust-notes" placeholder="ملاحظات (اختياري)" rows="2" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box; resize: none;"></textarea>
+    </div>
+  `;
+
+  DOM.cartItemsList.innerHTML = itemsHtml + formHtml;
+}
