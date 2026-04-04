@@ -545,8 +545,7 @@ const state = {
   currentFilter: "none",
   selectedDrink: null,
   selectedWeight: 1,
-  carouselPositions: {},
-  currentImageIndex: {} // ✅ تتبع الصورة الحالية لكل منتج
+  carouselPositions: {} // ✅ حفظ موضع الكاروسيل
 };
 
 // ========== DOM ELEMENTS ==========
@@ -604,8 +603,8 @@ function isPlateItem(drink) {
 
 // ========== FILTER FUNCTIONALITY ==========
 const baqlawaTypes = [
-  { id: 'fustuk', name: 'بقلاوة فستق', keys: ['فستق', 'بستاشيو', 'بلوريا', 'صره', 'اسيا', 'كل واشكر فستق', 'دولمة', 'اساور', 'سنيورة', 'لوكم فستق', 'مشكل فستق'] },
-  { id: 'loz', name: 'بقلاوة لوز', keys: ['لوز','لوكم بندق','كاجو','بقلاوة اسطنبولي جوز', 'وربات لوز', 'مشكل لوز'] },
+  { id: 'fustuk', name: 'بقلاوة فستق', keys: ['فستق', 'بستاشيو', 'بلوريا', 'صره', 'اسيا', 'كل واشكر فستق', 'دولمة', 'اساور', 'سنيورة', 'لوكم فستق'] },
+  { id: 'loz', name: 'بقلاوة لوز', keys: ['لوز','لوكم بندق','كاجو','بقلاوة اسطنبولي جوز', 'وربات لوز'] },
   { id: 'mix', name: 'أصناف متنوعة', keys: [  'عجوة' ,'معمول جوز','غريبة'] }
 ];
 
@@ -632,6 +631,7 @@ function filterDrinks(category) {
   }
 }
 
+// ✅ دالة تصفية الفئات الفرعية مع الكاروسيل
 function filterSubCategory(subId) {
   const typeData = baqlawaTypes.find(t => t.id === subId);
   
@@ -645,11 +645,11 @@ function filterSubCategory(subId) {
     btn.style.color = (btn.innerText === typeData.name) ? "#000" : "#fff";
   });
 
-  displayFilteredDrinks(filtered);
+  displayFilteredDrinks(filtered, subId); // ✅ أرسل معرّف الفئة
 }
 
-// ✅ دالة عرض المنتجات مع الكاروسيل للمنتجات التي لها صور متعددة
-function displayFilteredDrinks(data) {
+// ✅ دالة عرض المنتجات مع الكاروسيل في أول كرت
+function displayFilteredDrinks(data, subCategoryId) {
   DOM.drinksGrid.innerHTML = "";
   if (data.length === 0) {
     DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center;">قريباً...</p>`;
@@ -659,9 +659,10 @@ function displayFilteredDrinks(data) {
   data.forEach((drink, index) => {
     let card;
     
-    // ✅ إذا كان المنتج له صور متعددة = أضف كاروسيل
-    if (drink.images && drink.images.length > 1) {
-      card = createCarouselCard(drink);
+    // ✅ أول كرت = كاروسيل يعرض أول 6 منتجات
+    if (index === 0) {
+      const first6Products = data.slice(0, 6);
+      card = createCarouselCard(first6Products, subCategoryId);
     } else {
       card = createDrinkCard(drink);
     }
@@ -671,26 +672,21 @@ function displayFilteredDrinks(data) {
   });
 }
 
-// ✅ دالة إنشاء كرت الكاروسيل (صور متعددة فقط - بدون أزرار)
-function createCarouselCard(drink) {
+// ✅ دالة إنشاء كرت الكاروسيل
+function createCarouselCard(products, subCategoryId) {
   const card = document.createElement("div");
   card.className = "drink-card carousel-card";
   
-  const cartItem = state.cart.find(item => item.id === drink.id);
-  const qty = cartItem ? cartItem.quantity : 0;
+  const carouselId = `carousel-${subCategoryId}`;
   
-  const carouselId = `carousel-${drink.id}`;
-  const images = drink.images || [drink.image];
-  
-  // ✅ تهيئة موضع الصورة
-  if (!state.currentImageIndex[carouselId]) {
-    state.currentImageIndex[carouselId] = 0;
-  }
-
-  // ✅ إنشاء السلايدات
-  const slidesHTML = images.map((img, index) => `
-    <div class="carousel-slide" data-index="${index}">
-      <img src="${img}" alt="${drink.nameAr}" loading="lazy" />
+  // ✅ إنشاء السلايدات من أول 6 منتجات
+  const slidesHTML = products.map((product, index) => `
+    <div class="carousel-slide">
+      <img src="${product.image}" alt="${product.nameAr}" loading="lazy" />
+      <div class="slide-info">
+        <div class="slide-name">${product.nameAr}</div>
+        <div class="slide-price">${product.price} ج.م</div>
+      </div>
     </div>
   `).join('');
 
@@ -701,66 +697,50 @@ function createCarouselCard(drink) {
           ${slidesHTML}
         </div>
         
-        <!-- ✅ النقاط السفلية فقط (بدون أزرار) -->
+        <!-- ✅ أزرار التحكم -->
+        <button class="carousel-btn carousel-prev" onclick="moveCarousel('${carouselId}', -1)">
+          ❮
+        </button>
+        <button class="carousel-btn carousel-next" onclick="moveCarousel('${carouselId}', 1)">
+          ❯
+        </button>
+        
+        <!-- ✅ النقاط السفلية -->
         <div class="carousel-dots">
-          ${images.map((_, i) => `
-            <span class="dot ${i === 0 ? 'active' : ''}" onclick="goToImageSlide('${carouselId}', ${i})"></span>
+          ${products.map((_, i) => `
+            <span class="dot ${i === 0 ? 'active' : ''}" onclick="goToSlide('${carouselId}', ${i})"></span>
           `).join('')}
         </div>
       </div>
-      ${qty > 0 ? `<div class="card-qty-badge">${qty}</div>` : ''}
     </div>
     
     <div class="card-body" style="padding: 12px;">
       <div style="text-align: right; width: 100%;">
         <div class="card-name-ar" style="font-weight: 700; font-size: 1.1rem; color: #fff;">
-          ${drink.nameAr}
+          ${products[0].nameAr} + 5 أصناف أخرى
         </div>
-        <div class="card-desc-simple" style="color: #aaa; font-size: 0.85rem; margin-top: 4px; line-height: 1.3;">
-          ${drink.desc || ''}
+        <div class="card-desc-simple" style="color: #aaa; font-size: 0.85rem; margin-top: 4px;">
+          مجموعة مختارة من أفضل الأصناف
         </div>
       </div>
 
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
-        <div class="card-price" style="margin: 0;">
-          <strong style="color: #d4af37; font-size: 1.2rem;">${drink.price}</strong>
-          <small style="color: #d4af37;">ج.م</small>
-        </div>
-        
+      <div style="display: flex; justify-content: center; gap: 10px; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; flex-wrap: wrap;">
         <button class="quick-add-btn" 
-                onclick="handleQuickAdd(event, '${drink.id}')" 
-                style="background: #d4af37; color: #000; border: none; padding: 6px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
-          ${qty > 0 ? '➕ المزيد' : '🛍 اضف للسلة'}
+                onclick="selectProductFromCarousel(event, ${products[0].id})" 
+                style="background: #d4af37; color: #000; border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
+          🛍 اضف الأول
+        </button>
+        <button class="quick-add-btn" 
+                onclick="selectProductFromCarousel(event, ${products[1]?.id || products[0].id})" 
+                style="background: #d4af37; color: #000; border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
+          🛍 اضف الحالي
         </button>
       </div>
     </div>
   `;
   
-  // ✅ إضافة حدث Wheel/Scroll على الكاروسيل فقط
-  setTimeout(() => {
-    const container = document.getElementById(`${carouselId}-container`);
-    if (container) {
-      container.addEventListener('wheel', (e) => {
-        e.preventDefault();
-        const direction = e.deltaY > 0 ? 1 : -1;
-        changeImageSlide(carouselId, direction);
-      }, { passive: false });
-      
-      // ✅ إضافة دعم التمرير اللمسي (Swipe)
-      let touchStartX = 0;
-      container.addEventListener('touchstart', (e) => {
-        touchStartX = e.touches[0].clientX;
-      });
-      
-      container.addEventListener('touchend', (e) => {
-        const touchEndX = e.changedTouches[0].clientX;
-        const direction = touchStartX > touchEndX ? 1 : -1;
-        if (Math.abs(touchStartX - touchEndX) > 50) {
-          changeImageSlide(carouselId, direction);
-        }
-      });
-    }
-  }, 100);
+  // ✅ تهيئة موضع الكاروسيل
+  state.carouselPositions[carouselId] = 0;
   
   return card;
 }
@@ -808,38 +788,39 @@ function createDrinkCard(drink) {
   return card;
 }
 
-// ✅ دالة تحريك الكاروسيل عند السكرول
-function changeImageSlide(carouselId, direction) {
+// ✅ دالة تحريك الكاروسيل
+function moveCarousel(carouselId, direction) {
   const track = document.getElementById(`${carouselId}-track`);
+  const container = document.getElementById(`${carouselId}-container`);
   
-  if (!track) return;
+  if (!track || !container) return;
   
   const slides = track.querySelectorAll('.carousel-slide').length;
-  let newIndex = (state.currentImageIndex[carouselId] || 0) + direction;
+  let newPosition = (state.carouselPositions[carouselId] || 0) + direction;
   
-  // ✅ تكرار لانهائي
-  if (newIndex >= slides) newIndex = 0;
-  if (newIndex < 0) newIndex = slides - 1;
+  // ✅ التكرار اللانهائي
+  if (newPosition >= slides) newPosition = 0;
+  if (newPosition < 0) newPosition = slides - 1;
   
-  state.currentImageIndex[carouselId] = newIndex;
+  state.carouselPositions[carouselId] = newPosition;
   
-  track.style.transform = `translateX(-${newIndex * 100}%)`;
-  updateImageDots(carouselId, newIndex);
+  track.style.transform = `translateX(-${newPosition * 100}%)`;
+  updateDots(carouselId, newPosition);
 }
 
-// ✅ الانتقال المباشر للصورة
-function goToImageSlide(carouselId, index) {
+// ✅ الانتقال المباشر للسلايد
+function goToSlide(carouselId, index) {
   const track = document.getElementById(`${carouselId}-track`);
   
   if (!track) return;
   
-  state.currentImageIndex[carouselId] = index;
+  state.carouselPositions[carouselId] = index;
   track.style.transform = `translateX(-${index * 100}%)`;
-  updateImageDots(carouselId, index);
+  updateDots(carouselId, index);
 }
 
 // ✅ تحديث النقاط
-function updateImageDots(carouselId, index) {
+function updateDots(carouselId, index) {
   const container = document.getElementById(`${carouselId}-container`);
   
   if (!container) return;
@@ -848,6 +829,20 @@ function updateImageDots(carouselId, index) {
   dots.forEach((dot, i) => {
     dot.classList.toggle('active', i === index);
   });
+}
+
+// ✅ إضافة المنتج من الكاروسيل
+function selectProductFromCarousel(event, drinkId) {
+  event.stopPropagation();
+  const drink = drinks.find(d => d.id == drinkId);
+  
+  if (drink) {
+    if (isPlateItem(drink)) {
+      addToCartSimple(drink);
+    } else {
+      openWeightModal(drink);
+    }
+  }
 }
 
 // ========== WEIGHT MODAL ==========
