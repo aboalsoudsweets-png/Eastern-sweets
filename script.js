@@ -151,24 +151,45 @@ const drinks = [
   },
   
   // ✅ مشكل فستق حلبي - مع 6 صور
-  {
+ {
     id: "mishkal-fustuk",
     nameAr: "مشكل فستق حلبي",
     nameEn: "",
-    price: 2500,
+    price: 1750,
     category: "baqlawa",
-    image: "mishkal-fustuk-1.png",
+    image: "7.png",
     images: [
-      "mishkal-fustuk-1.png",
-      "mishkal-fustuk-2.png",
-      "mishkal-fustuk-3.png",
-      "mishkal-fustuk-4.png",
-      "mishkal-fustuk-5.png",
-      "mishkal-fustuk-6.png"
+      "7.png",
+      "6.png",
+      "8.png",
+      "10.png",
+      "13.png",
+      "17.png"
     ],
-    desc: "مزيج فاخر من أفضل أنواع البقلاوة بالفستق الحلبي الممتاز",
+    desc: "مزيج فاخر من أفضل أنواع البقلاوة بالفستق الحلبي الممتاز( قابل لتعديل الاصناف علي حسب زوقك)",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
+
+  {
+    id: "mishkal-fustuk-mix",
+    nameAr: " مشكل فستق حلبي مع لوز و كاجو",
+    nameEn: "",
+    price: 1250,
+    category: "baqlawa",
+    image: "7.png",
+    images: [
+      "7.png",
+      "27.png",
+      "6.png",
+      "23.png",
+      "20.png",
+      "11.png"
+    ],
+    desc: "مزيج فاخر من أفضل أنواع البقلاوة بالفستق الحلبي الممتاز( قابل لتعديل الاصناف علي حسب زوقك)",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+
+
 
   {
     id: "6",
@@ -303,24 +324,25 @@ const drinks = [
   },
  
   // ✅ مشكل لوز حلبي - مع 6 صور
-  {
+   {
     id: "mishkal-loz",
-    nameAr: "مشكل لوز حلبي",
+    nameAr: "مشكل لوز",
     nameEn: "",
-    price: 2500,
+    price: 750,
     category: "baqlawa",
-    image: "mishkal-loz-1.png",
+    image: "20.png",
     images: [
-      "mishkal-loz-1.png",
-      "mishkal-loz-2.png",
-      "mishkal-loz-3.png",
-      "mishkal-loz-4.png",
-      "mishkal-loz-5.png",
-      "mishkal-loz-6.png"
+      "20.png",
+      "21.png",
+      "23.png",
+      "24.png",
+      "26.png",
+      "30.png"
     ],
-    desc: "مزيج فاخر من أفضل أنواع البقلاوة باللوز الحلبي الممتاز",
+    desc: "مزيج فاخر من أفضل أنواع البقلاوة باللوز الممتاز( قابل لتعديل الاصناف علي حسب زوقك)",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
+
 
   {
     id: "20",
