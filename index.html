@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="ltr" class="dark">
+<html lang="ar" dir="rtl" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +7,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css?v=1.2" />
+  <style>
+    /* تنسيقات إضافية لضمان شكل السلة وحقول الإدخال */
+    .cart-input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background: #1a1a1a;
+      color: white;
+      font-family: 'Cairo', sans-serif;
+    }
+    .modal-box {
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+  </style>
 </head>
 <body>
 
@@ -24,40 +41,36 @@
         <span style="font-size: 1.5rem;">🛒</span>
         <span id="cart-count">0</span>
       </div>
-     
     </div>
   </nav>
 
-<section id="menu" style="padding-top: 100px;">
-  <div class="menu-header" style="text-align: center; margin-bottom: 30px;">
-    <img src="logo.png" alt="Logo" class="main-logo" style="max-width: 280px; height: auto;">
-    <h2 dir="rtl" style="color: #d4af37; font-family: 'Cairo', sans-serif; margin-top: 15px; font-weight: 700; font-size: 1.4rem; margin-bottom: 5px;">
-      أهلاً بكم في حلويات أبو السعود العربية
-    </h2>
-    
-    <p dir="rtl" style="color: #ffffff; font-family: 'Cairo', sans-serif; font-weight: 400; font-size: 1.1rem; margin-top: 0;">
-      اختر من قائمة الأصناف
-    </p>
-  </div>
+  <section id="menu" style="padding-top: 100px;">
+    <div class="menu-header" style="text-align: center; margin-bottom: 30px;">
+      <img src="logo.png" alt="Logo" class="main-logo" style="max-width: 280px; height: auto;">
+      <h2 style="color: #d4af37; font-family: 'Cairo', sans-serif; margin-top: 15px; font-weight: 700; font-size: 1.4rem; margin-bottom: 5px;">
+        أهلاً بكم في حلويات أبو السعود العربية
+      </h2>
+      <p style="color: #ffffff; font-family: 'Cairo', sans-serif; font-weight: 400; font-size: 1.1rem; margin-top: 0;">
+        اختر من قائمة الأصناف
+      </p>
+    </div>
 
- <div class="filters" dir="rtl" style="text-align:center; margin-bottom: 40px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
-    <button class="filter-btn" data-filter="konafa" style="border-radius: 4px !important;">كنافة</button>
-    <button class="filter-btn" data-filter="baqlawa" style="border-radius: 4px !important;">بقلاوة</button>
-    
-    <div style="flex-basis: 100%; height: 0;"></div> 
-    <button class="filter-btn" data-filter="namora" style="border-radius: 4px !important;">نمورة</button>
-  </div>
- <div id="sub-filters-container" dir="rtl" style="text-align:center; margin-bottom: 30px; display: none; flex-wrap: wrap; justify-content: center; gap: 10px;">
- </div>
-  
+    <div class="filters" style="text-align:center; margin-bottom: 40px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
+      <button class="filter-btn" data-filter="konafa" style="border-radius: 4px !important;">كنافة</button>
+      <button class="filter-btn" data-filter="baqlawa" style="border-radius: 4px !important;">بقلاوة</button>
+      <div style="flex-basis: 100%; height: 0;"></div> 
+      <button class="filter-btn" data-filter="namora" style="border-radius: 4px !important;">نمورة</button>
+    </div>
 
-  
-  <div class="drinks-grid" id="drinks-grid"></div>
-</section>
+    <div id="sub-filters-container" style="text-align:center; margin-bottom: 30px; display: none; flex-wrap: wrap; justify-content: center; gap: 10px;">
+    </div>
 
-<div id="modal-overlay" class="modal-overlay hidden">
+    <div class="drinks-grid" id="drinks-grid"></div>
+  </section>
+
+  <div id="modal-overlay" class="modal-overlay hidden">
     <div class="modal-box">
-      <img id="modal-img" src="" />
+      <img id="modal-img" src="" alt="product"/>
       <div class="modal-body" dir="rtl">
         <button class="modal-close" id="modal-close">✕</button>
         <h2 id="modal-name-ar"></h2>
@@ -70,74 +83,35 @@
     </div>
   </div>
 
- <div id="cart-modal-overlay" class="modal-overlay hidden">
-    <div class="modal-box" style="max-width: 450px; flex-direction: column; ma
-      
-      
-
-
-
-<div class="weight-selection-container" id="weight-box">
-  <label>اختر الوزن:</label>
-  <select id="weight-select">
-    <option value="0.5">نص كيلو</option>
-    <option value="1" selected>كيلو</option>
-    <option value="0.25">ربع كيلو</option>
-  </select>
-</div>
-
-
-      
-      
-      
-      
-      x-height: 90vh; overflow-y: auto;">
+  <div id="cart-modal-overlay" class="modal-overlay hidden">
+    <div class="modal-box" style="max-width: 450px;">
       <div class="modal-body" dir="rtl">
         <button class="modal-close" id="cart-modal-close">✕</button>
         <h2 style="text-align: center; color: #d4af37; margin-bottom: 20px;">🛒 سلتك</h2>
         
-        <div id="cart-items-list" style="margin: 10px 0; border-bottom: 1px solid #444; padding-bottom: 10px;"></div>
+        <div id="cart-items-list" style="margin: 10px 0; border-bottom: 1px solid #444; padding-bottom: 10px;">
+          </div>
         
-        <div style="margin: 15px 0; font-weight: bold; font-size: 1.2rem;">
-            الإجمالي: <span id="cart-total-price">0</span> ج.م
+        <div style="margin: 15px 0; font-weight: bold; font-size: 1.2rem; text-align: center;">
+          الإجمالي: <span id="cart-total-price">0</span> ج.م
         </div>
 
         <hr style="border: 0.5px solid #333; margin: 20px 0;">
 
-       
+        <h3 style="color: #d4af37; font-size: 1rem; margin-bottom: 10px;">بيانات التوصيل:</h3>
+        <input type="text" id="cust-name" class="cart-input" placeholder="الاسم بالكامل">
+        <input type="tel" id="cust-phone" class="cart-input" placeholder="رقم الموبايل">
+        <textarea id="cust-address" class="cart-input" placeholder="العنوان بالتفصيل" rows="2"></textarea>
+        <textarea id="cust-notes" class="cart-input" placeholder="ملاحظات (اختياري)" rows="1"></textarea>
 
-        <button id="checkout-whatsapp" style="background:#25D366; width: 100%; margin-top: 20px; padding: 12px; border-radius: 8px; color: white; border: none; font-weight: bold; cursor: pointer; font-size: 1.1rem;">
+        <button id="checkout-whatsapp" style="background:#25D366; width: 100%; margin-top: 15px; padding: 12px; border-radius: 8px; color: white; border: none; font-weight: bold; cursor: pointer; font-size: 1.1rem; font-family: 'Cairo';">
             إرسال الطلب عبر واتساب
         </button>
       </div>
     </div>
-</div>
-  <div id="toast" class="toast hidden"></div>
-  <script src="script.js"></script>
-
-
-  <footer class="main-footer">
-  <div class="footer-content">
-    <div class="establishment-date">
-      <p>تأسس عام ١٨٩٦ م</p>
-      <p>أبو السعود ©</p>
-    </div>
-
-    <div class="social-links">
-      <a href="https://www.instagram.com/abusaudsweets?igsh=MTJpMnNqcm14dXVvMw==" target="_blank" aria-label="Instagram">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a href="https://www.facebook.com/share/1JqpvBfRoH/" target="_blank" aria-label="Facebook">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-    </div>
   </div>
-</footer>
 
-
-
-
-<div id="weight-modal-overlay" class="modal-overlay hidden">
+  <div id="weight-modal-overlay" class="modal-overlay hidden">
     <div class="modal-box" style="max-width: 350px;">
         <div class="modal-body" dir="rtl" style="text-align: center;">
             <button class="modal-close" id="weight-modal-close">✕</button>
@@ -156,10 +130,23 @@
             </div>
         </div>
     </div>
-</div>
-  
+  </div>
 
-  
-  
+  <div id="toast" class="toast hidden"></div>
+
+  <footer class="main-footer">
+    <div class="footer-content">
+      <div class="establishment-date">
+        <p>تأسس عام ١٨٩٦ م</p>
+        <p>أبو السعود ©</p>
+      </div>
+      <div class="social-links">
+        <a href="https://www.instagram.com/abusaudsweets" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
