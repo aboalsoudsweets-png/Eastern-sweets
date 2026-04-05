@@ -479,66 +479,66 @@ const drinks = [
   
 ];
 
-// ========== STATE MANAGEMENT ==========
-let tempSelectedDrink = null; // لتخزين المنتج مؤقتاً عند اختيار الوزن
+// ==========================================
+// 2. إدارة الحالة (State Management)
+// ==========================================
+let tempSelectedDrink = null; 
 
 const state = {
   cart: JSON.parse(localStorage.getItem("cart")) || [],
   currentFilter: "none"
 };
 
-// ========== DOM ELEMENTS ==========
+// ==========================================
+// 3. عناصر الواجهة (DOM Elements)
+// ==========================================
 const DOM = {
   loadingScreen: document.getElementById("loading-screen"),
-  navbar: document.getElementById("navbar"),
   drinksGrid: document.getElementById("drinks-grid"),
   filterBtns: document.querySelectorAll(".filter-btn"),
-  cartModalOverlay: document.getElementById("cart-modal-overlay"),
-  weightModalOverlay: document.getElementById("weight-modal-overlay"),
-  cartIconWrap: document.getElementById("cart-icon-wrap"),
+  subContainer: document.getElementById("sub-filters-container"),
+  cartModal: document.getElementById("cart-modal-overlay"),
+  weightModal: document.getElementById("weight-modal-overlay"),
   cartCount: document.getElementById("cart-count"),
-  toast: document.getElementById("toast"),
-  cartModalClose: document.getElementById("cart-modal-close"),
-  weightModalClose: document.getElementById("weight-modal-close"),
-  cartItemsList: document.getElementById("cart-items-list"),
   cartTotalPrice: document.getElementById("cart-total-price"),
-  checkoutWhatsapp: document.getElementById("checkout-whatsapp")
+  cartItemsList: document.getElementById("cart-items-list"),
+  toast: document.getElementById("toast"),
+  checkoutBtn: document.getElementById("checkout-whatsapp")
 };
 
-// ========== INITIALIZATION ==========
+// ==========================================
+// 4. التشغيل الأولي (Initialization)
+// ==========================================
 document.addEventListener("DOMContentLoaded", () => {
   setupEventListeners();
-  hideLoadingScreen();
   updateCartUI();
+  // إخفاء شاشة التحميل بعد ثانيتين
+  setTimeout(() => {
+    if(DOM.loadingScreen) DOM.loadingScreen.style.display = "none";
+  }, 1500);
 });
 
-function hideLoadingScreen() {
-  setTimeout(() => {
-    DOM.loadingScreen?.classList.add("fade-out");
-    setTimeout(() => { if(DOM.loadingScreen) DOM.loadingScreen.style.display = "none"; }, 800);
-  }, 2000);
-}
-
-// ========== FILTER LOGIC ==========
+// ==========================================
+// 5. نظام الفلترة (Filtering System)
+// ==========================================
 const baqlawaTypes = [
-  { id: 'fustuk', name: 'بقلاوة فستق', keys: ['فستق', 'بستاشيو', 'بلوريا', 'صره', 'اسيا', 'كل واشكر فستق', 'دولمة', 'اساور', 'سنيورة'] },
-  { id: 'loz', name: 'بقلاوة لوز', keys: ['لوز','لوكم بندق','كاجو','بقلاوة اسطنبولي جوز'] },
-  { id: 'mix', name: 'أصناف متنوعة', keys: ['عجوة' ,'معمول جوز','غريبة'] }
+  { id: 'fustuk', name: 'بقلاوة فستق', keys: ['فستق', 'بستاشيو', 'بلوريا', 'صره'] },
+  { id: 'loz', name: 'بقلاوة لوز/جوز', keys: ['لوز','بندق','كاجو','جوز'] },
+  { id: 'mix', name: 'أصناف متنوعة', keys: ['عجوة' ,'معمول','غريبة'] }
 ];
 
 function filterDrinks(category) {
   state.currentFilter = category;
-  const subContainer = document.getElementById("sub-filters-container");
   DOM.filterBtns.forEach(btn => btn.classList.toggle("active", btn.dataset.filter === category));
 
   if (category === "baqlawa") {
-    subContainer.style.display = "flex";
-    subContainer.innerHTML = baqlawaTypes.map(type => `
+    DOM.subContainer.style.display = "flex";
+    DOM.subContainer.innerHTML = baqlawaTypes.map(type => `
       <button class="filter-btn sub-btn" onclick="filterSubCategory('${type.id}')">${type.name}</button>
     `).join("");
-    DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center; padding:20px;">اختر نوع البقلاوة المفضل لديك</p>`;
+    DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center; padding:20px;">اختر النوع من الأعلى</p>`;
   } else {
-    subContainer.style.display = "none";
+    DOM.subContainer.style.display = "none";
     renderDrinks();
   }
 }
@@ -546,112 +546,69 @@ function filterDrinks(category) {
 function filterSubCategory(subId) {
   const typeData = baqlawaTypes.find(t => t.id === subId);
   const filtered = drinks.filter(d => d.category === "baqlawa" && typeData.keys.some(key => d.nameAr.includes(key)));
-  displayFilteredDrinks(filtered);
+  displayDrinks(filtered);
 }
 
 function renderDrinks() {
   if (state.currentFilter === "none") return;
   const filtered = drinks.filter(d => d.category === state.currentFilter);
-  displayFilteredDrinks(filtered);
+  displayDrinks(filtered);
 }
 
-function displayFilteredDrinks(data) {
-  DOM.drinksGrid.innerHTML = "";
+function displayDrinks(data) {
+  DOM.drinksGrid.innerHTML = data.length ? "" : "<p style='color:#aaa; width:100%; text-align:center;'>قريباً...</p>";
   data.forEach((drink, index) => {
-    const card = createDrinkCard(drink);
+    const totalInCart = state.cart.filter(i => i.originalId === drink.id).reduce((s, i) => s + i.quantity, 0);
+    const card = document.createElement("div");
+    card.className = "drink-card visible";
+    card.innerHTML = `
+      <div class="card-img-wrap">
+        <img src="${drink.image}" alt="${drink.nameAr}">
+        ${totalInCart > 0 ? `<div class="card-qty-badge">${totalInCart}</div>` : ''}
+      </div>
+      <div class="card-body" style="padding:15px; text-align:right;">
+        <div style="font-weight:bold; color:white; font-size:1.1rem;">${drink.nameAr}</div>
+        <p style="color:#888; font-size:0.8rem; margin:5px 0;">${drink.desc}</p>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+          <span style="color:#d4af37; font-weight:bold;">${drink.price} ج.م</span>
+          <button onclick="handleOpenWeights('${drink.id}')" style="background:#d4af37; border:none; padding:7px 15px; border-radius:6px; cursor:pointer; font-weight:bold;">🛍 أضف</button>
+        </div>
+      </div>
+    `;
     DOM.drinksGrid.appendChild(card);
-    setTimeout(() => card.classList.add("visible"), index * 50);
   });
 }
 
-// ========== CARD & ADD LOGIC ==========
-function createDrinkCard(drink) {
-  const card = document.createElement("div");
-  card.className = "drink-card";
-  // نحسب إجمالي الكمية لكل الأوزان لهذا المنتج
-  const totalQty = state.cart.filter(item => item.originalId === drink.id).reduce((s, i) => s + i.quantity, 0);
-
-  card.innerHTML = `
-    <div class="card-img-wrap">
-      <img src="${drink.image || 'logo.png'}" alt="${drink.nameAr}" />
-      ${totalQty > 0 ? `<div class="card-qty-badge">${totalQty}</div>` : ''}
-    </div>
-    <div class="card-body">
-      <div class="card-name-ar">${drink.nameAr}</div>
-      <p class="card-desc-simple">${drink.desc || ''}</p>
-      <div class="card-footer-row">
-        <div class="card-price"><strong>${drink.price}</strong> <small>ج.م</small></div>
-        <button class="quick-add-btn" onclick="handleOpenWeightModal(event, '${drink.id}')">🛍 أضف</button>
-      </div>
-    </div>
-  `;
-  return card;
+// ==========================================
+// 6. منطق الأوزان والسلة (Weights & Cart)
+// ==========================================
+function handleOpenWeights(id) {
+  tempSelectedDrink = drinks.find(d => d.id === id);
+  DOM.weightModal.classList.remove("hidden");
+  DOM.weightModal.classList.add("open");
 }
 
-function handleOpenWeightModal(event, drinkId) {
-  event.stopPropagation();
-  const drink = drinks.find(d => d.id === drinkId);
-  if (drink) {
-    tempSelectedDrink = drink;
-    DOM.weightModalOverlay.classList.remove("hidden");
-    DOM.weightModalOverlay.classList.add("open");
-  }
-}
-
-function addToCartWithWeight(multiplier) {
-  const weightLabels = { "1": "كيلو", "0.5": "نصف كيلو", "0.25": "ربع كيلو" };
-  const finalPrice = tempSelectedDrink.price * multiplier;
-  const itemId = tempSelectedDrink.id + "_" + multiplier;
-
-  const existingItem = state.cart.find(i => i.id === itemId);
-  if (existingItem) {
-    existingItem.quantity += 1;
+function addToCartFinal(multiplier) {
+  const labels = { "1": "كيلو", "0.5": "نصف كيلو", "0.25": "ربع كيلو" };
+  const itemId = `${tempSelectedDrink.id}_${multiplier}`;
+  
+  const existing = state.cart.find(i => i.id === itemId);
+  if (existing) {
+    existing.quantity++;
   } else {
     state.cart.push({
       id: itemId,
       originalId: tempSelectedDrink.id,
-      nameAr: `${tempSelectedDrink.nameAr} (${weightLabels[multiplier]})`,
-      price: finalPrice,
-      quantity: 1,
-      image: tempSelectedDrink.image
+      nameAr: `${tempSelectedDrink.nameAr} (${labels[multiplier]})`,
+      price: tempSelectedDrink.price * multiplier,
+      quantity: 1
     });
   }
-  
+
   saveCart();
-  updateCartUI();
-  closeWeightModal();
-  showToast(`تمت إضافة ${tempSelectedDrink.nameAr} ✓`);
+  closeModals();
+  showToast(`تمت إضافة ${labels[multiplier]} للطلب`);
   renderDrinks();
-}
-
-// ========== CART UI ==========
-function saveCart() { localStorage.setItem("cart", JSON.stringify(state.cart)); }
-
-function updateCartUI() {
-  const totalItems = state.cart.reduce((sum, item) => sum + item.quantity, 0);
-  DOM.cartCount.textContent = totalItems;
-  const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  DOM.cartTotalPrice.textContent = totalPrice;
-}
-
-function renderCartItems() {
-  if (state.cart.length === 0) {
-    DOM.cartItemsList.innerHTML = "<p style='text-align:center; color:#aaa; padding:20px;'>السلة فارغة</p>";
-    return;
-  }
-  DOM.cartItemsList.innerHTML = state.cart.map(item => `
-    <div class="cart-item">
-      <div style="flex:1;">
-        <div style="font-weight:bold; color:white;">${item.nameAr}</div>
-        <div style="color:#d4af37; font-size:0.9rem;">${item.price * item.quantity} ج.م</div>
-      </div>
-      <div class="cart-qty-control">
-        <button onclick="updateQty('${item.id}', -1)">-</button>
-        <span style="color:white;">${item.quantity}</span>
-        <button onclick="updateQty('${item.id}', 1)">+</button>
-      </div>
-    </div>
-  `).join("");
 }
 
 function updateQty(id, delta) {
@@ -660,43 +617,58 @@ function updateQty(id, delta) {
     item.quantity += delta;
     if (item.quantity <= 0) state.cart = state.cart.filter(i => i.id !== id);
     saveCart();
-    updateCartUI();
     renderCartItems();
     renderDrinks();
   }
 }
 
-// ========== MODALS & EVENTS ==========
-function closeWeightModal() {
-  DOM.weightModalOverlay.classList.remove("open");
-  DOM.weightModalOverlay.classList.add("hidden");
-  tempSelectedDrink = null;
+function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(state.cart));
+  updateCartUI();
 }
 
-function openCartModal() {
-  renderCartItems();
-  DOM.cartModalOverlay.classList.remove("hidden");
-  DOM.cartModalOverlay.classList.add("open");
+function updateCartUI() {
+  const count = state.cart.reduce((s, i) => s + i.quantity, 0);
+  const total = state.cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+  DOM.cartCount.textContent = count;
+  DOM.cartTotalPrice.textContent = total;
 }
 
-function closeCartModal() {
-  DOM.cartModalOverlay.classList.remove("open");
-  DOM.cartModalOverlay.classList.add("hidden");
+function renderCartItems() {
+  if (!state.cart.length) {
+    DOM.cartItemsList.innerHTML = "<p style='text-align:center; color:#666; padding:20px;'>السلة فارغة حالياً</p>";
+    return;
+  }
+  DOM.cartItemsList.innerHTML = state.cart.map(item => `
+    <div class="cart-item" style="display:flex; justify-content:space-between; align-items:center; background:#111; padding:10px; border-radius:8px; margin-bottom:8px;">
+      <div style="flex:1; text-align:right;">
+        <div style="color:white; font-weight:bold; font-size:0.9rem;">${item.nameAr}</div>
+        <div style="color:#d4af37; font-size:0.85rem;">${item.price * item.quantity} ج.م</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px; background:#222; padding:5px 10px; border-radius:5px;">
+        <button onclick="updateQty('${item.id}', 1)" style="color:#d4af37; background:none; border:none; font-size:1.2rem; cursor:pointer;">+</button>
+        <span style="color:white; font-weight:bold;">${item.quantity}</span>
+        <button onclick="updateQty('${item.id}', -1)" style="color:#ff4444; background:none; border:none; font-size:1.2rem; cursor:pointer;">-</button>
+      </div>
+    </div>
+  `).join("");
 }
 
+// ==========================================
+// 7. واتساب والخدمات (Checkout & UI)
+// ==========================================
 function sendToWhatsapp() {
-  const name = document.getElementById('cust-name')?.value.trim();
-  const phone = document.getElementById('cust-phone')?.value.trim();
-  const address = document.getElementById('cust-address')?.value.trim();
+  const name = document.getElementById('cust-name').value.trim();
+  const phone = document.getElementById('cust-phone').value.trim();
+  const address = document.getElementById('cust-address').value.trim();
 
-  if (!name || !phone || !address) { showToast("⚠️ يرجى إكمال البيانات"); return; }
-  if (state.cart.length === 0) return;
+  if (!name || !phone || !address) return showToast("⚠️ يرجى كتابة بيانات التوصيل");
+  if (!state.cart.length) return showToast("⚠️ السلة فارغة");
 
-  const itemsText = state.cart.map(i => `• ${i.nameAr} [العدد: ${i.quantity}]`).join('\n');
-  const total = DOM.cartTotalPrice.textContent;
-  const message = `*طلب جديد من أبو السعود*\n\n*الاسم:* ${name}\n*الهاتف:* ${phone}\n*العنوان:* ${address}\n\n*الطلبات:*\n${itemsText}\n\n*الإجمالي:* ${total} ج.م`;
+  const items = state.cart.map(i => `• ${i.nameAr} (العدد: ${i.quantity})`).join('\n');
+  const msg = `*طلب جديد من منيو أبو السعود*\n\n*الاسم:* ${name}\n*الهاتف:* ${phone}\n*العنوان:* ${address}\n\n*الطلبات:*\n${items}\n\n*الإجمالي:* ${DOM.cartTotalPrice.textContent} ج.م`;
   
-  window.open(`https://wa.me/201070100122?text=${encodeURIComponent(message)}`, "_blank");
+  window.open(`https://wa.me/201070100122?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
 function showToast(msg) {
@@ -705,24 +677,39 @@ function showToast(msg) {
   setTimeout(() => DOM.toast.classList.remove("show"), 2500);
 }
 
-function setupEventListeners() {
-  DOM.filterBtns.forEach(btn => btn.addEventListener("click", () => filterDrinks(btn.dataset.filter)));
-  DOM.cartIconWrap.addEventListener("click", openCartModal);
-  DOM.cartModalClose.addEventListener("click", closeCartModal);
-  DOM.weightModalClose.addEventListener("click", closeWeightModal);
-  DOM.checkoutWhatsapp.addEventListener("click", sendToWhatsapp);
-
-  // مستمع أزرار الأوزان
-  document.querySelectorAll('.weight-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const m = parseFloat(btn.dataset.multiplier);
-      addToCartWithWeight(m);
-    });
-  });
-
-  window.onclick = (e) => {
-    if (e.target == DOM.cartModalOverlay) closeCartModal();
-    if (e.target == DOM.weightModalOverlay) closeWeightModal();
-  };
+function closeModals() {
+  DOM.cartModal.classList.add("hidden");
+  DOM.weightModal.classList.add("hidden");
+  DOM.cartModal.classList.remove("open");
+  DOM.weightModal.classList.remove("open");
 }
 
+function setupEventListeners() {
+  // فلاتر الأقسام
+  DOM.filterBtns.forEach(btn => btn.addEventListener("click", () => filterDrinks(btn.dataset.filter)));
+  
+  // فتح السلة
+  DOM.cartIconWrap.addEventListener("click", () => {
+    renderCartItems();
+    DOM.cartModal.classList.remove("hidden");
+    DOM.cartModal.classList.add("open");
+  });
+
+  // إغلاق المودالات
+  document.getElementById("cart-modal-close").onclick = closeModals;
+  document.getElementById("weight-modal-close").onclick = closeModals;
+
+  // أزرار الأوزان داخل المودال
+  document.querySelectorAll('.weight-btn').forEach(btn => {
+    btn.onclick = () => addToCartFinal(parseFloat(btn.dataset.multiplier));
+  });
+
+  // زر الواتساب
+  DOM.checkoutBtn.onclick = sendToWhatsapp;
+
+  // الضغط خارج المودال للإغلاق
+  window.onclick = (e) => {
+    if (e.target == DOM.cartModal || e.target == DOM.weightModal) closeModals();
+  };
+}
+      
