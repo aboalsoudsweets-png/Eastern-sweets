@@ -479,7 +479,7 @@ const drinks = [
   
 ];
 
-// ========== STATE MANAGEMENT ==========
+            // ========== STATE MANAGEMENT ==========
 const state = {
   cart: JSON.parse(localStorage.getItem("cart")) || [],
   currentFilter: "none",
@@ -507,7 +507,6 @@ const DOM = {
 
 // ========== INITIALIZATION ==========
 document.addEventListener("DOMContentLoaded", () => {
-  renderDrinks();
   setupEventListeners();
   hideLoadingScreen();
   updateCartUI();
@@ -516,31 +515,18 @@ document.addEventListener("DOMContentLoaded", () => {
 // ========== LOADING SCREEN ==========
 function hideLoadingScreen() {
   setTimeout(() => {
-    DOM.loadingScreen.classList.add("fade-out");
-    setTimeout(() => {
-      DOM.loadingScreen.style.display = "none";
-    }, 800);
+    DOM.loadingScreen?.classList.add("fade-out");
+    setTimeout(() => { if(DOM.loadingScreen) DOM.loadingScreen.style.display = "none"; }, 800);
   }, 2000);
 }
 
-// ========== NAVBAR SCROLL EFFECT ==========
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 50) {
-    DOM.navbar.classList.add("scrolled");
-  } else {
-    DOM.navbar.classList.remove("scrolled");
-  }
-});
-
 // ========== FILTER FUNCTIONALITY ==========
-// 1. تعريف الأقسام الفرعية للبقلاوة (الـ 3 خانات)
 const baqlawaTypes = [
   { id: 'fustuk', name: 'بقلاوة فستق', keys: ['فستق', 'بستاشيو', 'بلوريا', 'صره', 'اسيا', 'كل واشكر فستق', 'دولمة', 'اساور', 'سنيورة'] },
   { id: 'loz', name: 'بقلاوة لوز', keys: ['لوز','لوكم بندق','كاجو','بقلاوة اسطنبولي جوز'] },
-  { id: 'mix', name: 'أصناف متنوعة', keys: [  'عجوة' ,'معمول جوز','غريبة'] }
+  { id: 'mix', name: 'أصناف متنوعة', keys: ['عجوة' ,'معمول جوز','غريبة'] }
 ];
 
-// 2. تحديث الدالة الأساسية
 function filterDrinks(category) {
   state.currentFilter = category;
   const subContainer = document.getElementById("sub-filters-container");
@@ -549,35 +535,27 @@ function filterDrinks(category) {
     btn.classList.toggle("active", btn.dataset.filter === category);
   });
 
-  // إذا اختار بقلاوة، نظهر الخانات الفرعية
   if (category === "baqlawa") {
     subContainer.style.display = "flex";
     subContainer.innerHTML = baqlawaTypes.map(type => `
-      <button class="filter-btn sub-btn" onclick="filterSubCategory('${type.id}')" style="background: #1a1a1a; border: 1px solid #d4af37; font-size: 0.9rem; padding: 5px 15px;">
+      <button class="filter-btn sub-btn" onclick="filterSubCategory('${type.id}')" style="background: #1a1a1a; border: 1px solid #d4af37; font-size: 0.9rem; padding: 5px 15px; border-radius:4px; color:white; cursor:pointer;">
         ${type.name}
       </button>
     `).join("");
-    
-    // اختياري: فضي الجريد لحد ما يختار نوع بقلاوة معين
-    DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center;">اختر نوع البقلاوة المفضل لديك</p>`;
+    DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center; padding:20px;">اختر نوع البقلاوة المفضل لديك</p>`;
   } else {
-    // لو اختار كنافة أو نمورة، اخفي الخانات واعرض الصور علطول
     subContainer.style.display = "none";
     renderDrinks();
   }
 }
 
-// 3. دالة الفلترة الفرعية للبقلاوة
 function filterSubCategory(subId) {
   const typeData = baqlawaTypes.find(t => t.id === subId);
-  
-  // فلترة الصور بناءً على الكلمات المفتاحية في الاسم
   const filtered = drinks.filter(d => 
     d.category === "baqlawa" && 
     typeData.keys.some(key => d.nameAr.includes(key))
   );
 
-  // تحديث شكل الزراير الفرعية (active state)
   document.querySelectorAll('.sub-btn').forEach(btn => {
     btn.style.background = (btn.innerText === typeData.name) ? "#d4af37" : "#1a1a1a";
     btn.style.color = (btn.innerText === typeData.name) ? "#000" : "#fff";
@@ -586,14 +564,12 @@ function filterSubCategory(subId) {
   displayFilteredDrinks(filtered);
 }
 
-// 4. دالة عرض النتائج المفلترة
 function displayFilteredDrinks(data) {
   DOM.drinksGrid.innerHTML = "";
   if (data.length === 0) {
     DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center;">قريباً...</p>`;
     return;
   }
-  
   data.forEach((drink, index) => {
     const card = createDrinkCard(drink);
     DOM.drinksGrid.appendChild(card);
@@ -601,351 +577,148 @@ function displayFilteredDrinks(data) {
   });
 }
 
-
-
-
-
-// ========== RENDER DRINKS ==========
 function renderDrinks() {
-  if (state.currentFilter === "none") {
-    DOM.drinksGrid.innerHTML = "";
-    return;
-  }
-
-  const filtered = state.currentFilter === "all"
-    ? drinks
-    : drinks.filter(d => d.category === state.currentFilter);
-  
-  DOM.drinksGrid.innerHTML = "";
-  
-  filtered.forEach((drink, index) => {
-    const card = createDrinkCard(drink);
-    DOM.drinksGrid.appendChild(card);
-    
-    setTimeout(() => {
-      card.classList.add("visible");
-    }, index * 50);
-  });
+  if (state.currentFilter === "none") return;
+  const filtered = drinks.filter(d => d.category === state.currentFilter);
+  displayFilteredDrinks(filtered);
 }
 
-// ========== CREATE CARD (المعدلة لإظهار الشرح والزرار بره) ==========
+// ========== CREATE DRINK CARD ==========
 function createDrinkCard(drink) {
   const card = document.createElement("div");
   card.className = "drink-card";
-  
-  // فحص الكمية في السلة
   const cartItem = state.cart.find(item => item.id === drink.id);
   const qty = cartItem ? cartItem.quantity : 0;
 
   card.innerHTML = `
     <div class="card-img-wrap">
       <img src="${drink.image || 'logo.png'}" alt="${drink.nameAr}" loading="lazy" />
-      <div class="card-overlay"></div>
-      ${qty > 0 ? `<div class="card-qty-badge">${qty}</div>` : ''}
+      ${qty > 0 ? `<div class="card-qty-badge" style="position:absolute; top:10px; right:10px; background:#d4af37; color:#000; padding:2px 8px; border-radius:50%; font-weight:bold;">${qty}</div>` : ''}
     </div>
-    <div class="card-body" style="padding: 12px;">
-      <div class="card-row" style="margin-bottom: 8px;">
-        <div style="text-align: right; width: 100%;">
-          <div class="card-name-ar" style="font-weight: 700; font-size: 1.1rem; color: #fff;">${drink.nameAr}</div>
-          
-          <div class="card-desc-simple" style="color: #aaa; font-size: 0.85rem; margin-top: 4px; line-height: 1.3;">
-            ${drink.desc || ''}
-          </div>
-        </div>
-      </div>
-
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
-        <div class="card-price" style="margin: 0;">
-          <strong style="color: #d4af37; font-size: 1.2rem;">${drink.price}</strong>
-          <small style="color: #d4af37;">ج.م</small>
-        </div>
-        
-        <button class="quick-add-btn" 
-                onclick="handleQuickAdd(event, '${drink.id}')" 
-                style="background: #d4af37; color: #000; border: none; padding: 6px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
-          ${qty > 0 ? '➕ المزيد' : '🛍 اضف للسلة'}
+    <div class="card-body" style="padding: 12px; direction:rtl; text-align:right;">
+      <div class="card-name-ar" style="font-weight: 700; font-size: 1.1rem; color: #fff;">${drink.nameAr}</div>
+      <p style="color: #aaa; font-size: 0.85rem; margin: 5px 0;">${drink.desc || ''}</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+        <div style="color: #d4af37; font-weight: bold;">${drink.price} ج.م</div>
+        <button onclick="handleQuickAdd(event, '${drink.id}')" style="background: #d4af37; color: #000; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">
+          ${qty > 0 ? '➕ المزيد' : '🛍 أضف'}
         </button>
       </div>
     </div>
   `;
-  
   return card;
 }
 
-// دالة التعامل مع الإضافة من بره وتحديث الصفحة
 function handleQuickAdd(event, drinkId) {
   event.stopPropagation(); 
   const drink = drinks.find(d => d.id === drinkId);
   if (drink) {
     addToCartSimple(drink);
-    renderDrinks(); // عشان نحدث الرقم (الكمية) اللي ظهرت على الكرت فوراً
+    renderDrinks();
   }
 }
 
-// دالة إضافة للسلة مختصرة (بدون غلق المودال)
 function addToCartSimple(drink) {
   const existingItem = state.cart.find(item => item.id === drink.id);
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    state.cart.push({
-      id: drink.id,
-      nameAr: drink.nameAr,
-      nameEn: drink.nameEn,
-      price: drink.price,
-      quantity: 1,
-      image: drink.image
-    });
-  }
+  if (existingItem) { existingItem.quantity += 1; } 
+  else { state.cart.push({ ...drink, quantity: 1 }); }
   saveCart();
   updateCartUI();
-  showToast(`تم إضافة ${drink.nameAr} ✓`);
-}
-// ========== MODAL MANAGEMENT ==========
-function openModal(drink) {
-  state.selectedDrink = drink;
-  
-  document.getElementById("modal-img").src = drink.image;
-  document.getElementById("modal-name-ar").textContent = drink.nameAr;
-  document.getElementById("modal-name-en").textContent = drink.nameEn;
-  document.getElementById("modal-price").textContent = drink.price;
-  document.getElementById("modal-desc").textContent = drink.desc;
-  
-  const ingList = document.getElementById("modal-ing-list");
-  ingList.innerHTML = drink.ingredients.map(ing => `<li>${ing}</li>`).join("");
-  
-  DOM.modalOverlay.classList.remove("hidden");
-  DOM.modalOverlay.classList.add("open");
+  showToast(`تمت إضافة ${drink.nameAr} ✓`);
 }
 
-function closeModal() {
-  DOM.modalOverlay.classList.remove("open");
-  DOM.modalOverlay.classList.add("closing");
-  
-  setTimeout(() => {
-    DOM.modalOverlay.classList.add("hidden");
-    DOM.modalOverlay.classList.remove("closing");
-  }, 300);
-}
-
-// ========== CART MANAGEMENT ==========
-function addToCart(drink) {
-  const existingItem = state.cart.find(item => item.id === drink.id);
-  
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    state.cart.push({
-      id: drink.id,
-      nameAr: drink.nameAr,
-      nameEn: drink.nameEn,
-      price: drink.price,
-      quantity: 1,
-      image: drink.image
-    });
-  }
-  
-  saveCart();
-  updateCartUI();
-  showToast(`تم إضافة ${drink.nameAr} للسلة ✓`);
-  closeModal();
-}
-
-function removeFromCart(itemId) {
-  state.cart = state.cart.filter(item => item.id !== itemId);
-  saveCart();
-  updateCartUI();
-  renderCartItems();
-  showToast("تم الحذف من السلة");
-}
-
-function updateCartQuantity(itemId, quantity) {
-  const item = state.cart.find(item => item.id === itemId);
-  if (item) {
-    if (quantity <= 0) {
-      removeFromCart(itemId);
-    } else {
-      item.quantity = quantity;
-      saveCart();
-      updateCartUI();
-      renderCartItems();
-    }
-  }
-}
-
-function saveCart() {
-  localStorage.setItem("cart", JSON.stringify(state.cart));
-}
+// ========== CART LOGIC ==========
+function saveCart() { localStorage.setItem("cart", JSON.stringify(state.cart)); }
 
 function updateCartUI() {
   const totalItems = state.cart.reduce((sum, item) => sum + item.quantity, 0);
   DOM.cartCount.textContent = totalItems;
-  
   const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   DOM.cartTotalPrice.textContent = totalPrice;
 }
 
-function openCartModal() {
+function renderCartItems() {
   if (state.cart.length === 0) {
-    showToast("السلة فارغة");
+    DOM.cartItemsList.innerHTML = "<p style='text-align:center; color: #aaa; padding: 20px;'>السلة فارغة</p>";
     return;
   }
   
+  // عرض المنتجات فقط في هذا الـ Div
+  DOM.cartItemsList.innerHTML = state.cart.map(item => `
+    <div class="cart-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 8px; background: #1a1a1a; border-radius: 8px; direction: rtl;">
+      <div style="flex: 1;">
+        <div style="font-weight: bold; color: white; font-size:0.9rem;">${item.nameAr}</div>
+        <div style="color: #d4af37; font-size: 0.8rem;">${item.price * item.quantity} ج.م</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <button onclick="updateQty('${item.id}', -1)" style="background:#333; color:white; border:none; width:24px; height:24px; border-radius:4px; cursor:pointer;">-</button>
+        <span style="color:white; min-width:20px; text-align:center;">${item.quantity}</span>
+        <button onclick="updateQty('${item.id}', 1)" style="background:#333; color:white; border:none; width:24px; height:24px; border-radius:4px; cursor:pointer;">+</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function updateQty(id, delta) {
+  const item = state.cart.find(i => i.id === id);
+  if (item) {
+    item.quantity += delta;
+    if (item.quantity <= 0) state.cart = state.cart.filter(i => i.id !== id);
+    saveCart();
+    updateCartUI();
+    renderCartItems();
+    renderDrinks();
+  }
+}
+
+function openCartModal() {
   renderCartItems();
   DOM.cartModalOverlay.classList.remove("hidden");
   DOM.cartModalOverlay.classList.add("open");
 }
 
 function closeCartModal() {
-  DOM.cartModalOverlay.classList.remove("open");
   DOM.cartModalOverlay.classList.add("closing");
-  
   setTimeout(() => {
+    DOM.cartModalOverlay.classList.remove("open", "closing");
     DOM.cartModalOverlay.classList.add("hidden");
-    DOM.cartModalOverlay.classList.remove("closing");
   }, 300);
-}
-
-// استبدل الدالة القديمة بهذا الكود بالكامل
-function renderCartItems() {
-  if (state.cart.length === 0) {
-    DOM.cartItemsList.innerHTML = "<p style='text-align:center; color: #aaa; padding: 2rem;'>لا توجد عناصر في السلة</p>";
-    return;
-  }
-  
-  // 1. الجزء الخاص بعرض المنتجات المضافة للسلة
-  let itemsHtml = state.cart.map(item => `
-    <div class="cart-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; direction: rtl;">
-      <div class="cart-item-info" style="flex: 1; text-align: right;">
-        <div class="cart-item-name" style="font-weight: bold; color: white;">${item.nameAr}</div>
-        <div style="color: #d4af37; font-size: 0.9rem;">${item.price * item.quantity} ج.م</div>
-      </div>
-      <div class="cart-qty-control" style="display: flex; align-items: center; gap: 10px; margin: 0 15px;">
-        <button class="qty-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity - 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">−</button>
-        <div class="qty-display" style="color: white;">${item.quantity}</div>
-        <button class="qty-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity + 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">+</button>
-      </div>
-      <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" style="background:transparent; border:none; color:#ff4444; cursor:pointer; font-size: 1.2rem;">✕</button>
-    </div>
-  `).join("");
-
-  // 2. الجزء الخاص بحقول البيانات (الاسم، الهاتف، العنوان، الملاحظات)
-  const formHtml = `
-    <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px; direction: rtl; text-align: right;" id="customer-form">
-      <h3 style="color: #d4af37; font-size: 1rem; border-right: 3px solid #d4af37; padding-right: 8px; margin-bottom: 5px;">بيانات التوصيل:</h3>
-      <input type="text" id="cust-name" placeholder="الاسم بالكامل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">
-      <input type="tel" id="cust-phone" placeholder="رقم الموبايل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">
-      <input type="text" id="cust-address" placeholder="العنوان بالتفصيل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">
-      <textarea id="cust-notes" placeholder="ملاحظات (اختياري)" rows="2" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box; resize: none;"></textarea>
-    </div>
-  `;
-
-  // دمج المنتجات مع النموذج وعرضهم في السلة
-  DOM.cartItemsList.innerHTML = itemsHtml + formHtml;
 }
 
 // ========== WHATSAPP CHECKOUT ==========
 function sendToWhatsapp() {
-  if (state.cart.length === 0) {
-    showToast("السلة فارغة");
-    return;
-  }
+  const name = document.getElementById('cust-name')?.value.trim();
+  const phone = document.getElementById('cust-phone')?.value.trim();
+  const address = document.getElementById('cust-address')?.value.trim();
 
-  // جلب قيم الحقول
-  const name = document.getElementById('cust-name').value.trim();
-  const phone = document.getElementById('cust-phone').value.trim();
-  const address = document.getElementById('cust-address').value.trim();
-  const notes = document.getElementById('cust-notes').value.trim();
-
-  // التحقق من البيانات الأساسية
   if (!name || !phone || !address) {
-    showToast("⚠️ يرجى إكمال بيانات التوصيل");
-    document.getElementById('customer-form').scrollIntoView({ behavior: 'smooth' });
+    showToast("⚠️ يرجى ملئ بيانات التوصيل");
     return;
   }
-  
-  // بناء نص المنتجات
-  const cartSummary = state.cart.map(item => 
-    `• ${item.nameAr} [الكمية: ${item.quantity}]`
-  ).join("\n");
-  
-  const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  
-  // بناء الرسالة النهائية
-  const message = `
-*طلب جديد من حلويات أبو السعود* 🍰
 
-*البيانات الشخصية:*
-👤 الاسم: ${name}
-📞 الهاتف: ${phone}
-📍 العنوان: ${address}
-${notes ? `📝 ملاحظات: ${notes}` : ''}
-
-*الطلبات:*
-${cartSummary}
-
-*ــــــــــــــــــــــــــــــــــــــــــــــــــ*
-💰 *الإجمالي: ${totalPrice} ج.م*
-*ــــــــــــــــــــــــــــــــــــــــــــــــــ*
-  `.trim();
+  const itemsText = state.cart.map(item => `• ${item.nameAr} (${item.quantity} كيلو/صحن)`).join('\n');
+  const total = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   
-  // رقم الواتساب الخاص بك
-  const whatsappURL = `https://wa.me/201070100122?text=${encodeURIComponent(message)}`;
-  window.open(whatsappURL, "_blank");
+  const message = `*طلب جديد من أبو السعود*\n\n*الاسم:* ${name}\n*الهاتف:* ${phone}\n*العنوان:* ${address}\n\n*الطلبات:*\n${itemsText}\n\n*الإجمالي:* ${total} ج.م`;
   
-  // تفريغ السلة بعد نجاح العملية (اختياري)
-  state.cart = [];
-  saveCart();
-  updateCartUI();
-  closeCartModal();
-  showToast("تم إرسال الطلب بنجاح ✓");
+  window.open(`https://wa.me/201070100122?text=${encodeURIComponent(message)}`, "_blank");
 }
 
-// ========== TOAST NOTIFICATIONS ==========
-function showToast(message) {
-  DOM.toast.textContent = message;
-  DOM.toast.classList.remove("hidden");
+function showToast(msg) {
+  DOM.toast.textContent = msg;
   DOM.toast.classList.add("show");
-  
-  setTimeout(() => {
-    DOM.toast.classList.remove("show");
-    setTimeout(() => {
-      DOM.toast.classList.add("hidden");
-    }, 400);
-  }, 2500);
+  setTimeout(() => DOM.toast.classList.remove("show"), 2500);
 }
 
-// ========== EVENT LISTENERS ==========
 function setupEventListeners() {
-  // تم حذف مستمع حدث التبديل هنا
-  
-  DOM.filterBtns.forEach(btn => {
-    btn.addEventListener("click", () => filterDrinks(btn.dataset.filter));
-  });
-  
-  DOM.modalClose.addEventListener("click", closeModal);
-  DOM.modalOverlay.addEventListener("click", (e) => {
-    if (e.target === DOM.modalOverlay) closeModal();
-  });
-  
-  DOM.orderBtn.addEventListener("click", () => {
-    if (state.selectedDrink) {
-      addToCart(state.selectedDrink);
-    }
-  });
-  
-  DOM.cartModalClose.addEventListener("click", closeCartModal);
-  DOM.cartModalOverlay.addEventListener("click", (e) => {
-    if (e.target === DOM.cartModalOverlay) closeCartModal();
-  });
-  
-  DOM.checkoutWhatsapp.addEventListener("click", sendToWhatsapp);
+  DOM.filterBtns.forEach(btn => btn.addEventListener("click", () => filterDrinks(btn.dataset.filter)));
   DOM.cartIconWrap.addEventListener("click", openCartModal);
+  DOM.cartModalClose.addEventListener("click", closeCartModal);
+  DOM.checkoutWhatsapp.addEventListener("click", sendToWhatsapp);
   
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      closeModal();
-      closeCartModal();
-    }
-  });
+  // إغلاق المودالات عند الضغط خارجها
+  window.onclick = (e) => {
+    if (e.target == DOM.cartModalOverlay) closeCartModal();
+    if (e.target == DOM.modalOverlay) closeModal();
+  };
 }
