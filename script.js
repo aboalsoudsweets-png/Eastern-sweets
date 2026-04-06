@@ -898,11 +898,13 @@ function renderCartItems() {
   
   let itemsHtml = state.cart.map(item => {
     const weightLabel = item.weight === 1 ? "كيلو" : item.weight === 0.5 ? "نصف كيلو" : "ربع كيلو";
+    const drinkData = drinks.find(d => d.id === item.id);
+const isPlate = drinkData ? isPlateItem(drinkData) : false;
     return `
     <div class="cart-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; direction: rtl;">
       <div class="cart-item-info" style="flex: 1; text-align: right;">
         <div class="cart-item-name" style="font-weight: bold; color: white;">${item.nameAr}</div>
-        <div style="color: #aaa; font-size: 0.85rem;">${!isPlateItem(drinks.find(d => d.id === item.id)) ? weightLabel : ''}</div>
+       
         <div style="color: #d4af37; font-size: 0.9rem;">${item.price * item.quantity} ج.م</div>
       </div>
       <div class="cart-qty-control" style="display: flex; align-items: center; gap: 10px; margin: 0 15px;">
@@ -946,12 +948,16 @@ function sendToWhatsapp() {
     return;
   }
   
-  const cartSummary = state.cart.map(item => {
+ const cartSummary = state.cart.map(item => {
+  const drinkData = drinks.find(d => d.id === item.id);
+  const isPlate = drinkData ? isPlateItem(drinkData) : false;
+
   const weightLabel = item.weight === 1 ? "كيلو" : item.weight === 0.5 ? "نصف كيلو" : "ربع كيلو";
 
-  const weight = !isPlateItem(drinks.find(d => d.id === item.id)) 
-    ? ` (${weightLabel})` 
-    : "";
+  const weight = !isPlate ? ` (${weightLabel})` : "";
+
+  return `• ${item.nameAr}${weight} [الكمية: ${item.quantity}]`;
+}).join('\n');
 
   return `• ${item.nameAr}${weight} [الكمية: ${item.quantity}]`;
 }).join('\n');
