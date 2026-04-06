@@ -30,7 +30,7 @@ const drinks = [
     ingredients: []
   },
   {
-    id: "400",
+    id: "400-1",
     nameAr: " 1K.g  اسطنبولية و عربية نصف و نصف",
     nameEn: "",
     price: 540,
@@ -110,7 +110,7 @@ const drinks = [
     ingredients: []
   },
   {
-    id: "504",
+    id: "504-1",
     nameAr: "صحن نابلسية و عربية",
     nameEn: "",
     price: 135,
@@ -769,22 +769,20 @@ function addToCartWithWeight() {
   const weight = state.selectedWeight;
   const finalPrice = Math.round(drink.price * weight);
   
-  const existingItem = state.cart.find(item => 
-    item.id === drink.id && item.weight === weight
-  );
-  
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    state.cart.push({
-      id: drink.id,
-      nameAr: drink.nameAr,
-      nameEn: drink.nameEn,
-      price: finalPrice,
-      quantity: 1,
-      image: drink.image,
-      weight: weight,
-      originalPrice: drink.price
+  const existingItem = state.cart.find(item => item.uniqueId === uniqueId);
+
+if (existingItem) {
+  existingItem.quantity += 1;
+} else {
+  state.cart.push({
+    uniqueId: uniqueId,
+    id: drink.id,
+    nameAr: drink.nameAr,
+    price: finalPrice,
+    quantity: 1,
+    image: drink.image,
+    weight: weight,
+    originalPrice: drink.price
     });
   }
   
@@ -849,12 +847,8 @@ function addToCart(drink) {
   closeModal();
 }
 
-function removeFromCart(itemId) {
-  state.cart = state.cart.filter(item => item.id !== itemId);
-  saveCart();
-  updateCartUI();
-  renderCartItems();
-  showToast("تم الحذف من السلة");
+function removeFromCart(item.uniqueId) {
+  state.cart = state.cart.filter(item => item.uniqueId !== uniqueId);
 }
 
 function updateCartQuantity(itemId, quantity) {
