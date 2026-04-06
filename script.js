@@ -629,7 +629,7 @@ function createDrinkCard(drink) {
  const qty = state.cart
   .filter(item => item.id === drink.id)
   .reduce((sum, item) => sum + item.quantity, 0);
-  const qty = cartItem ? cartItem.quantity : 0;
+ 
 
   card.innerHTML = `
     <div class="card-img-wrap">
@@ -743,26 +743,7 @@ function handleQuickAdd(event, drinkId) {
   }
 }
 
-function addToCartSimple(drink) {
-  const existingItem = state.cart.find(item => item.id === drink.id);
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    state.cart.push({
-      id: drink.id,
-      nameAr: drink.nameAr,
-      nameEn: drink.nameEn,
-      price: drink.price,
-      quantity: 1,
-      image: drink.image,
-      weight: 1 // Default weight for plates
-    });
-  }
-  saveCart();
-  updateCartUI();
-  showToast(`تم إضافة ${drink.nameAr} ✓`);
-  renderDrinks();
-}
+
 
 
 function addToCartWithWeight() {
@@ -966,10 +947,14 @@ function sendToWhatsapp() {
   }
   
   const cartSummary = state.cart.map(item => {
-    const weightLabel = item.weight === 1 ? "كيلو" : item.weight === 0.5 ? "نصف كيلو" : "ربع كيلو";
-    const weight = !isPlateItem(drinks.find(d => d.id === item.id)) ? ` [${weightLabel}]` : '';
-    return `• ${item.nameAr}${weight} [الكمية: ${item.quantity}]`;
-  }).join("\n");
+  const weightLabel = item.weight === 1 ? "كيلو" : item.weight === 0.5 ? "نصف كيلو" : "ربع كيلو";
+
+  const weight = !isPlateItem(drinks.find(d => d.id === item.id)) 
+    ? ` (${weightLabel})` 
+    : "";
+
+  return `• ${item.nameAr}${weight} [الكمية: ${item.quantity}]`;
+}).join('\n');
   
   const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   
@@ -1028,7 +1013,7 @@ function setupEventListeners() {
   DOM.orderBtn.addEventListener("click", () => {
     if (state.selectedDrink) {
       if (isPlateItem(state.selectedDrink)) {
-        addToCart(state.selectedDrink);
+        addToCartSimple(state.selectedDrink);
       } else {
         closeModal();
         openWeightModal(state.selectedDrink);
