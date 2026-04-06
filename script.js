@@ -476,7 +476,9 @@ const drinks = [
     ingredients: ["إسبريسو", "حليب", "رغوة حليب", "قرفة"]
   },
   
-  // ========== STATE MANAGEMENT ==========
+
+
+// ========== STATE MANAGEMENT ==========
 const state = {
   cart: JSON.parse(localStorage.getItem("cart")) || [],
   currentFilter: "none",
@@ -840,5 +842,3 @@ function setupEventListeners() {
     }
   });
 }
-];
-          
