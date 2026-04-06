@@ -703,7 +703,7 @@ function closeWeightModal() {
 }
 
 function updateWeightPrice(drink, multiplier) {
-  const priceDisplay = document.getElementById("modal-price");
+  const priceDisplay = document.getElementById("weight-price");
   const newPrice = Math.round(drink.price * multiplier);
   priceDisplay.textContent = newPrice;
   
