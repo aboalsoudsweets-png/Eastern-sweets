@@ -626,7 +626,9 @@ function createDrinkCard(drink) {
   const card = document.createElement("div");
   card.className = "drink-card";
   
-  const cartItem = state.cart.find(item => item.id === drink.id);
+ const qty = state.cart
+  .filter(item => item.id === drink.id)
+  .reduce((sum, item) => sum + item.quantity, 0);
   const qty = cartItem ? cartItem.quantity : 0;
 
   card.innerHTML = `
@@ -762,7 +764,7 @@ function addToCartSimple(drink) {
   renderDrinks();
 }
 
-function addToCartWithWeight() {
+
 function addToCartWithWeight() {
   if (!state.selectedDrink) return;
   
@@ -827,27 +829,29 @@ function closeModal() {
 }
 
 // ========== CART MANAGEMENT ==========
-function addToCart(drink) {
-  const existingItem = state.cart.find(item => item.id === drink.id);
-  
+function addToCartSimple(drink) {
+  const uniqueId = drink.id + "_plate";
+
+  const existingItem = state.cart.find(item => item.uniqueId === uniqueId);
+
   if (existingItem) {
     existingItem.quantity += 1;
   } else {
     state.cart.push({
+      uniqueId: uniqueId,
       id: drink.id,
       nameAr: drink.nameAr,
-      nameEn: drink.nameEn,
       price: drink.price,
       quantity: 1,
       image: drink.image,
       weight: 1
     });
   }
-  
+
   saveCart();
   updateCartUI();
-  showToast(`تم إضافة ${drink.nameAr} للسلة ✓`);
-  closeModal();
+  showToast(`تم إضافة ${drink.nameAr} ✓`);
+  renderDrinks();
 }
 
 function removeFromCart(uniqueId) {
@@ -921,9 +925,9 @@ function renderCartItems() {
         <div style="color: #d4af37; font-size: 0.9rem;">${item.price * item.quantity} ج.م</div>
       </div>
       <div class="cart-qty-control" style="display: flex; align-items: center; gap: 10px; margin: 0 15px;">
-        <button class="qty-btn" onclick="updateCartQuantity('${item.uniqueId}', ${item.quantity - 1})", ${item.quantity - 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">−</button>
+        <button class="qty-btn" onclick="updateCartQuantity('${item.uniqueId}', ${item.quantity - 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">−</button>
         <div class="qty-display" style="color: white;">${item.quantity}</div>
-        <button class="qty-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity + 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">+</button>
+        <button class="qty-btn" onclick="updateCartQuantity('${item.uniqueId}', ${item.quantity + 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">+</button>
       </div>
       <button class="cart-item-remove" onclick="removeFromCart('${item.uniqueId}')" style="background:transparent; border:none; color:#ff4444; cursor:pointer; font-size: 1.2rem;">✕</button>
     </div>
