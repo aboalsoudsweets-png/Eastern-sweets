@@ -961,8 +961,7 @@ function sendToWhatsapp() {
   return `• ${item.nameAr}${weight} [الكمية: ${item.quantity}]`;
 }).join('\n');
 
-  return `• ${item.nameAr}${weight} [الكمية: ${item.quantity}]`;
-}).join('\n');
+
   
   const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   
