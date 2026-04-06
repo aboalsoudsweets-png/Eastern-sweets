@@ -80,7 +80,7 @@ const drinks = [
     ingredients: []
   },
   {
-    id: "2",
+    id: "2-1",
     nameAr: "صحن عربية",
     nameEn: "",
     price: 90 ,
@@ -425,7 +425,7 @@ const drinks = [
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
   {
-    id: "505",
+    id: "505-7",
     nameAr: "لوكم فسدق حلبي",
     nameEn: "",
     price: 1950,
@@ -763,35 +763,38 @@ function addToCartSimple(drink) {
 }
 
 function addToCartWithWeight() {
+function addToCartWithWeight() {
   if (!state.selectedDrink) return;
   
   const drink = state.selectedDrink;
   const weight = state.selectedWeight;
   const finalPrice = Math.round(drink.price * weight);
-  
+
+  const uniqueId = drink.id + "_" + weight;
+
   const existingItem = state.cart.find(item => item.uniqueId === uniqueId);
 
-if (existingItem) {
-  existingItem.quantity += 1;
-} else {
-  state.cart.push({
-    uniqueId: uniqueId,
-    id: drink.id,
-    nameAr: drink.nameAr,
-    price: finalPrice,
-    quantity: 1,
-    image: drink.image,
-    weight: weight,
-    originalPrice: drink.price
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    state.cart.push({
+      uniqueId: uniqueId,
+      id: drink.id,
+      nameAr: drink.nameAr,
+      price: finalPrice,
+      quantity: 1,
+      image: drink.image,
+      weight: weight,
+      originalPrice: drink.price
     });
   }
-  
+
   saveCart();
   updateCartUI();
-  
+
   const weightLabel = weight === 1 ? "كيلو" : weight === 0.5 ? "نصف كيلو" : "ربع كيلو";
   showToast(`تم إضافة ${drink.nameAr} (${weightLabel}) ✓`);
-  
+
   closeWeightModal();
   renderDrinks();
 }
@@ -847,15 +850,19 @@ function addToCart(drink) {
   closeModal();
 }
 
-function removeFromCart(item.uniqueId) {
+function removeFromCart(uniqueId) {
   state.cart = state.cart.filter(item => item.uniqueId !== uniqueId);
+  saveCart();
+  updateCartUI();
+  renderCartItems();
 }
 
-function updateCartQuantity(itemId, quantity) {
-  const item = state.cart.find(item => item.id === itemId);
+function updateCartQuantity(uniqueId, quantity) {
+  const item = state.cart.find(item => item.uniqueId === uniqueId);
+  
   if (item) {
     if (quantity <= 0) {
-      removeFromCart(itemId);
+      removeFromCart(uniqueId);
     } else {
       item.quantity = quantity;
       saveCart();
@@ -914,11 +921,11 @@ function renderCartItems() {
         <div style="color: #d4af37; font-size: 0.9rem;">${item.price * item.quantity} ج.م</div>
       </div>
       <div class="cart-qty-control" style="display: flex; align-items: center; gap: 10px; margin: 0 15px;">
-        <button class="qty-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity - 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">−</button>
+        <button class="qty-btn" onclick="updateCartQuantity('${item.uniqueId}', ${item.quantity - 1})", ${item.quantity - 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">−</button>
         <div class="qty-display" style="color: white;">${item.quantity}</div>
         <button class="qty-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity + 1})" style="background:#444; border:none; color:white; width:25px; height:25px; border-radius:4px; cursor:pointer;">+</button>
       </div>
-      <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" style="background:transparent; border:none; color:#ff4444; cursor:pointer; font-size: 1.2rem;">✕</button>
+      <button class="cart-item-remove" onclick="removeFromCart('${item.uniqueId}')" style="background:transparent; border:none; color:#ff4444; cursor:pointer; font-size: 1.2rem;">✕</button>
     </div>
   `;
   }).join("");
