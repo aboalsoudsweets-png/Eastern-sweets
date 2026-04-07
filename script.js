@@ -1,8 +1,8 @@
 // ========== DATA ==========
 const drinks = [
-  {
+   {
     id: "4",
-    nameAr: "1K.g كنافة نابلسية",
+    nameAr: " كنافة نابلسية",
     nameEn: "",
     price: 500,
     category: "konafa",
@@ -12,7 +12,7 @@ const drinks = [
   },
    {
     id: "5",
-    nameAr: "1K.g كنافة عربية",
+    nameAr: " كنافة عربية",
     nameEn: "",
     price: 500 ,
     category: "konafa",
@@ -21,7 +21,7 @@ const drinks = [
     ingredients: []
   },
   { id: "9000",
-    nameAr: "1K.g كنافة اسطنبولية",
+    nameAr: " كنافة اسطنبولية",
     nameEn: "",
     price: 580 ,
     category: "konafa",
@@ -30,8 +30,8 @@ const drinks = [
     ingredients: []
   },
   {
-    id: "400-1",
-    nameAr: " 1K.g  اسطنبولية و عربية نصف و نصف",
+    id: "400",
+    nameAr: "  اسطنبولية و عربية نصف و نصف",
     nameEn: "",
     price: 540,
     category: "konafa",
@@ -41,7 +41,7 @@ const drinks = [
   },
   {
     id: "400",
-    nameAr: " 1K.g  اسطنبولية و نابلسية نصف و نصف",
+    nameAr: "   اسطنبولية و نابلسية نصف و نصف",
     nameEn: "",
     price: 540,
     category: "konafa",
@@ -51,7 +51,7 @@ const drinks = [
   },
   {
     id: "504",
-    nameAr: "1K.g نابلسية و عربية نصف و نصف ",
+    nameAr: " نابلسية و عربية نصف و نصف ",
     nameEn: "",
     price: 135,
     category: "konafa",
@@ -80,7 +80,7 @@ const drinks = [
     ingredients: []
   },
   {
-    id: "2-1",
+    id: "2",
     nameAr: "صحن عربية",
     nameEn: "",
     price: 90 ,
@@ -110,7 +110,7 @@ const drinks = [
     ingredients: []
   },
   {
-    id: "504-1",
+    id: "504",
     nameAr: "صحن نابلسية و عربية",
     nameEn: "",
     price: 135,
@@ -139,17 +139,46 @@ const drinks = [
     desc: "رقائق الجلاش محشوة بالقشطة مع اللبن والزبدة",
     ingredients: []
   },
-  {
-    id: "10000",
-    nameAr: "كنافة لوز",
-    nameEn: "",
-    price: 950 ,
-    category: "baqlawa",
-    image: "10000.png",
-    desc: "حلوى شرقية من خيوط الكنافة المحمّصة ومحشية لوز ",
-    ingredients: []
-  },
   
+  // ✅ مشكل فستق حلبي
+  {
+    id: "mishkal-fustuk",
+    nameAr: "مشكل فستق حلبي",
+    nameEn: "",
+    price: 1750,
+    category: "baqlawa",
+    image: "7.png",
+    images: [
+      "7.png",
+      "6.png",
+      "8.png",
+      "10.png",
+      "13.png",
+      "17.png"
+    ],
+    desc: "مزيج فاخر من أفضل أنواع البقلاوة بالفستق الحلبي الممتاز( قابل لتعديل الاصناف علي حسب زوقك)",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+
+  {
+    id: "mishkal-fustuk-mix",
+    nameAr: " مشكل فستق حلبي مع لوز و كاجو",
+    nameEn: "",
+    price: 1250,
+    category: "baqlawa",
+    image: "7.png",
+    images: [
+      "7.png",
+      "27.png",
+      "6.png",
+      "23.png",
+      "20.png",
+      "11.png"
+    ],
+    desc: "مزيج فاخر من أفضل أنواع البقلاوة بالفستق الحلبي الممتاز( قابل لتعديل الاصناف علي حسب زوقك)",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+
   {
     id: "6",
     nameAr: "بورما فستق حلبي",
@@ -282,6 +311,37 @@ const drinks = [
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
  
+  // ✅ مشكل لوز
+  {
+    id: "mishkal-loz",
+    nameAr: "مشكل لوز",
+    nameEn: "",
+    price: 750,
+    category: "baqlawa",
+    image: "20.png",
+    images: [
+      "20.png",
+      "21.png",
+      "23.png",
+      "24.png",
+      "26.png",
+      "30.png"
+    ],
+    desc: "مزيج فاخر من أفضل أنواع البقلاوة باللوز الممتاز( قابل لتعديل الاصناف علي حسب زوقك)",
+    ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
+  },
+
+  {
+    id: "10000",
+    nameAr: "كنافة لوز",
+    nameEn: "",
+    price: 950 ,
+    category: "baqlawa",
+    image: "10000.png",
+    desc: "حلوى شرقية من خيوط الكنافة المحمّصة ومحشية لوز ",
+    ingredients: []
+  },
+  
   {
     id: "20",
     nameAr: "بورما لوز",
@@ -299,7 +359,7 @@ const drinks = [
     price: 680,
     category: "baqlawa",
     image: "21.png",
-    desc: "حلوى من الكنافة على شكل دائري محشوة باللوز الحلو",
+    desc: "حلوى من الكنافة على   كل دائري محشوة باللوز الحلو",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
   {
@@ -352,7 +412,6 @@ const drinks = [
     desc: "حلوى من رقائق الجلاش محشية باللوز الحلو، ملفوفة على شكل أصابع ومحمّرة",
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
-  
   
   {
     id: "29",
@@ -425,7 +484,7 @@ const drinks = [
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
   {
-    id: "505-7",
+    id: "505",
     nameAr: "لوكم فسدق حلبي",
     nameEn: "",
     price: 1950,
@@ -435,7 +494,7 @@ const drinks = [
     ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
   },
   {
-    id: "505",
+    id: "505b",
     nameAr: "لوكم بندق ",
     nameEn: "",
     price: 950,
@@ -629,11 +688,21 @@ function createDrinkCard(drink) {
  const qty = state.cart
   .filter(item => item.id === drink.id)
   .reduce((sum, item) => sum + item.quantity, 0);
- 
+const hasMultipleImages = drink.images && drink.images.length > 1;
+
+  
 
   card.innerHTML = `
     <div class="card-img-wrap">
-      <img src="${drink.image || 'logo.png'}" alt="${drink.nameAr}" loading="lazy" />
+     ${hasMultipleImages ? `
+  <div class="card-img-scroll">
+    ${drink.images.map(img => `
+      <img src="${img}" class="card-img-slide" loading="lazy" />
+    `).join('')}
+  </div>
+` : `
+  <img src="${drink.image || 'logo.png'}" class="card-img-slide" loading="lazy" />
+`}
       <div class="card-overlay"></div>
       ${qty > 0 ? `<div class="card-qty-badge">${qty}</div>` : ''}
     </div>
