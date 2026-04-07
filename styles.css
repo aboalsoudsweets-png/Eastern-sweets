@@ -1395,3 +1395,90 @@ footer p {
 }
 
 
+
+
+
+
+
+/* ====== IMAGE WRAPPER ====== */
+.card-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+}
+
+/* ====== SCROLL CONTAINER ====== */
+.card-img-scroll {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  height: 100%;
+  
+  /* يخلي السكرول ناعم في الموبايل */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ====== HIDE SCROLLBAR ====== */
+.card-img-scroll::-webkit-scrollbar {
+  display: none;
+}
+.card-img-scroll {
+  scrollbar-width: none; /* Firefox */
+}
+
+/* ====== EACH IMAGE ====== */
+.card-img-slide {
+  min-width: 100%;
+  height: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  transition: transform 0.3s ease;
+}
+
+/* ====== HOVER EFFECT (اختياري) ====== */
+.card-img-slide:hover {
+  transform: scale(1.05);
+}
+
+/* ====== OVERLAY (لو عندك تأثير غامق) ====== */
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+  pointer-events: none;
+}
+
+/* ====== QUANTITY BADGE ====== */
+.card-qty-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #d4af37;
+  color: #000;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+/* ====== تحسين للموبايل ====== */
+@media (max-width: 768px) {
+  .card-img-wrap {
+    height: 180px;
+  }
+}
+
+/* ====== تحسين للسحب (اختياري) ====== */
+.card-img-scroll {
+  cursor: grab;
+}
+
+.card-img-scroll:active {
+  cursor: grabbing;
+}
+
+
