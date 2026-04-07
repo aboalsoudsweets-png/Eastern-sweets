@@ -630,10 +630,12 @@ function filterDrinks(category) {
 function filterSubCategory(subId) {
   const typeData = baqlawaTypes.find(t => t.id === subId);
   
-  const filtered = drinks.filter(d => 
-    d.category === "baqlawa" && 
-    typeData.keys.some(key => d.nameAr.includes(key))
-  );
+ const filtered = drinks.filter(d => 
+  d.category === "baqlawa" && 
+  typeData.keys.some(key => 
+    d.nameAr.toLowerCase().includes(key.toLowerCase())
+  )
+);
 
   document.querySelectorAll('.sub-btn').forEach(btn => {
     btn.style.background = (btn.innerText === typeData.name) ? "#d4af37" : "#1a1a1a";
@@ -643,26 +645,7 @@ function filterSubCategory(subId) {
   displayFilteredDrinks(filtered);
 }
 
-function renderDrinks() {
-  if (state.currentFilter === "none") {
-    DOM.drinksGrid.innerHTML = "";
-    return;
-  }
 
-  const filtered = state.currentFilter === "all"
-    ? drinks
-    : drinks.filter(d => d.category === state.currentFilter);
-  
-  DOM.drinksGrid.innerHTML = "";
-  
-  filtered.forEach((drink, index) => {
-    const card = createDrinkCard(drink);
-    DOM.drinksGrid.appendChild(card);
-    
-    setTimeout(() => {
-      card.classList.add("visible");
-    }, index * 50);
-  });
 
   // 👇👇👇 حطه هنا بالظبط
   setTimeout(() => {
