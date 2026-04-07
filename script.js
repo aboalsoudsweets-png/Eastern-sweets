@@ -643,18 +643,42 @@ function filterSubCategory(subId) {
   displayFilteredDrinks(filtered);
 }
 
-function displayFilteredDrinks(data) {
-  DOM.drinksGrid.innerHTML = "";
-  if (data.length === 0) {
-    DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center;">قريباً...</p>`;
+function renderDrinks() {
+  if (state.currentFilter === "none") {
+    DOM.drinksGrid.innerHTML = "";
     return;
   }
+
+  const filtered = state.currentFilter === "all"
+    ? drinks
+    : drinks.filter(d => d.category === state.currentFilter);
   
-  data.forEach((drink, index) => {
+  DOM.drinksGrid.innerHTML = "";
+  
+  filtered.forEach((drink, index) => {
     const card = createDrinkCard(drink);
     DOM.drinksGrid.appendChild(card);
-    setTimeout(() => card.classList.add("visible"), index * 50);
+    
+    setTimeout(() => {
+      card.classList.add("visible");
+    }, index * 50);
   });
+
+  // 👇👇👇 حطه هنا بالظبط
+  setTimeout(() => {
+    const scrollContainers = document.querySelectorAll(".card-img-scroll");
+
+    scrollContainers.forEach(container => {
+      const dots = container.parentElement.querySelectorAll(".dot");
+
+      container.addEventListener("scroll", () => {
+        const index = Math.round(container.scrollLeft / container.clientWidth);
+
+        dots.forEach(dot => dot.classList.remove("active"));
+        if (dots[index]) dots[index].classList.add("active");
+      });
+    });
+  }, 100);
 }
 
 // ========== RENDER DRINKS ==========
@@ -694,14 +718,20 @@ const hasMultipleImages = drink.images && drink.images.length > 1;
 
   card.innerHTML = `
     <div class="card-img-wrap">
-     ${hasMultipleImages ? `
+    ${hasMultipleImages ? `
   <div class="card-img-scroll">
     ${drink.images.map(img => `
-      <img src="${img}" class="card-img-slide" loading="lazy" />
+      <img src="${img}" class="card-img-slide" />
+    `).join('')}
+  </div>
+
+  <div class="card-dots">
+    ${drink.images.map((_, i) => `
+      <span class="dot ${i === 0 ? 'active' : ''}"></span>
     `).join('')}
   </div>
 ` : `
-  <img src="${drink.image || 'logo.png'}" class="card-img-slide" loading="lazy" />
+  <img src="${drink.image || 'logo.png'}" class="card-img-slide" />
 `}
       <div class="card-overlay"></div>
       ${qty > 0 ? `<div class="card-qty-badge">${qty}</div>` : ''}
