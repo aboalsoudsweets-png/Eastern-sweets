@@ -615,7 +615,13 @@ btn.classList.toggle("active", btn.dataset.filter === category);
 
 if (category === "baqlawa") {
 subContainer.style.display = "flex";
-subContainer.innerHTML = baqlawaTypes.map(type =>   <button class="filter-btn sub-btn" onclick="filterSubCategory('${type.id}')" style="background: #1a1a1a; border: 1px solid #d4af37; font-size: 0.9rem; padding: 5px 15px;">   ${type.name}   </button>  ).join("");
+subContainer.innerHTML = baqlawaTypes.map(type => `
+  <button class="filter-btn sub-btn"
+    onclick="filterSubCategory('${type.id}')"
+    style="background: #1a1a1a; border: 1px solid #d4af37;">
+    ${type.name}
+  </button>
+`).join("");
 
 DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center;">اختر نوع البقلاوة المفضل لديك</p>`;
 
@@ -626,40 +632,38 @@ renderDrinks();
 }
 
 function filterSubCategory(subId) {
-const typeData = baqlawaTypes.find(t => t.id === subId);
+  const typeData = baqlawaTypes.find(t => t.id === subId);
 
-const filtered = drinks.filter(d =>
-d.category === "baqlawa" &&
-typeData.keys.some(key => d.nameAr.includes(key))
-);
+  const filtered = drinks.filter(d =>
+    d.category === "baqlawa" &&
+    typeData.keys.some(key =>
+      d.nameAr.toLowerCase().includes(key.toLowerCase())
+    )
+  );
 
-document.querySelectorAll('.sub-btn').forEach(btn => {
-btn.style.background = (btn.innerText === typeData.name) ? "#d4af37" : "#1a1a1a";
-btn.style.color = (btn.innerText === typeData.name) ? "#000" : "#fff";
-});
+  document.querySelectorAll('.sub-btn').forEach(btn => {
+    btn.style.background = (btn.innerText === typeData.name) ? "#d4af37" : "#1a1a1a";
+    btn.style.color = (btn.innerText === typeData.name) ? "#000" : "#fff";
+  });
 
-displayFilteredDrinks(filtered);
+  displayFilteredDrinks(filtered);
 }
 
-
-
-// 👇👇👇 حطه هنا بالظبط
+// 👇 برا الفنكشن
 setTimeout(() => {
-const scrollContainers = document.querySelectorAll(".card-img-scroll");
+  const scrollContainers = document.querySelectorAll(".card-img-scroll");
 
-scrollContainers.forEach(container => {  
-  const dots = container.parentElement.querySelectorAll(".dot");  
+  scrollContainers.forEach(container => {
+    const dots = container.parentElement.querySelectorAll(".dot");
 
-  container.addEventListener("scroll", () => {  
-    const index = Math.round(container.scrollLeft / container.clientWidth);  
+    container.addEventListener("scroll", () => {
+      const index = Math.round(container.scrollLeft / container.clientWidth);
 
-    dots.forEach(dot => dot.classList.remove("active"));  
-    if (dots[index]) dots[index].classList.add("active");  
-  });  
-});
-
+      dots.forEach(dot => dot.classList.remove("active"));
+      if (dots[index]) dots[index].classList.add("active");
+    });
+  });
 }, 100);
-}
 
 // ========== RENDER DRINKS ==========
 function renderDrinks() {
@@ -847,7 +851,7 @@ saveCart();
 updateCartUI();
 
 const weightLabel = getWeightLabel(weight);
-showToast(تم إضافة ${drink.nameAr} (${weightLabel}) ✓);
+showToast(`تم إضافة ${drink.nameAr} (${weightLabel}) ✓`);
 
 closeWeightModal();
 renderDrinks();
@@ -1045,10 +1049,9 @@ const isPlate = drinkData ? isPlateItem(drinkData) : false;
 
 const weightLabel = getWeightLabel(item.weight);
 
-const weight = (!isPlate && weightLabel) ?  (${weightLabel}) : "";
+const weight = (!isPlate && weightLabel) ? ` (${weightLabel})` : "";
 
-return • ${item.nameAr}${weight} [الكمية: ${item.quantity}];
-}).join('\n');
+return `• ${item.nameAr}${weight} [الكمية: ${item.quantity}]`;
 
 const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
