@@ -537,7 +537,7 @@ ingredients: ["إسبريسو", "حليب", "رغوة حليب", "قرفة"]
 }
 ];
 
-// ========== STATE MANAGEMENT ==========
+ // ========== STATE MANAGEMENT ==========
 const state = {
 cart: JSON.parse(localStorage.getItem("cart")) || [],
 currentFilter: "none",
@@ -615,13 +615,7 @@ btn.classList.toggle("active", btn.dataset.filter === category);
 
 if (category === "baqlawa") {
 subContainer.style.display = "flex";
-subContainer.innerHTML = baqlawaTypes.map(type => `
-  <button class="filter-btn sub-btn"
-    onclick="filterSubCategory('${type.id}')"
-    style="background: #1a1a1a; border: 1px solid #d4af37;">
-    ${type.name}
-  </button>
-`).join("");
+subContainer.innerHTML = baqlawaTypes.map(type =>   <button class="filter-btn sub-btn" onclick="filterSubCategory('${type.id}')" style="background: #1a1a1a; border: 1px solid #d4af37; font-size: 0.9rem; padding: 5px 15px;">   ${type.name}   </button>  ).join("");
 
 DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center;">اختر نوع البقلاوة المفضل لديك</p>`;
 
@@ -632,38 +626,34 @@ renderDrinks();
 }
 
 function filterSubCategory(subId) {
-  const typeData = baqlawaTypes.find(t => t.id === subId);
+const typeData = baqlawaTypes.find(t => t.id === subId);
 
-  const filtered = drinks.filter(d =>
-    d.category === "baqlawa" &&
-    typeData.keys.some(key =>
-      d.nameAr.toLowerCase().includes(key.toLowerCase())
-    )
-  );
+const filtered = drinks.filter(d =>
+d.category === "baqlawa" &&
+typeData.keys.some(key => d.nameAr.includes(key))
+);
 
-  document.querySelectorAll('.sub-btn').forEach(btn => {
-    btn.style.background = (btn.innerText === typeData.name) ? "#d4af37" : "#1a1a1a";
-    btn.style.color = (btn.innerText === typeData.name) ? "#000" : "#fff";
-  });
+document.querySelectorAll('.sub-btn').forEach(btn => {
+btn.style.background = (btn.innerText === typeData.name) ? "#d4af37" : "#1a1a1a";
+btn.style.color = (btn.innerText === typeData.name) ? "#000" : "#fff";
+});
 
-  displayFilteredDrinks(filtered);
+displayFilteredDrinks(filtered);
 }
 
-// 👇 برا الفنكشن
-setTimeout(() => {
-  const scrollContainers = document.querySelectorAll(".card-img-scroll");
+function displayFilteredDrinks(data) {
+DOM.drinksGrid.innerHTML = "";
+if (data.length === 0) {
+DOM.drinksGrid.innerHTML = <p style="color:#aaa; width:100%; text-align:center;">قريباً...</p>;
+return;
+}
 
-  scrollContainers.forEach(container => {
-    const dots = container.parentElement.querySelectorAll(".dot");
-
-    container.addEventListener("scroll", () => {
-      const index = Math.round(container.scrollLeft / container.clientWidth);
-
-      dots.forEach(dot => dot.classList.remove("active"));
-      if (dots[index]) dots[index].classList.add("active");
-    });
-  });
-}, 100);
+data.forEach((drink, index) => {
+const card = createDrinkCard(drink);
+DOM.drinksGrid.appendChild(card);
+setTimeout(() => card.classList.add("visible"), index * 50);
+});
+}
 
 // ========== RENDER DRINKS ==========
 function renderDrinks() {
@@ -699,31 +689,18 @@ const qty = state.cart
 .reduce((sum, item) => sum + item.quantity, 0);
 const hasMultipleImages = drink.images && drink.images.length > 1;
 
-card.innerHTML = `
-<div class="card-img-wrap">
+card.innerHTML =   <div class="card-img-wrap">   ${hasMultipleImages ?
 
-  ${hasMultipleImages ? `
-    <div class="card-img-scroll">
-      ${drink.images.map(img => `
-        <img src="${img}" class="card-img-slide" />
-      `).join('')}
-    </div>
-
-    <div class="card-dots">
-      ${drink.images.map((_, i) => `
-        <span class="dot ${i === 0 ? 'active' : ''}"></span>
-      `).join('')}
-    </div>
-  ` : `
-    <img src="${drink.image || 'logo.png'}" class="card-img-slide" />
-  `}
-
-  <div class="card-overlay"></div>
-
-</div>
-`;
-
- 
+  <div class="card-img-scroll">  
+    ${drink.images.map(img => `  
+      <img src="${img}" class="card-img-slide" />  
+    `).join('')}  
+  </div>    <div class="card-dots">  
+    ${drink.images.map((_, i) => `  
+      <span class="dot ${i === 0 ? 'active' : ''}"></span>  
+    `).join('')}  
+  </div>  
+` : `  
   <img src="${drink.image || 'logo.png'}" class="card-img-slide" />  
 `}  
       <div class="card-overlay"></div>  
@@ -864,7 +841,7 @@ saveCart();
 updateCartUI();
 
 const weightLabel = getWeightLabel(weight);
-showToast(`تم إضافة ${drink.nameAr} ✓`);
+showToast(تم إضافة ${drink.nameAr} (${weightLabel}) ✓);
 
 closeWeightModal();
 renderDrinks();
@@ -881,7 +858,7 @@ document.getElementById("modal-price").textContent = drink.price;
 document.getElementById("modal-desc").textContent = drink.desc;
 
 const ingList = document.getElementById("modal-ing-list");
-ingList.innerHTML = drink.ingredients.map(ing => `<li>${ing}</li>`).join("");
+ingList.innerHTML = drink.ingredients.map(ing => <li>${ing}</li>).join("");
 
 DOM.modalOverlay.classList.remove("hidden");
 DOM.modalOverlay.classList.add("open");
@@ -1033,19 +1010,7 @@ return `
 `;
 }).join("");
 
-const formHtml = `
-<div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px; direction: rtl; text-align: right;" id="customer-form">
-
-  <h3 style="color: #d4af37;">بيانات التوصيل:</h3>
-
-  <input type="text" id="cust-name" placeholder="الاسم بالكامل">
-  <input type="tel" id="cust-phone" placeholder="رقم الموبايل">
-  <input type="text" id="cust-address" placeholder="العنوان">
-
-  <textarea id="cust-notes" placeholder="ملاحظات"></textarea>
-
-</div>
-`;
+const formHtml =   <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px; direction: rtl; text-align: right;" id="customer-form">   <h3 style="color: #d4af37; font-size: 1rem; border-right: 3px solid #d4af37; padding-right: 8px; margin-bottom: 5px;">بيانات التوصيل:</h3>   <input type="text" id="cust-name" placeholder="الاسم بالكامل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">   <input type="tel" id="cust-phone" placeholder="رقم الموبايل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">   <input type="text" id="cust-address" placeholder="العنوان بالتفصيل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">   <textarea id="cust-notes" placeholder="ملاحظات (اختياري)" rows="2" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box; resize: none;"></textarea>   </div>  ;
 
 DOM.cartItemsList.innerHTML = itemsHtml + formHtml;
 }
@@ -1069,32 +1034,37 @@ return;
 }
 
 const cartSummary = state.cart.map(item => {
-  const drinkData = drinks.find(d => d.id === item.id);
-  const isPlate = drinkData ? isPlateItem(drinkData) : false;
+const drinkData = drinks.find(d => d.id === item.id);
+const isPlate = drinkData ? isPlateItem(drinkData) : false;
 
-  const weightLabel = getWeightLabel(item.weight);
-  const weight = (!isPlate && weightLabel) ? ` (${weightLabel})` : "";
+const weightLabel = getWeightLabel(item.weight);
 
-  return `• ${item.nameAr}${weight} [الكمية: ${item.quantity}]`;
-}).join('\n'); // 🔥 مهم جداً
+const weight = (!isPlate && weightLabel) ?  (${weightLabel}) : "";
+
+return • ${item.nameAr}${weight} [الكمية: ${item.quantity}];
+}).join('\n');
 
 const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
 const message = `
 طلب جديد من حلويات أبو السعود 🍰
 
+البيانات الشخصية:
 👤 الاسم: ${name}
 📞 الهاتف: ${phone}
 📍 العنوان: ${address}
-${notes ? `📝 ملاحظات: ${notes}` : ''}
+${notes ? 📝 ملاحظات: ${notes} : ''}
 
 الطلبات:
 ${cartSummary}
 
+ــــــــــــــــــــــــــــــــــــــــــــــــــ
 💰 الإجمالي: ${totalPrice} ج.م
+ــــــــــــــــــــــــــــــــــــــــــــــــــ
 `.trim();
 
-const whatsappURL = `https://wa.me/201070100122?text=${encodeURIComponent(message)}`;
+const whatsappURL = https://wa.me/201070100122?text=${encodeURIComponent(message)};
+window.open(whatsappURL, "_blank");
 
 state.cart = [];
 saveCart();
