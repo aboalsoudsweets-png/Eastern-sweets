@@ -615,7 +615,12 @@ btn.classList.toggle("active", btn.dataset.filter === category);
 
 if (category === "baqlawa") {
 subContainer.style.display = "flex";
-subContainer.innerHTML = baqlawaTypes.map(type =>   <button class="filter-btn sub-btn" onclick="filterSubCategory('${type.id}')" style="background: #1a1a1a; border: 1px solid #d4af37; font-size: 0.9rem; padding: 5px 15px;">   ${type.name}   </button>  ).join("");
+subContainer.innerHTML = baqlawaTypes.map(type => `
+  <button class="filter-btn sub-btn" onclick="filterSubCategory('${type.id}')"
+    style="background: #1a1a1a; border: 1px solid #d4af37; font-size: 0.9rem; padding: 5px 15px;">
+    ${type.name}
+  </button>
+`).join("");
 
 DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center;">اختر نوع البقلاوة المفضل لديك</p>`;
 
@@ -644,7 +649,7 @@ displayFilteredDrinks(filtered);
 function displayFilteredDrinks(data) {
 DOM.drinksGrid.innerHTML = "";
 if (data.length === 0) {
-DOM.drinksGrid.innerHTML = <p style="color:#aaa; width:100%; text-align:center;">قريباً...</p>;
+DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center;">قريباً...</p>`;
 return;
 }
 
@@ -749,7 +754,12 @@ btn.style.color = "white";
 });
 
 // Set first button as selected
-weightButtons[0].style.background = "#d4af37";
+weightButtons.forEach(btn => {
+  if (parseFloat(btn.dataset.multiplier) === 1) {
+    btn.style.background = "#d4af37";
+    btn.style.color = "#000";
+  }
+});
 weightButtons[0].style.color = "#000";
 
 weightModalOverlay.classList.remove("hidden");
@@ -841,7 +851,7 @@ saveCart();
 updateCartUI();
 
 const weightLabel = getWeightLabel(weight);
-showToast(تم إضافة ${drink.nameAr} (${weightLabel}) ✓);
+showToast(`تم إضافة ${drink.nameAr} (${weightLabel}) ✓`);
 
 closeWeightModal();
 renderDrinks();
@@ -858,7 +868,7 @@ document.getElementById("modal-price").textContent = drink.price;
 document.getElementById("modal-desc").textContent = drink.desc;
 
 const ingList = document.getElementById("modal-ing-list");
-ingList.innerHTML = drink.ingredients.map(ing => <li>${ing}</li>).join("");
+ingList.innerHTML = drink.ingredients.map(ing => `<li>${ing}</li>`).join("");
 
 DOM.modalOverlay.classList.remove("hidden");
 DOM.modalOverlay.classList.add("open");
@@ -896,7 +906,7 @@ weight: 1
 
 saveCart();
 updateCartUI();
-showToast(تم إضافة ${drink.nameAr} ✓);
+showToast(`تم إضافة ${drink.nameAr} ✓`);
 renderDrinks();
 }
 
@@ -1010,7 +1020,11 @@ return `
 `;
 }).join("");
 
-const formHtml =   <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px; direction: rtl; text-align: right;" id="customer-form">   <h3 style="color: #d4af37; font-size: 1rem; border-right: 3px solid #d4af37; padding-right: 8px; margin-bottom: 5px;">بيانات التوصيل:</h3>   <input type="text" id="cust-name" placeholder="الاسم بالكامل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">   <input type="tel" id="cust-phone" placeholder="رقم الموبايل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">   <input type="text" id="cust-address" placeholder="العنوان بالتفصيل" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box;">   <textarea id="cust-notes" placeholder="ملاحظات (اختياري)" rows="2" style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 6px; font-family: 'Cairo'; box-sizing: border-box; resize: none;"></textarea>   </div>  ;
+const formHtml = `
+<div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px; direction: rtl; text-align: right;" id="customer-form">
+...
+</div>
+`;
 
 DOM.cartItemsList.innerHTML = itemsHtml + formHtml;
 }
@@ -1039,9 +1053,9 @@ const isPlate = drinkData ? isPlateItem(drinkData) : false;
 
 const weightLabel = getWeightLabel(item.weight);
 
-const weight = (!isPlate && weightLabel) ?  (${weightLabel}) : "";
+const weight = (!isPlate && weightLabel) ? `(${weightLabel})` : "";
 
-return • ${item.nameAr}${weight} [الكمية: ${item.quantity}];
+return `• ${item.nameAr}${weight} [الكمية: ${item.quantity}]`;
 }).join('\n');
 
 const totalPrice = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -1063,7 +1077,7 @@ ${cartSummary}
 ــــــــــــــــــــــــــــــــــــــــــــــــــ
 `.trim();
 
-const whatsappURL = https://wa.me/201070100122?text=${encodeURIComponent(message)};
+const whatsappURL = `https://wa.me/201070100122?text=${encodeURIComponent(message)}`;
 window.open(whatsappURL, "_blank");
 
 state.cart = [];
