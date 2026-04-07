@@ -1035,7 +1035,34 @@ return `
 
 const formHtml = `
 <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px; direction: rtl; text-align: right;" id="customer-form">
-...
+
+  <input 
+    id="cust-name" 
+    type="text" 
+    placeholder="الاسم"
+    style="padding:10px; border-radius:6px; border:none; background:#222; color:#fff;"
+  />
+
+  <input 
+    id="cust-phone" 
+    type="tel" 
+    placeholder="رقم الهاتف"
+    style="padding:10px; border-radius:6px; border:none; background:#222; color:#fff;"
+  />
+
+  <input 
+    id="cust-address" 
+    type="text" 
+    placeholder="العنوان"
+    style="padding:10px; border-radius:6px; border:none; background:#222; color:#fff;"
+  />
+
+  <textarea 
+    id="cust-notes" 
+    placeholder="ملاحظات (اختياري)"
+    style="padding:10px; border-radius:6px; border:none; background:#222; color:#fff;"
+  ></textarea>
+
 </div>
 `;
 
