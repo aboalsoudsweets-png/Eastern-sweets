@@ -686,57 +686,70 @@ setTimeout(() => {
 
 // ========== CREATE CARD ==========
 function createDrinkCard(drink) {
-const card = document.createElement("div");
-card.className = "drink-card";
+  const card = document.createElement("div");
+  card.className = "drink-card";
 
-const qty = state.cart
-.filter(item => item.id === drink.id)
-.reduce((sum, item) => sum + item.quantity, 0);
-const hasMultipleImages = drink.images && drink.images.length > 1;
+  const qty = state.cart
+    .filter(item => item.id === drink.id)
+    .reduce((sum, item) => sum + item.quantity, 0);
 
-card.innerHTML =   <div class="card-img-wrap">   ${hasMultipleImages ?
+  const hasMultipleImages = drink.images && drink.images.length > 1;
 
-  <div class="card-img-scroll">  
-    ${drink.images.map(img => `  
-      <img src="${img}" class="card-img-slide" />  
-    `).join('')}  
-  </div>    <div class="card-dots">  
-    ${drink.images.map((_, i) => `  
-      <span class="dot ${i === 0 ? 'active' : ''}"></span>  
-    `).join('')}  
-  </div>  
-` : `  
-  <img src="${drink.image || 'logo.png'}" class="card-img-slide" />  
-`}  
-      <div class="card-overlay"></div>  
-      ${qty > 0 ? `<div class="card-qty-badge">${qty}</div>` : ''}  
-    </div>  
-    <div class="card-body" style="padding: 12px;">  
-      <div class="card-row" style="margin-bottom: 8px;">  
-        <div style="text-align: right; width: 100%;">  
-          <div class="card-name-ar" style="font-weight: 700; font-size: 1.1rem; color: #fff;">${drink.nameAr}</div>  <div class="card-desc-simple" style="color: #aaa; font-size: 0.85rem; margin-top: 4px; line-height: 1.3;">  
-        ${drink.desc || ''}  
-      </div>  
-    </div>  
-  </div>  
+  card.innerHTML = `
+  <div class="card-img-wrap">
 
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">  
-    <div class="card-price" style="margin: 0;">  
-      <strong style="color: #d4af37; font-size: 1.2rem;">${drink.price}</strong>  
-      <small style="color: #d4af37;">ج.م</small>  
-    </div>  
+    ${hasMultipleImages ? `
+      <div class="card-img-scroll">
+        ${drink.images.map(img => `
+          <img src="${img}" class="card-img-slide" />
+        `).join('')}
+      </div>
+
+      <div class="card-dots">
+        ${drink.images.map((_, i) => `
+          <span class="dot ${i === 0 ? 'active' : ''}"></span>
+        `).join('')}
+      </div>
+    ` : `
+      <img src="${drink.image || 'logo.png'}" class="card-img-slide" />
+    `}
+
+    <div class="card-overlay"></div>
+
+    ${qty > 0 ? `<div class="card-qty-badge">${qty}</div>` : ''}
+
+  </div>
+
+  <div class="card-body" style="padding: 12px;">
+
+    <div style="text-align: right;">
+      <div style="font-weight: bold; color: #fff; font-size: 1.1rem;">
+        ${drink.nameAr}
+      </div>
+
+      <div style="color: #aaa; font-size: 0.85rem; margin-top: 5px;">
+        ${drink.desc || ''}
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
       
-    <button class="quick-add-btn"   
-            onclick="handleQuickAdd(event, '${drink.id}')"   
-            style="background: #d4af37; color: #000; border: none; padding: 6px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo';">  
-      ${qty > 0 ? '➕ المزيد' : '🛍 اضف للسلة'}  
-    </button>  
-  </div>  
-</div>
+      <div style="color: #d4af37;">
+        <strong>${drink.price}</strong> ج.م
+      </div>
 
-`;
+      <button 
+        onclick="handleQuickAdd(event, '${drink.id}')"
+        style="background: #d4af37; color: #000; border: none; padding: 6px 15px; border-radius: 6px; cursor: pointer;">
+        ${qty > 0 ? '➕ المزيد' : '🛍 اضف للسلة'}
+      </button>
 
-return card;
+    </div>
+
+  </div>
+  `;
+
+  return card;
 }
 
 // ========== WEIGHT MODAL ==========
@@ -1067,7 +1080,7 @@ const message = `
 👤 الاسم: ${name}
 📞 الهاتف: ${phone}
 📍 العنوان: ${address}
-${notes ? 📝 ملاحظات: ${notes} : ''}
+${notes ? `📝 ملاحظات: ${notes}` : ''}
 
 الطلبات:
 ${cartSummary}
