@@ -959,7 +959,9 @@ function closeCartModal() {
   }, 300);
 }
 
- function getWeightLabel(weight) {
+function getWeightLabel(weight) {
+  if (!weight) return ""; // 🔥 الحل هنا
+
   switch(weight) {
     case 1: return "كيلو";
     case 0.5: return "نصف كيلو";
@@ -1048,7 +1050,7 @@ function sendToWhatsapp() {
 
   const weightLabel = getWeightLabel(item.weight);
 
-  const weight = !isPlate ? ` (${weightLabel})` : "";
+  const weight = (!isPlate && weightLabel) ? ` (${weightLabel})` : "";
 
   return `• ${item.nameAr}${weight} [الكمية: ${item.quantity}]`;
 }).join('\n');
