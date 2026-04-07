@@ -775,7 +775,7 @@ function addToCartWithWeight() {
   saveCart();
   updateCartUI();
 
-  const weightLabel = weight === 1 ? "كيلو" : weight === 0.5 ? "نصف كيلو" : "ربع كيلو";
+  const weightLabel = getWeightLabel(weight);
   showToast(`تم إضافة ${drink.nameAr} (${weightLabel}) ✓`);
 
   closeWeightModal();
@@ -890,6 +890,17 @@ function closeCartModal() {
   }, 300);
 }
 
+ function getWeightLabel(weight) {
+  switch(weight) {
+    case 1: return "كيلو";
+    case 0.5: return "نصف كيلو";
+    case 0.25: return "ربع كيلو";
+    case 1.25: return "كيلو وربع";
+    case 1.5: return "كيلو ونص";
+    default: return weight + " كيلو";
+  }
+}
+
 function renderCartItems() {
   if (state.cart.length === 0) {
     DOM.cartItemsList.innerHTML = "<p style='text-align:center; color: #aaa; padding: 2rem;'>لا توجد عناصر في السلة</p>";
@@ -897,9 +908,10 @@ function renderCartItems() {
   }
   
   let itemsHtml = state.cart.map(item => {
-    const weightLabel = item.weight === 1 ? "كيلو" : item.weight === 0.5 ? "نصف كيلو" : "ربع كيلو";
+ 
     const drinkData = drinks.find(d => d.id === item.id);
 const isPlate = drinkData ? isPlateItem(drinkData) : false;
+    const weightLabel = getWeightLabel(item.weight);
    return `
   <div class="cart-item" style="display: flex; justify-content: space-between; align-items: center;">
     
@@ -965,7 +977,7 @@ function sendToWhatsapp() {
   const drinkData = drinks.find(d => d.id === item.id);
   const isPlate = drinkData ? isPlateItem(drinkData) : false;
 
-  const weightLabel = item.weight === 1 ? "كيلو" : item.weight === 0.5 ? "نصف كيلو" : "ربع كيلو";
+  const weightLabel = getWeightLabel(item.weight);
 
   const weight = !isPlate ? ` (${weightLabel})` : "";
 
