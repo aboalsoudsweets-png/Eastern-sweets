@@ -53,7 +53,7 @@ ingredients: []
 id: "504",
 nameAr: " نابلسية و عربية نصف و نصف ",
 nameEn: "",
-price: 135,
+price: 500,
 category: "konafa",
 image: "504.JPG",
 desc: "",
