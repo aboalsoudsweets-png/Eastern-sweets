@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="ltr" class="dark">
+<html lang="ar" dir="rtl" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,15 +10,19 @@
 </head>
 <body>
 
+
   <div id="loading-screen">
     <div class="loading-content">
       <h1 class="loading-title">ABU ALSOUD</h1>
       <p>...جاري التحضير</p>
     </div>
   </div>
+  
 
   <nav id="navbar">
-    <div class="nav-logo"><span>ABU ALSOUD</span></div>
+   <div class="nav-logo">
+  <span id="admin-trigger" style="cursor: pointer;">ABU ALSOUD</span>
+</div>
     <div style="display: flex; align-items: center; gap: 1rem;">
       <div id="cart-icon-wrap" style="position: relative; cursor: pointer;">
         <span style="font-size: 1.5rem;">🛒</span>
@@ -52,7 +56,7 @@
   
 
   
-  <div class="drinks-grid" id="drinks-grid"></div>
+<div class="drinks-grid" id="drinks-grid"></div>
 </section>
 
 <div id="modal-overlay" class="modal-overlay hidden">
@@ -92,8 +96,7 @@
       </div>
     </div>
 </div>
-  <div id="toast" class="toast hidden"></div>
-  <script src="script.js"></script>
+ 
 
 
   <footer class="main-footer">
@@ -152,9 +155,39 @@
         </div>
     </div>
 </div>
-  
 
-  
-  
+
+
+  <div id="admin-panel" style="
+position: fixed;
+top: 0;
+right: -100%;
+width: 300px;
+height: 100%;
+background: #111;
+color: white;
+z-index: 9999;
+padding: 20px;
+transition: 0.3s;
+overflow-y: auto;
+">
+
+<h2 style="color:#d4af37;">Admin Panel</h2>
+
+<button onclick="closeAdminPanel()">❌ اغلاق</button>
+
+<div id="admin-products"></div>
+
+</div>
+
+
+
+ <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+  <!-- Script بتاعك -->
+  <script src="script.js?v=2"></script>
+
 </body>
 </html>
