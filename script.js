@@ -821,7 +821,7 @@ updateWeightPrice(state.selectedDrink, multiplier);
 // ========== HANDLE QUICK ADD ==========
 function handleQuickAdd(event, drinkId) {
 
-const closedItems = ["9000", "2", "40055","3","503","","",""];
+const closedItems = ["9000", "2", "40055","3","503","400","",""];
 
 if (closedItems.includes(drinkId)) {
   showToast("❌ الصنف غير متوفر حالياً");
