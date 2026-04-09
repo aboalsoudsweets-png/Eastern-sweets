@@ -763,9 +763,22 @@ function displayFilteredDrinks(data) {
 // ========== RENDER DRINKS ==========
 // دالة لعرض المنتجات من Firebase
 function renderDrinks() {
+  // 👇 نجيب ترتيب الـ IDs من الكود الأصلي
+  const orderMap = defaultDrinks.map(d => d.id);
+
   const filtered = state.currentFilter === "all"
     ? drinks
     : drinks.filter(d => d.category === state.currentFilter);
+
+  // 👇 نرتب حسب ترتيبك في الكود
+ filtered.sort((a, b) => {
+  // 👇 الأولوية للمشكل
+  if (a.nameAr.includes("مشكل") && !b.nameAr.includes("مشكل")) return -1;
+  if (!a.nameAr.includes("مشكل") && b.nameAr.includes("مشكل")) return 1;
+
+  // 👇 بعد كده الترتيب الطبيعي
+  return orderMap.indexOf(a.id) - orderMap.indexOf(b.id);
+});
 
   DOM.drinksGrid.innerHTML = "";
 
