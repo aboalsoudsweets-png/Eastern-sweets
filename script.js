@@ -537,10 +537,33 @@ ingredients: ["إسبريسو", "حليب", "رغوة حليب", "قرفة"]
 }
 ];
 
+const firebaseConfig = {
+  apiKey: "AIzaSyBFBnaSspqZZ32YPQOlVFxLC23Ik5LalEM",
+  authDomain: "abo-alsoude.firebaseapp.com",
+  projectId: "abo-alsoude",
+  storageBucket: "abo-alsoude.firebasestorage.app",
+  messagingSenderId: "207897769616",
+  appId: "1:207897769616:web:28a481314624f92ea50a15",
+  measurementId: "G-C39993QJZF"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+
+
+
+let drinks = [];
+//=============clicl============
+let isAdmin = false;
+
+
+
+
  // ========== STATE MANAGEMENT ==========
 const state = {
 cart: JSON.parse(localStorage.getItem("cart")) || [],
-currentFilter: "none",
+currentFilter: "all",
 selectedDrink: null,
 selectedWeight: 1 // Default weight
 };
@@ -567,12 +590,74 @@ weightModalClose: document.getElementById("weight-modal-close")
 };
 
 // ========== INITIALIZATION ==========
-document.addEventListener("DOMContentLoaded", () => {
-renderDrinks();
-setupEventListeners();
-hideLoadingScreen();
-updateCartUI();
+document.addEventListener("DOMContentLoaded", async () => {
+DOM.drinksGrid.style.display = "none";
+  // ✅ كود الأدمن (لوحده فوق)
+  let clickCount = 0;
+  let clickTimer = null;
+
+  const adminTrigger = document.getElementById("admin-trigger");
+
+  if (adminTrigger) {
+   adminTrigger.addEventListener("click", () => {
+  clickCount++;
+
+  clearTimeout(clickTimer);
+  clickTimer = setTimeout(() => {
+    clickCount = 0;
+  }, 1500);
+
+  if (clickCount === 3) {
+    clickCount = 0;
+
+    const code = prompt("ادخل كود الادمن");
+
+    if (code === "1234") {
+      isAdmin = true;
+      alert("تم تفعيل الأدمن");
+      openAdminPanel();
+    } else {
+      alert("كود غلط");
+        }
+      }
+    });
+  }
+
+  // ✅ Firebase لوحده
+ try {
+  let snapshot = await db.collection("products").get();
+
+  if (snapshot.empty) {
+    await uploadDefaultProducts();
+    drinks = defaultDrinks;
+  } else {
+    drinks = snapshot.docs.map(doc => ({
+      firebaseId: doc.id,
+      ...doc.data()
+    }));
+  }
+
+} catch (error) {
+  console.error("🔥 Firebase مش شغال:", error);
+  drinks = defaultDrinks;
+}
+
+  setupEventListeners();
+  updateCartUI();
+ 
+
+  setTimeout(() => {
+    const loading = document.getElementById("loading-screen");
+    if (loading) {
+      loading.style.display = "none";
+    }
+  }, 1000);
+
 });
+// 👇 كود الأدمن
+// 👇 كود الأدمن
+// 👇 كود الأدمن هنا
+
 
 // ========== LOADING SCREEN ==========
 function hideLoadingScreen() {
@@ -599,94 +684,122 @@ return drink.nameAr.includes("صحن");
 }
 
 // ========== FILTER FUNCTIONALITY ==========
+
+
+
 const baqlawaTypes = [
-{ id: 'fustuk', name: 'بقلاوة فستق', keys: ['فستق', 'بستاشيو', 'بلوريا', 'صره', 'اسيا', 'كل واشكر فستق', 'دولمة', 'اساور', 'سنيورة'] },
-{ id: 'loz', name: 'بقلاوة لوز', keys: ['مشكل لوز','لوكم بندق','اصابع كاجو ','بقلاوة اسطنبولي جوز','كنافة لوز','بورمة لوز','عش البلبل لوز','بقلاوة اسطنبولي لوز','بقلاوة لوز','صرة لوز','كل وشكر لوز','اصابع لوز','عش البلبل كاجو','وربات لوز','لوكم بندق', 'مشكل لوز' ] },
-{ id: 'mix', name: 'أصناف متنوعة', keys: [  'عجوة' ,'معمول جوز','غريبة'] }
+  { id: 'fustuk', name: 'بقلاوة فستق', keys: ['فستق', 'بستاشيو', 'بلوريا', 'صره', 'اسيا', 'كل واشكر فستق', 'دولمة', 'اساور', 'سنيورة'] },
+  { id: 'loz', name: 'بقلاوة لوز', keys: ['مشكل لوز','لوكم بندق','اصابع كاجو ','بقلاوة اسطنبولي جوز','كنافة لوز','بورمة لوز','عش البلبل لوز','بقلاوة اسطنبولي لوز','بقلاوة لوز','صرة لوز','كل وشكر لوز','اصابع لوز','عش البلبل كاجو','وربات لوز','لوكم بندق', 'مشكل لوز'] },
+  { id: 'mix', name: 'أصناف متنوعة', keys: ['عجوة','معمول جوز','غريبة'] }
 ];
 
 function filterDrinks(category) {
-state.currentFilter = category;
-const subContainer = document.getElementById("sub-filters-container");
+  state.currentFilter = category;
+  const subContainer = document.getElementById("sub-filters-container");
 
-DOM.filterBtns.forEach(btn => {
-btn.classList.toggle("active", btn.dataset.filter === category);
-});
+  // 👇 نظهر الكروت أول ما المستخدم يضغط
+  DOM.drinksGrid.style.display = "grid";
 
-if (category === "baqlawa") {
-subContainer.style.display = "flex";
-subContainer.innerHTML = baqlawaTypes.map(type => `
-  <button class="filter-btn sub-btn" onclick="filterSubCategory('${type.id}')"
-    style="background: #1a1a1a; border: 1px solid #d4af37; font-size: 0.9rem; padding: 5px 15px;">
-    ${type.name}
-  </button>
-`).join("");
+  DOM.filterBtns.forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.filter === category);
+  });
 
-DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center;">اختر نوع البقلاوة المفضل لديك</p>`;
+  if (category === "baqlawa") {
+    subContainer.style.display = "flex";
+    subContainer.innerHTML = baqlawaTypes.map(type => `
+      <button class="filter-btn sub-btn" onclick="filterSubCategory('${type.id}')"
+        style="background: #1a1a1a; border: 1px solid #d4af37; font-size: 0.9rem; padding: 5px 15px;">
+        ${type.name}
+      </button>
+    `).join("");
 
-} else {
-subContainer.style.display = "none";
-renderDrinks();
-}
+    DOM.drinksGrid.innerHTML = `
+      <p style="color:#aaa; width:100%; text-align:center;">
+        اختر نوع البقلاوة المفضل لديك
+      </p>
+    `;
+
+  } else {
+    subContainer.style.display = "none";
+    renderDrinks();
+  }
 }
 
 function filterSubCategory(subId) {
-const typeData = baqlawaTypes.find(t => t.id === subId);
+  const typeData = baqlawaTypes.find(t => t.id === subId);
 
-const filtered = drinks.filter(d =>
-d.category === "baqlawa" &&
-typeData.keys.some(key => d.nameAr.includes(key))
-);
+  const filtered = drinks.filter(d =>
+    d.category === "baqlawa" &&
+    typeData.keys.some(key => d.nameAr.includes(key))
+  );
 
-document.querySelectorAll('.sub-btn').forEach(btn => {
-btn.style.background = (btn.innerText === typeData.name) ? "#d4af37" : "#1a1a1a";
-btn.style.color = (btn.innerText === typeData.name) ? "#000" : "#fff";
-});
+  document.querySelectorAll('.sub-btn').forEach(btn => {
+    btn.style.background = (btn.innerText === typeData.name) ? "#d4af37" : "#1a1a1a";
+    btn.style.color = (btn.innerText === typeData.name) ? "#000" : "#fff";
+  });
 
-displayFilteredDrinks(filtered);
+  displayFilteredDrinks(filtered);
 }
 
 function displayFilteredDrinks(data) {
-DOM.drinksGrid.innerHTML = "";
-if (data.length === 0) {
-DOM.drinksGrid.innerHTML = `<p style="color:#aaa; width:100%; text-align:center;">قريباً...</p>`;
-return;
-}
+  DOM.drinksGrid.innerHTML = "";
 
-data.forEach((drink, index) => {
-const card = createDrinkCard(drink);
-DOM.drinksGrid.appendChild(card);
-setTimeout(() => card.classList.add("visible"), index * 50);
-});
+  if (data.length === 0) {
+    DOM.drinksGrid.innerHTML = `
+      <p style="color:#aaa; width:100%; text-align:center;">قريباً...</p>
+    `;
+    return;
+  }
+
+  data.forEach((drink, index) => {
+    const card = createDrinkCard(drink);
+    DOM.drinksGrid.appendChild(card);
+    setTimeout(() => card.classList.add("visible"), index * 50);
+  });
 }
 
 // ========== RENDER DRINKS ==========
+// دالة لعرض المنتجات من Firebase
 function renderDrinks() {
-if (state.currentFilter === "none") {
-DOM.drinksGrid.innerHTML = "";
-return;
+  const filtered = state.currentFilter === "all"
+    ? drinks
+    : drinks.filter(d => d.category === state.currentFilter);
+
+  DOM.drinksGrid.innerHTML = "";
+
+  filtered.forEach((drink, index) => {
+    const card = createDrinkCard(drink);
+    DOM.drinksGrid.appendChild(card);
+
+    setTimeout(() => {
+      card.classList.add("visible");
+    }, index * 50);
+  });
 }
 
-const filtered = state.currentFilter === "all"
-? drinks
-: drinks.filter(d => d.category === state.currentFilter);
+ 
 
-DOM.drinksGrid.innerHTML = "";
+async function uploadDefaultProducts() {
+  const snapshot = await db.collection("products").get();
 
-filtered.forEach((drink, index) => {
-const card = createDrinkCard(drink);
-DOM.drinksGrid.appendChild(card);
+  if (!snapshot.empty) return; // لو فيه بيانات بلاش
 
-setTimeout(() => {  
-  card.classList.add("visible");  
-}, index * 50);
+  for (let drink of defaultDrinks) {
+    await db.collection("products").add({
+      ...drink,
+      available: true // تأكد من إضافة هذا المفتاح لكل منتج
+    });
+  }
 
-});
+  console.log("تم رفع المنتجات لأول مرة ✅");
 }
 
 // ========== CREATE CARD ==========
 function createDrinkCard(drink) {
   const card = document.createElement("div");
+ if (drink.available === false && !isAdmin) {
+  card.style.opacity = "0.5";
+}
   card.className = "drink-card";
 
   const qty = state.cart
@@ -734,15 +847,45 @@ function createDrinkCard(drink) {
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
       
-      <div style="color: #d4af37;">
-        <strong>${drink.price}</strong> ج.م
-      </div>
+     <div style="display:flex; flex-direction:column; align-items:flex-start; gap:5px;">
+  
+  <div style="color: #d4af37;">
+    <strong>${drink.price}</strong> ج.م
+  </div>
 
-      <button 
-        onclick="handleQuickAdd(event, '${drink.id}')"
-        style="background: #d4af37; color: #000; border: none; padding: 6px 15px; border-radius: 6px; cursor: pointer;">
-        ${qty > 0 ? '➕ المزيد' : '🛍 اضف للسلة'}
-      </button>
+  ${isAdmin ? `
+    <button onclick="toggleAvailability('${drink.id}')"
+    style="
+      background: #444;
+      color: white;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+    ">
+      ${drink.available === false ? 'اظهار' : 'اخفاء'}
+    </button>
+  ` : ''}
+
+</div>
+
+     
+<button
+  ${drink.available === false ? 'disabled' : ''}
+  onclick="handleQuickAdd(event, '${drink.id}')"
+  style="
+    background: ${drink.available === false ? '#555' : '#d4af37'};
+    color: ${drink.available === false ? '#aaa' : '#000'};
+    border: none;
+    padding: 6px 15px;
+    border-radius: 6px;
+    cursor: ${drink.available === false ? 'not-allowed' : 'pointer'};
+  "
+>
+  ${drink.available === false ? '❌ غير متوفر' : (qty > 0 ? '➕ المزيد' : '🛍 اضف للسلة')}
+</button>
+
 
     </div>
 
@@ -820,14 +963,6 @@ updateWeightPrice(state.selectedDrink, multiplier);
 
 // ========== HANDLE QUICK ADD ==========
 function handleQuickAdd(event, drinkId) {
-
-const closedItems = ["9000", "2", "40055","3","503","400","",""];
-
-if (closedItems.includes(drinkId)) {
-  showToast("❌ الصنف غير متوفر حالياً");
-  return;
-}
- 
 event.stopPropagation();
 const drink = drinks.find(d => d.id === drinkId);
 
@@ -875,7 +1010,7 @@ const weightLabel = getWeightLabel(weight);
 showToast(`تم إضافة ${drink.nameAr} (${weightLabel}) ✓`);
 
 closeWeightModal();
-renderDrinks();
+
 }
 
 // ========== MODAL MANAGEMENT ==========
@@ -928,7 +1063,7 @@ weight: 1
 saveCart();
 updateCartUI();
 showToast(`تم إضافة ${drink.nameAr} ✓`);
-renderDrinks();
+
 }
 
 function removeFromCart(uniqueId) {
@@ -1213,4 +1348,63 @@ closeWeightModal();
 // Add function to confirm weight selection
 function confirmWeightSelection() {
 addToCartWithWeight();
+}
+
+
+
+
+// دالة لتغيير التوفر (إخفاء أو إظهار)
+function toggleAvailability(id) {
+  const product = drinks.find(d => d.id === id);
+
+  if (!product || !product.firebaseId) {
+    showToast("خطأ في المنتج ❌");
+    return;
+  }
+
+  product.available = !product.available;
+
+  db.collection("products").doc(product.firebaseId).update({
+    available: product.available
+  })
+  .then(() => {
+    showToast("تم التحديث ✅");
+    
+    renderAdminPanel();
+  })
+  .catch((error) => {
+    console.error(error);
+    showToast("حصل خطأ ❌");
+  });
+}
+
+
+
+
+
+function renderAdminPanel() {
+  const container = document.getElementById("admin-products");
+
+  container.innerHTML = drinks.map(drink => `
+    <div style="border-bottom:1px solid #444; padding:10px 0; text-align:right;">
+      
+      <div>${drink.nameAr}</div>
+
+      <button onclick="toggleAvailability('${drink.id}')"
+      style="margin-top:5px; padding:5px 10px; cursor:pointer;">
+        ${drink.available === false ? '❌ غير متوفر' : '✅ متوفر'}
+      </button>
+
+    </div>
+  `).join("");
+}
+
+
+function openAdminPanel() {
+  document.getElementById("admin-panel").style.right = "0";
+  renderAdminPanel();
+}
+
+function closeAdminPanel() {
+  document.getElementById("admin-panel").style.right = "-100%";
 }
