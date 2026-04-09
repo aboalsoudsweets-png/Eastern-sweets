@@ -162,7 +162,7 @@ ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
 
 {
 id: "mishkal-fustuk-mix",
-nameAr: " مشكل فستق حلبي مع لوز و كاجو",
+nameAr: " مشكل فستق حلبي مع لوز  ",
 nameEn: "",
 price: 1250,
 category: "baqlawa",
