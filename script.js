@@ -50,7 +50,7 @@ desc: "",
 ingredients: []
 },
 {
-id: "504666",
+id: "504",
 nameAr: " نابلسية و عربية نصف و نصف ",
 nameEn: "",
 price: 500,
@@ -626,17 +626,28 @@ DOM.drinksGrid.style.display = "none";
   }
 
   // ✅ Firebase لوحده
- try {
+try {
   let snapshot = await db.collection("products").get();
 
   if (snapshot.empty) {
     await uploadDefaultProducts();
     drinks = defaultDrinks;
   } else {
-    drinks = snapshot.docs.map(doc => ({
+    const firebaseData = snapshot.docs.map(doc => ({
       firebaseId: doc.id,
       ...doc.data()
     }));
+
+    // 🔥 ندمج الكود مع Firebase (الكود يكسب)
+    drinks = defaultDrinks.map(localItem => {
+      const firebaseItem = firebaseData.find(f => f.id === localItem.id);
+
+      return {
+        ...localItem, // 👈 السعر من الكود
+        firebaseId: firebaseItem?.firebaseId,
+        available: firebaseItem?.available ?? true
+      };
+    });
   }
 
 } catch (error) {
@@ -763,22 +774,9 @@ function displayFilteredDrinks(data) {
 // ========== RENDER DRINKS ==========
 // دالة لعرض المنتجات من Firebase
 function renderDrinks() {
-  // 👇 نجيب ترتيب الـ IDs من الكود الأصلي
-  const orderMap = defaultDrinks.map(d => d.id);
-
   const filtered = state.currentFilter === "all"
     ? drinks
     : drinks.filter(d => d.category === state.currentFilter);
-
-  // 👇 نرتب حسب ترتيبك في الكود
- filtered.sort((a, b) => {
-  // 👇 الأولوية للمشكل
-  if (a.nameAr.includes("مشكل") && !b.nameAr.includes("مشكل")) return -1;
-  if (!a.nameAr.includes("مشكل") && b.nameAr.includes("مشكل")) return 1;
-
-  // 👇 بعد كده الترتيب الطبيعي
-  return orderMap.indexOf(a.id) - orderMap.indexOf(b.id);
-});
 
   DOM.drinksGrid.innerHTML = "";
 
@@ -1211,7 +1209,7 @@ const formHtml = `
   <input 
     id="cust-address" 
     type="text" 
-    placeholder="العنوان"
+    placeholder=" العنوان ( مدينة نصر و مصر الد"
     style="padding:10px; border-radius:6px; border:none; background:#222; color:#fff;"
   />
 
