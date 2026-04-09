@@ -1209,7 +1209,7 @@ const formHtml = `
   <input 
     id="cust-address" 
     type="text" 
-    placeholder=" العنوان ( مدينة نصر و مصر الد"
+    placeholder=" العنوان ( مدينة نصر و مصر الجديدة فقط )"
     style="padding:10px; border-radius:6px; border:none; background:#222; color:#fff;"
   />
 
