@@ -31,7 +31,7 @@ ingredients: []
 },
 {
 id: "40055",
-nameAr: "  اسطنبولية و عربية نصف و نصف",
+nameAr: "  اسطنبولية و عربية مشكل",
 nameEn: "",
 price: 540,
 category: "konafa",
@@ -41,7 +41,7 @@ ingredients: []
 },
 {
 id: "400",
-nameAr: "   اسطنبولية و نابلسية نصف و نصف",
+nameAr: "   اسطنبولية و نابلسية مشكل",
 nameEn: "",
 price: 540,
 category: "konafa",
@@ -51,7 +51,7 @@ ingredients: []
 },
 {
 id: "504",
-nameAr: " نابلسية و عربية نصف و نصف ",
+nameAr: "نابلسية و عربية مشكل ",
 nameEn: "",
 price: 500,
 category: "konafa",
@@ -162,7 +162,7 @@ ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
 
 {
 id: "mishkal-fustuk-mix",
-nameAr: " مشكل فستق حلبي مع لوز  ",
+nameAr: " مشكل فستق حلبي مع لوز و كاجو",
 nameEn: "",
 price: 1250,
 category: "baqlawa",
@@ -615,12 +615,12 @@ DOM.drinksGrid.style.display = "none";
     const code = prompt("ادخل كود الادمن");
 
     if (code === "1234") {
-      isAdmin = true;
-      alert("تم تفعيل الأدمن");
-      openAdminPanel();
-    } else {
-      alert("كود غلط");
-        }
+  isAdmin = true;
+  showToast("تم تفعيل الأدمن ✓");
+  openAdminPanel();
+} else {
+  showToast("كود غلط ❌");
+}
       }
     });
   }
@@ -1209,7 +1209,7 @@ const formHtml = `
   <input 
     id="cust-address" 
     type="text" 
-    placeholder=" العنوان ( مدينة نصر و مصر الجديدة فقط )"
+    placeholder=" العنوان ( مدينة نصر و مصر الجديدة فقط)"
     style="padding:10px; border-radius:6px; border:none; background:#222; color:#fff;"
   />
 
@@ -1284,18 +1284,20 @@ showToast("تم إرسال الطلب بنجاح ✓");
 }
 
 // ========== TOAST NOTIFICATIONS ==========
-function showToast(message) {
-DOM.toast.textContent = message;
-DOM.toast.classList.remove("hidden");
-DOM.toast.classList.add("show");
 
-setTimeout(() => {
-DOM.toast.classList.remove("show");
-setTimeout(() => {
-DOM.toast.classList.add("hidden");
-}, 400);
-}, 2500);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
 // ========== EVENT LISTENERS ==========
 function setupEventListeners() {
@@ -1420,4 +1422,39 @@ function openAdminPanel() {
 
 function closeAdminPanel() {
   document.getElementById("admin-panel").style.right = "-100%";
+}
+
+
+
+
+
+function showToast(message) {
+  let toast = document.getElementById("toast");
+
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "toast";
+
+    toast.style.position = "fixed";
+    toast.style.bottom = "20px";
+    toast.style.left = "50%";
+    toast.style.transform = "translateX(-50%)";
+    toast.style.background = "#d4af37";
+    toast.style.color = "#000";
+    toast.style.padding = "12px 20px";
+    toast.style.borderRadius = "10px";
+    toast.style.fontSize = "14px";
+    toast.style.zIndex = "99999";
+    toast.style.opacity = "0";
+    toast.style.transition = "0.3s";
+
+    document.body.appendChild(toast);
+  }
+
+  toast.textContent = message;
+  toast.style.opacity = "1";
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+  }, 2000);
 }
