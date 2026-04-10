@@ -113,7 +113,7 @@ ingredients: []
 id: "50465",
 nameAr: "صحن نابلسية و عربية",
 nameEn: "",
-price: 135,
+price: 125,
 category: "konafa",
 image: "504.JPG",
 desc: "",
