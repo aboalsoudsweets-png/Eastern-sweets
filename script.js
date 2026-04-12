@@ -614,7 +614,7 @@ DOM.drinksGrid.style.display = "none";
 
     const code = prompt("ادخل كود الادمن");
 
-    if (code === "1234") {
+    if (code === "8800") {
   isAdmin = true;
   showToast("تم تفعيل الأدمن ✓");
   openAdminPanel();
