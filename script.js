@@ -143,7 +143,7 @@ ingredients: []
 // ✅ مشكل فستق حلبي
 {
 id: "mishkal-fustuk",
-nameAr: "مشكل فستق حلبي",
+nameAr: "مشكل حلبي",
 nameEn: "",
 price: 1750,
 category: "baqlawa",
@@ -162,7 +162,7 @@ ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
 
 {
 id: "mishkal-fustuk-mix",
-nameAr: " مشكل فستق حلبي مع لوز و كاجو",
+nameAr: " مشكل حلبي مع لوز ",
 nameEn: "",
 price: 1250,
 category: "baqlawa",
