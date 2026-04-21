@@ -447,7 +447,7 @@ ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
 id: "32",
 nameAr: "وربات لوز",
 nameEn: "",
-price: 900,
+price: 600,
 category: "baqlawa",
 image: "32.png",
 desc: "رقائق الجلاش المحشية بعجينة اللوز الحلو",
