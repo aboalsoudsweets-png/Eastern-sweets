@@ -146,15 +146,10 @@ id: "mishkal-fustuk",
 nameAr: "مشكل حلبي",
 nameEn: "",
 price: 1750,
-category: "baqlawa",
-image: "7.png",
+category: "mshak",
+image: "halaby.png",
 images: [
-"7.png",
-"6.png",
-"8.png",
-"10.png",
-"13.png",
-"17.png"
+"7.png"
 ],
 desc: "مزيج فاخر من أفضل أنواع البقلاوة بالفستق الحلبي الممتاز( قابل لتعديل الاصناف علي حسب زوقك)",
 ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
@@ -165,15 +160,10 @@ id: "mishkal-fustuk-mix",
 nameAr: " مشكل حلبي مع لوز ",
 nameEn: "",
 price: 1250,
-category: "baqlawa",
-image: "30.png",
+category: "mshak",
+image: "lozhalaby.png",
 images: [
-"30.png",
-"27.png",
-"6.png",
-"23.png",
-"20.png",
-"11.png"
+"30.png"
 ],
 desc: "مزيج فاخر من أفضل أنواع البقلاوة بالفستق الحلبي الممتاز( قابل لتعديل الاصناف علي حسب زوقك)",
 ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
@@ -317,15 +307,10 @@ id: "mishkal-loz",
 nameAr: "مشكل لوز",
 nameEn: "",
 price: 750,
-category: "baqlawa",
-image: "20.png",
+category: "mshak",
+image: "loz.png",
 images: [
 "20.png",
-"21.png",
-"23.png",
-"24.png",
-"26.png",
-"30.png"
 ],
 desc: "مزيج فاخر من أفضل أنواع البقلاوة باللوز الممتاز( قابل لتعديل الاصناف علي حسب زوقك)",
 ingredients: ["حبوب قهوة عربية", "ماء", "رغوة حليب"]
