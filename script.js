@@ -933,6 +933,12 @@ state.selectedWeight = 1; // Reset to default
 const weightModalOverlay = document.getElementById("weight-modal-overlay");
 const weightButtons = document.querySelectorAll(".weight-btn");
 
+// إخفاء خيار "كيلو وربع" لأي صنف من أصناف الكنافة
+const kiloRobaBtn = document.querySelector('.weight-btn[data-multiplier="1.25"]');
+if (kiloRobaBtn) {
+kiloRobaBtn.style.display = (drink.category === "konafa") ? "none" : "block";
+}
+
 // Reset button styles
 weightButtons.forEach(btn => {
 btn.style.background = "#444";
