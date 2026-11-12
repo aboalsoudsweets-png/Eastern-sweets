@@ -524,6 +524,550 @@ ingredients: ["إسبريسو", "حليب", "رغوة حليب", "قرفة"]
 
 
 
+// ========== WESTERN (غربي) — يتباع بالقطعة ==========
+const westernDrinks = [
+  {
+    id: "w1",
+    nameAr: "تورتة كاراميل",
+    nameEn: "Caramel Cake",
+    price: 950,
+    category: "cakes",
+    unit: "piece",
+    image: "IMG_8981.JPG",
+    desc: "كيك إسفنج أبيض - كريمة نوتيلا - كرست كريب - شري مستورد - كريمة لباني - جليز شوكولاتة",
+    ingredients: []
+  },
+  {
+    id: "w2",
+    nameAr: "تورتة مانجا لارج",
+    nameEn: "Large Mango Cake",
+    price: 800,
+    category: "cakes",
+    unit: "piece",
+    image: "IMG_8980.JPG",
+    desc: "كيك إسفنج أبيض - كريمة لباني - فراولة مستوردة - فاكهة استوائية - شري مستورد - جليز فراولة",
+    ingredients: []
+  },
+  {
+    id: "w3",
+    nameAr: "تورتة مانجا وسط",
+    nameEn: "Medium Mango Cake",
+    price: 800,
+    category: "cakes",
+    unit: "piece",
+    image: "IMG_8980.JPG",
+    desc: "كيك إسفنج أبيض - كريمة لباني - فراولة مستوردة - فاكهة استوائية - شري مستورد - جليز فراولة",
+    ingredients: []
+  },
+  {
+    id: "w4",
+    nameAr: "تورتة أمريكان لوتس",
+    nameEn: "American Lotus Cake",
+    price: 900,
+    category: "cakes",
+    unit: "piece",
+    image: "IMG_8979.JPG",
+    desc: "كيك إسفنج أبيض - كريمة لباني - حشوة توت مشكل - زبدة كاكاو - جليز شوكولاتة - فاكهة استوائية",
+    ingredients: []
+  },
+  {
+    id: "w5",
+    nameAr: "تورتة بيستاشيو",
+    nameEn: "Pistachio Cake",
+    price: 600,
+    category: "cakes",
+    unit: "piece",
+    image: "IMG_8978.JPG",
+    desc: "موس ماجيك - موس درك - موس وايت - كرست كريب - زبدة كاكاو - جليز شوكولاتة",
+    ingredients: []
+  },
+  {
+    id: "w6",
+    nameAr: "تورتة بلاك فوريست ميني",
+    nameEn: "Black Forest Cake Mini",
+    price: 450,
+    category: "cakes",
+    unit: "piece",
+    image: "IMG_8976.JPG",
+    desc: "كيك شوكليت - موس كراميل - توفي كراميل - عين جمل - زبدة كاكاو - جليز كراميل",
+    ingredients: []
+  },
+  {
+    id: "w7",
+    nameAr: "تورتة وايت فوريست ميني",
+    nameEn: "White Forest Cake Mini",
+    price: 450,
+    category: "cakes",
+    unit: "piece",
+    image: "IMG_8977.JPG",
+    desc: "كيك وايت - موس كراميل - توفي كراميل - عين جمل - زبدة كاكاو - جليز كراميل",
+    ingredients: []
+  },
+  {
+    id: "w8",
+    nameAr: "تورتة بلاك فوريست لارج",
+    nameEn: "Black Forest Cake Large",
+    price: 600,
+    category: "cakes",
+    unit: "piece",
+    image: "IMG_8976.JPG",
+    desc: "كيك شوكليت - موس كراميل - توفي كراميل - عين جمل - زبدة كاكاو - جليز كراميل",
+    ingredients: []
+  },
+  {
+    id: "w9",
+    nameAr: "تورتة وايت فوريست لارج",
+    nameEn: "White Forest Cake Large",
+    price: 600,
+    category: "cakes",
+    unit: "piece",
+    image: "IMG_8977.JPG",
+    desc: "كيك وايت - موس كراميل - توفي كراميل - عين جمل - زبدة كاكاو - جليز كراميل",
+    ingredients: []
+  },
+  {
+    id: "w10",
+    nameAr: "إكلير اللوتس",
+    nameEn: "Lotus Éclair",
+    price: 80,
+    category: "gato",
+    unit: "piece",
+    image: "IMG_8822.JPG (1).jpeg",
+    desc: "اكلير - كريمة باستري - زبدة لوتس - بسكويت لوتس مستورد",
+    ingredients: []
+  },
+  {
+    id: "w11",
+    nameAr: "جبنة اللوتس",
+    nameEn: "Cheese Lotus",
+    price: 100,
+    category: "gato",
+    unit: "piece",
+    image: "15.JPG",
+    desc: "بسكويت لوتس - زبدة مستوردة - كريمة تشيز - لوتس مستورد",
+    ingredients: []
+  },
+  {
+    id: "w12",
+    nameAr: "جبنة نوتيلا",
+    nameEn: "Cheese Nutella",
+    price: 100,
+    category: "gato",
+    unit: "piece",
+    image: "16.JPG",
+    desc: "بسكويت لوتس - زبدة مستوردة - كريمة تشيز - نوتيلا",
+    ingredients: []
+  },
+  {
+    id: "w13",
+    nameAr: "جاتو السيجار",
+    nameEn: "Cigar Gateau",
+    price: 80,
+    category: "gato",
+    unit: "piece",
+    image: "17.JPG",
+    desc: "فادج شوكليت - موس درك - توفي كراميل - جناش قهوة - زبدة الكاكاو",
+    ingredients: []
+  },
+  {
+    id: "w14",
+    nameAr: "ميلفيه كلاسيك",
+    nameEn: "Classic Mille-feuille",
+    price: 80,
+    category: "gato",
+    unit: "piece",
+    image: "18.JPG",
+    desc: "ميلفيه - كريمة باستري - سكر ناعم",
+    ingredients: []
+  },
+  {
+    id: "w15",
+    nameAr: "جبنة شيري",
+    nameEn: "Cheese Cherry",
+    price: 100,
+    category: "gato",
+    unit: "piece",
+    image: "19.JPG",
+    desc: "بسكويت لوتس - زبدة مستوردة - كريمة تشيز - شري مستورد",
+    ingredients: []
+  },
+  {
+    id: "w16",
+    nameAr: "ميلفيه اللوتس",
+    nameEn: "Lotus Mille-feuille",
+    price: 80,
+    category: "gato",
+    unit: "piece",
+    image: "20.JPG",
+    desc: "ميلفيه - كريمة باستري - زبدة لوتس - بسكويت لوتس",
+    ingredients: []
+  },
+  {
+    id: "w17",
+    nameAr: "جاتو روشيه",
+    nameEn: "Rocher Gateau",
+    price: 80,
+    category: "gato",
+    unit: "piece",
+    image: "21.JPG",
+    desc: "موس ماجيك - فادج كيك - نوتيلا - كرست كريب",
+    ingredients: []
+  },
+  {
+    id: "w18",
+    nameAr: "أفريكانو",
+    nameEn: "Africano",
+    price: 100,
+    category: "gato",
+    unit: "piece",
+    image: "23.JPG",
+    desc: "فادج كيك - موس درك - موس وايت - كرست كريب - زبدة كاكاو - جليز شوكليت",
+    ingredients: []
+  },
+  {
+    id: "w19",
+    nameAr: "جاتو جوز الهند",
+    nameEn: "Coconut Gateau",
+    price: 100,
+    category: "gato",
+    unit: "piece",
+    image: "25.JPG",
+    desc: "اسبونج وايت - حشو باونتي - باشون فروت - موس جوز هند - مانجو نعناع - شوكليت حليب سويسري",
+    ingredients: []
+  },
+  {
+    id: "w20",
+    nameAr: "إكلير الفستق",
+    nameEn: "Pistachio Éclair",
+    price: 80,
+    category: "gato",
+    unit: "piece",
+    image: "14.3.JPG",
+    desc: "كيك فستق - موس فستق - كرنش فستق - جليز فستق",
+    ingredients: []
+  },
+  {
+    id: "w21",
+    nameAr: "تاكو الشوكولاتة",
+    nameEn: "Chocolate Taco",
+    price: 85,
+    category: "gato",
+    unit: "piece",
+    image: "14.4.JPG",
+    desc: "بسكويت سابليه - كريمة باستري - شوكليت - كرست كريب",
+    ingredients: []
+  },
+  {
+    id: "w22",
+    nameAr: "جاتوه فستق",
+    nameEn: "Pistachio Gateau",
+    price: 100,
+    category: "gato",
+    unit: "piece",
+    image: "IMG_8975.JPG",
+    desc: "كيك فستق - موس فستق - كرنش فستق - جليز فستق",
+    ingredients: []
+  },
+  {
+    id: "w23",
+    nameAr: "حبة مانجا",
+    nameEn: "Mango Bean",
+    price: 60,
+    category: "gato",
+    unit: "piece",
+    image: "IMG_8974.JPG",
+    desc: "موس وايت - حشو مانجو طبيعي - زبدة الكاكاو - بكتين",
+    ingredients: []
+  },
+  {
+    id: "w24",
+    nameAr: "حبة قهوة",
+    nameEn: "Coffee Bean",
+    price: 80,
+    category: "gato",
+    unit: "piece",
+    image: "IMG_8973.JPG",
+    desc: "موس ماجيك - جناش قهوة - فادج كيك - كوفي",
+    ingredients: []
+  },
+  {
+    id: "w25",
+    nameAr: "جاتوه لوتس",
+    nameEn: "Lotus Gateau",
+    price: 80,
+    category: "gato",
+    unit: "piece",
+    image: "IMG_8972.JPG",
+    desc: "كيك لوتس - كريمة تشيز - زبدة لوتس - بسكويت لوتس مستورد",
+    ingredients: []
+  },
+  {
+    id: "w26",
+    nameAr: "جاتوه فاكهة",
+    nameEn: "Fruit Gateau",
+    price: 60,
+    category: "gato",
+    unit: "piece",
+    image: "IMG_8971.JPG",
+    desc: "بسكويت سابليه - كريمة باستري - مانجو فرش",
+    ingredients: []
+  },
+  {
+    id: "w27",
+    nameAr: "تاكو مانجا",
+    nameEn: "Mango Taco",
+    price: 70,
+    category: "gato",
+    unit: "piece",
+    image: "IMG_8970.JPG",
+    desc: "بسكويت سابليه - كريمة باستري - مانجو فرش",
+    ingredients: []
+  },
+  {
+    id: "w28",
+    nameAr: "هاني كيك",
+    nameEn: "Honey Cake",
+    price: 100,
+    category: "gato",
+    unit: "piece",
+    image: "IMG_8969.JPG",
+    desc: "كيك هاني - كريمة تشيز - عسل نحل",
+    ingredients: []
+  },
+  {
+    id: "w29",
+    nameAr: "تارت مانجا",
+    nameEn: "Mango Tart",
+    price: 100,
+    category: "gato",
+    unit: "piece",
+    image: "IMG_8968.JPG",
+    desc: "موس وايت - حشو مانجو طبيعي - زبدة الكاكاو - بكتين",
+    ingredients: []
+  },
+  {
+    id: "w30",
+    nameAr: "تاكو فانيليا",
+    nameEn: "Vanilla Taco",
+    price: 85,
+    category: "gato",
+    unit: "piece",
+    image: "IMG_8967.JPG",
+    desc: "بسكويت سابليه - كريمة باستري - نوتيلا - كرست كريب",
+    ingredients: []
+  },
+  {
+    id: "w31",
+    nameAr: "جاتوه ماجيك",
+    nameEn: "Magic Gateau",
+    price: 80,
+    category: "gato",
+    unit: "piece",
+    image: "IMG_8966.JPG",
+    desc: "موس جندوجيا - فادج كيك - كرست كريب - نوتيلا",
+    ingredients: []
+  },
+  {
+    id: "w32",
+    nameAr: "ميلفيه نوتيلا",
+    nameEn: "Nutella Mille-feuille",
+    price: 80,
+    category: "gato",
+    unit: "piece",
+    image: "IMG_8965.JPG",
+    desc: "ميلفيه - كريمة باستري - نوتيلا - كرست كريب",
+    ingredients: []
+  },
+  {
+    id: "w33",
+    nameAr: "جاتوه ريد فيلفت",
+    nameEn: "Red Velvet Gateau",
+    price: 90,
+    category: "gato",
+    unit: "piece",
+    image: "IMG_8964.JPG",
+    desc: "كيك ريد فيلفت - كريمة تشيز - حشو شري مستورد - فاكهة استوائية",
+    ingredients: []
+  },
+  {
+    id: "w34",
+    nameAr: "فيستيفال",
+    nameEn: "Festival",
+    price: 80,
+    category: "gato",
+    unit: "piece",
+    image: "IMG_8913.JPG",
+    desc: "بسكويت سابليه - كريمة باستري - شوكليت - كرست كريب",
+    ingredients: []
+  },
+  {
+    id: "w35",
+    nameAr: "آيس كريم الفانيليا",
+    nameEn: "Vanilla",
+    price: 70,
+    category: "icecream",
+    unit: "piece",
+    image: "icecream-1.jpg",
+    desc: "سعادة الفانيليا النقية في كل ملعقة",
+    ingredients: []
+  },
+  {
+    id: "w36",
+    nameAr: "آيس كريم الشوكولاتة",
+    nameEn: "Chocolate",
+    price: 70,
+    category: "icecream",
+    unit: "piece",
+    image: "icecream-2.jpg",
+    desc: "نكهة شوكولاتة داكنة غنية",
+    ingredients: []
+  },
+  {
+    id: "w37",
+    nameAr: "آيس كريم الفراولة",
+    nameEn: "Strawberry",
+    price: 70,
+    category: "icecream",
+    unit: "piece",
+    image: "icecream-3.jpg",
+    desc: "متعة الفراولة الطازجة",
+    ingredients: []
+  },
+  {
+    id: "w38",
+    nameAr: "آيس كريم الفستق",
+    nameEn: "Pistachio",
+    price: 70,
+    category: "icecream",
+    unit: "piece",
+    image: "icecream-4.jpg",
+    desc: "مزيج فستق كريمي فاخر",
+    ingredients: []
+  },
+  {
+    id: "w39",
+    nameAr: "آيس كريم كيندر",
+    nameEn: "Kinder",
+    price: 70,
+    category: "icecream",
+    unit: "piece",
+    image: "icecream-7.jpg",
+    desc: "مزيج كيندر شوكولاتة كريمي",
+    ingredients: []
+  },
+  {
+    id: "w40",
+    nameAr: "آيس كريم الليمون",
+    nameEn: "Lemon",
+    price: 70,
+    category: "icecream",
+    unit: "piece",
+    image: "icecream-8.jpg",
+    desc: "نكهة ليمون منعشة",
+    ingredients: []
+  },
+  {
+    id: "w41",
+    nameAr: "آيس كريم الكوكيز",
+    nameEn: "Cookies",
+    price: 70,
+    category: "icecream",
+    unit: "piece",
+    image: "icecream-9.jpg",
+    desc: "كوكيز قرمشي مع كريم",
+    ingredients: []
+  },
+  {
+    id: "w42",
+    nameAr: "آيس كريم نوتيلا",
+    nameEn: "Nutella",
+    price: 70,
+    category: "icecream",
+    unit: "piece",
+    image: "icecream-10.jpg",
+    desc: "نكهة نوتيلا اللذيذة",
+    ingredients: []
+  },
+  {
+    id: "w43",
+    nameAr: "آيس كريم الشوكولاتة الداكنة",
+    nameEn: "Dark Chocolate",
+    price: 70,
+    category: "icecream",
+    unit: "piece",
+    image: "icecream-11.jpg",
+    desc: "متعة الشوكولاتة الداكنة الفاخرة",
+    ingredients: []
+  },
+  {
+    id: "w44",
+    nameAr: "آيس كريم روشيه",
+    nameEn: "Rocher",
+    price: 70,
+    category: "icecream",
+    unit: "piece",
+    image: "icecream-12.jpg",
+    desc: "ويفر قرمشي مع مركز البندق",
+    ingredients: []
+  },
+  {
+    id: "w45",
+    nameAr: "آيس كريم حلاوة روح",
+    nameEn: "Halawa Ruh",
+    price: 70,
+    category: "icecream",
+    unit: "piece",
+    image: "icecream-13.jpg",
+    desc: "حلاوة تقليدية مع الفستق والكنافة",
+    ingredients: []
+  },
+  {
+    id: "w46",
+    nameAr: "آيس كريم البلح بالجوز",
+    nameEn: "Date Walnut",
+    price: 70,
+    category: "icecream",
+    unit: "piece",
+    image: "icecream-15.jpg",
+    desc: "بلح حلو مع جوز قرمشي",
+    ingredients: []
+  },
+  {
+    id: "w47",
+    nameAr: "آيس كريم تشيز كيك",
+    nameEn: "Cheesecake",
+    price: 70,
+    category: "icecream",
+    unit: "piece",
+    image: "icecream-16.jpg",
+    desc: "نكهة تشيز كيك كريمية",
+    ingredients: []
+  },
+  {
+    id: "w48",
+    nameAr: "آيس كريم زبادي توت",
+    nameEn: "Yogurt Berry",
+    price: 70,
+    category: "icecream",
+    unit: "piece",
+    image: "icecream-17.jpg",
+    desc: "زبادي مع توت مشكل",
+    ingredients: []
+  },
+  {
+    id: "w49",
+    nameAr: "آيس كريم اللوتس",
+    nameEn: "Lotus",
+    price: 70,
+    category: "icecream",
+    unit: "piece",
+    image: "icecream-18.jpg",
+    desc: "كريم بسكويت اللوتس الناعم",
+    ingredients: []
+  }
+];
+defaultDrinks.push(...westernDrinks);
+
 const firebaseConfig = {
   apiKey: "AIzaSyBFBnaSspqZZ32YPQOlVFxLC23Ik5LalEM",
   authDomain: "abo-alsoude.firebaseapp.com",
@@ -560,7 +1104,7 @@ const DOM = {
 loadingScreen: document.getElementById("loading-screen"),
 navbar: document.getElementById("navbar"),
 drinksGrid: document.getElementById("drinks-grid"),
-filterBtns: document.querySelectorAll(".filter-btn"),
+filterBtns: document.querySelectorAll(".filter-btn:not(.section-btn)"),
 modalOverlay: document.getElementById("modal-overlay"),
 cartModalOverlay: document.getElementById("cart-modal-overlay"),
 cartIconWrap: document.getElementById("cart-icon-wrap"),
@@ -610,48 +1154,55 @@ DOM.drinksGrid.style.display = "none";
     });
   }
 
-  // ✅ Firebase لوحده
-try {
-  let snapshot = await db.collection("products").get();
-
-  if (snapshot.empty) {
-    await uploadDefaultProducts();
-    drinks = defaultDrinks;
-  } else {
-    const firebaseData = snapshot.docs.map(doc => ({
-      firebaseId: doc.id,
-      ...doc.data()
-    }));
-
-    // 🔥 ندمج الكود مع Firebase (الكود يكسب)
-    drinks = defaultDrinks.map(localItem => {
-      const firebaseItem = firebaseData.find(f => f.id === localItem.id);
-
-      return {
-        ...localItem, // 👈 السعر من الكود
-        firebaseId: firebaseItem?.firebaseId,
-        available: firebaseItem?.available ?? true
-      };
-    });
-  }
-
-} catch (error) {
-  console.error("🔥 Firebase مش شغال:", error);
+  // ✅ نعرض الموقع فورًا بالبيانات اللي في الكود (من غير ما نستنى Firebase)
   drinks = defaultDrinks;
-}
-
   setupEventListeners();
   updateCartUI();
- 
 
+  // ✅ شاشة الترحيب تفضل ظاهرة 3 ثواني
   setTimeout(() => {
     const loading = document.getElementById("loading-screen");
-    if (loading) {
-      loading.style.display = "none";
-    }
-  }, 1000);
+    if (loading) loading.style.display = "none";
+  }, 3000);
 
+  // ✅ Firebase في الخلفية: بيحدّث التوفر ويرفع المنتجات الجديدة مرة واحدة
+  syncWithFirebase();
 });
+
+async function syncWithFirebase() {
+  try {
+    const snapshot = await db.collection("products").get();
+    const byId = new Map(snapshot.docs.map(doc => [doc.data().id, { firebaseId: doc.id, ...doc.data() }]));
+
+    const missing = [];
+    drinks.forEach(item => {
+      const fb = byId.get(item.id);
+      if (fb) {
+        item.firebaseId = fb.firebaseId;
+        item.available = fb.available ?? true;   // السعر يفضل من الكود
+      } else {
+        missing.push(item);
+      }
+    });
+
+    // المنتجات اللي مش في Firebase تترفع دفعة واحدة (batch) بدل واحد واحد
+    if (missing.length) {
+      const batch = db.batch();
+      missing.forEach(item => {
+        const ref = db.collection("products").doc();
+        batch.set(ref, { ...item, available: true });
+        item.firebaseId = ref.id;
+        item.available = true;
+      });
+      await batch.commit();
+    }
+
+    // نحدّث العرض لو المستخدم فاتح قسم دلوقتي
+    if (!["all", "baqlawa"].includes(state.currentFilter)) renderDrinks();
+  } catch (error) {
+    console.error("🔥 Firebase مش شغال:", error);
+  }
+}
 // 👇 كود الأدمن
 // 👇 كود الأدمن
 // 👇 كود الأدمن هنا
@@ -678,7 +1229,7 @@ DOM.navbar.classList.remove("scrolled");
 
 // ========== CHECK IF ITEM IS PLATE ==========
 function isPlateItem(drink) {
-return drink.nameAr.includes("صحن");
+return drink.unit === "piece" || drink.nameAr.includes("صحن");
 }
 
 // ========== FILTER FUNCTIONALITY ==========
@@ -722,6 +1273,22 @@ const baqlawaTypes = [
     keys: ['عجوة', 'معمول جوز', 'غريبة'] 
   }
 ];
+
+// ========== MAIN SECTIONS (شرقي / غربي) ==========
+function showSection(section) {
+  document.querySelectorAll(".section-btn").forEach(b =>
+    b.classList.toggle("active", b.dataset.section === section));
+
+  document.getElementById("east-filters").style.display = section === "east" ? "flex" : "none";
+  document.getElementById("west-filters").style.display = section === "west" ? "flex" : "none";
+
+  // نرجّع الصفحة لحالة "اختر قسم"
+  state.currentFilter = "all";
+  document.querySelectorAll(".filter-btn:not(.section-btn)").forEach(b => b.classList.remove("active"));
+  document.getElementById("sub-filters-container").style.display = "none";
+  DOM.drinksGrid.style.display = "none";
+  DOM.drinksGrid.innerHTML = "";
+}
 
 function filterDrinks(category) {
   state.currentFilter = category;
@@ -844,7 +1411,7 @@ function createDrinkCard(drink) {
     ${hasMultipleImages ? `
       <div class="card-img-scroll">
         ${drink.images.map(img => `
-          <img src="${img}" class="card-img-slide" />
+          <img src="${img}" class="card-img-slide" loading="lazy" decoding="async" />
         `).join('')}
       </div>
 
@@ -854,7 +1421,7 @@ function createDrinkCard(drink) {
         `).join('')}
       </div>
     ` : `
-      <img src="${drink.image || 'logo.png'}" class="card-img-slide" />
+      <img src="${drink.image || 'logo.png'}" class="card-img-slide" loading="lazy" decoding="async" />
     `}
 
     <div class="card-overlay"></div>
@@ -1324,6 +1891,9 @@ showToast("تم إرسال الطلب بنجاح ✓");
 
 // ========== EVENT LISTENERS ==========
 function setupEventListeners() {
+document.querySelectorAll(".section-btn").forEach(btn => {
+  btn.addEventListener("click", () => showSection(btn.dataset.section));
+});
 DOM.filterBtns.forEach(btn => {
 btn.addEventListener("click", () => filterDrinks(btn.dataset.filter));
 });
