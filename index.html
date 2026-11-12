@@ -7,6 +7,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css?v=1.2" />
+  <style>
+    /* ===== تناسق الأزرار: رئيسي (شرقي/غربي) ← فرعي (كنافة...) ← أنواع البقلاوة ===== */
+    .filter-btn{font-family:'Cairo',sans-serif;border-radius:4px !important;cursor:pointer;transition:all .25s ease}
+
+    /* المستوى 1: رئيسي */
+    .section-btn{min-width:130px;padding:10px 34px !important;font-size:1.2rem !important;font-weight:700 !important;
+      background:transparent !important;color:#d4af37 !important;border:2px solid #d4af37 !important}
+    .section-btn.active{background:#d4af37 !important;color:#000 !important}
+
+    /* المستوى 2: فرعي */
+    #east-filters .filter-btn,#west-filters .filter-btn{min-width:90px;padding:7px 22px !important;font-size:1rem !important;font-weight:600 !important;
+      background:transparent !important;color:#fff !important;border:1px solid rgba(212,175,55,.55) !important}
+    #east-filters .filter-btn.active,#west-filters .filter-btn.active{background:rgba(212,175,55,.18) !important;color:#d4af37 !important;border-color:#d4af37 !important}
+
+    /* المستوى 3: أنواع البقلاوة */
+    #sub-filters-container .sub-btn{border-radius:4px !important;font-family:'Cairo',sans-serif;font-size:.9rem !important;padding:5px 16px !important;border:1px solid rgba(212,175,55,.55) !important}
+  </style>
 </head>
 <body>
 
@@ -44,16 +61,26 @@
     </p>
   </div>
 
- <div class="filters" dir="rtl" style="text-align:center; margin-bottom: 40px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
+ <div class="filters" dir="rtl" style="text-align:center; margin-bottom: 25px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
+    <button class="filter-btn section-btn" data-section="east" style="border-radius: 4px !important;">شرقي</button>
+    <button class="filter-btn section-btn" data-section="west" style="border-radius: 4px !important;">غربي</button>
+  </div>
+
+  <div id="east-filters" class="filters" dir="rtl" style="text-align:center; margin-bottom: 40px; display: none; flex-wrap: wrap; justify-content: center; gap: 12px;">
     <button class="filter-btn" data-filter="konafa" style="border-radius: 4px !important;">كنافة</button>
     <button class="filter-btn" data-filter="baqlawa" style="border-radius: 4px !important;">بقلاوة</button>
-    
-    <div style="flex-basis: 100%; height: 0;"></div> 
+    <div style="flex-basis: 100%; height: 0;"></div>
     <button class="filter-btn" data-filter="namora" style="border-radius: 4px !important;">نمورة</button>
-<button class="filter-btn" data-filter="mshak" style="border-radius: 4px !important;">مشكل</button>
+    <button class="filter-btn" data-filter="mshak" style="border-radius: 4px !important;">مشكل</button>
   </div>
-  
- <div id="sub-filters-container" dir="rtl" style="text-align:center; margin-bottom: 30px; display: none; flex-wrap: wrap; justify-content: center; gap: 10px;">
+
+  <div id="west-filters" class="filters" dir="rtl" style="text-align:center; margin-bottom: 40px; display: none; flex-wrap: wrap; justify-content: center; gap: 12px;">
+    <button class="filter-btn" data-filter="cakes" style="border-radius: 4px !important;">تورت</button>
+    <button class="filter-btn" data-filter="gato" style="border-radius: 4px !important;">جاتوه</button>
+    <button class="filter-btn" data-filter="icecream" style="border-radius: 4px !important;">آيس كريم</button>
+  </div>
+
+  <div id="sub-filters-container" dir="rtl" style="text-align:center; margin-bottom: 30px; display: none; flex-wrap: wrap; justify-content: center; gap: 10px;">
  </div>
   
 
