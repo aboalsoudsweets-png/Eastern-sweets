@@ -1228,6 +1228,17 @@ DOM.navbar.classList.remove("scrolled");
 });
 
 // ========== CHECK IF ITEM IS PLATE ==========
+// ========== تصغير الصور تلقائيًا (من غير ما تلمس الملفات) ==========
+// على الموقع الحقيقي الصورة بتعدي على خدمة wsrv.nl اللي بتصغّرها وتحوّلها WebP قبل ما توصل.
+// على الجهاز المحلي أو لو الخدمة وقفت، بترجع للصورة الأصلية.
+function imgUrl(path, width = 600) {
+  if (!path) return "logo.png";
+  const isLocal = location.protocol === "file:" || ["localhost", "127.0.0.1", ""].includes(location.hostname);
+  if (isLocal) return path;
+  const abs = new URL(path, location.href).href;
+  return `https://wsrv.nl/?url=${encodeURIComponent(abs)}&w=${width}&q=70&output=webp`;
+}
+
 function isPlateItem(drink) {
 return drink.unit === "piece" || drink.nameAr.includes("صحن");
 }
@@ -1411,7 +1422,7 @@ function createDrinkCard(drink) {
     ${hasMultipleImages ? `
       <div class="card-img-scroll">
         ${drink.images.map(img => `
-          <img src="${img}" class="card-img-slide" loading="lazy" decoding="async" />
+          <img src="${imgUrl(img)}" data-orig="${img}" onerror="this.onerror=null;this.src=this.dataset.orig" class="card-img-slide" loading="lazy" decoding="async" />
         `).join('')}
       </div>
 
@@ -1421,7 +1432,7 @@ function createDrinkCard(drink) {
         `).join('')}
       </div>
     ` : `
-      <img src="${drink.image || 'logo.png'}" class="card-img-slide" loading="lazy" decoding="async" />
+      <img src="${imgUrl(drink.image)}" data-orig="${drink.image || 'logo.png'}" onerror="this.onerror=null;this.src=this.dataset.orig" class="card-img-slide" loading="lazy" decoding="async" />
     `}
 
     <div class="card-overlay"></div>
@@ -1620,7 +1631,9 @@ closeWeightModal();
 function openModal(drink) {
 state.selectedDrink = drink;
 
-document.getElementById("modal-img").src = drink.image;
+const modalImg = document.getElementById("modal-img");
+modalImg.onerror = () => { modalImg.onerror = null; modalImg.src = drink.image; };
+modalImg.src = imgUrl(drink.image, 900);
 document.getElementById("modal-name-ar").textContent = drink.nameAr;
 document.getElementById("modal-name-en").textContent = drink.nameEn;
 document.getElementById("modal-price").textContent = drink.price;
