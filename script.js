@@ -33,7 +33,7 @@ ingredients: []
 id: "40055",
 nameAr: "  اسطنبولية و عربية مشكل",
 nameEn: "",
-price: 540,
+price: 550,
 category: "konafa",
 image: "3.png",
 desc: "",
