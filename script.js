@@ -53,7 +53,7 @@ ingredients: []
 id: "504",
 nameAr: "نابلسية و عربية مشكل ",
 nameEn: "",
-price: 500,
+price: 550,
 category: "konafa",
 image: "504.JPG",
 desc: "",
